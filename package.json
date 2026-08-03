@@ -1,0 +1,16 @@
+{
+  "name": "inovantage-website",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Inovantage marketing website with a review-first publishing workflow.",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node preview.mjs",
+    "check": "node check.mjs",
+    "verify": "npm run build && npm run check"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

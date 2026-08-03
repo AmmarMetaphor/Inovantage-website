@@ -1,0 +1,121 @@
+backend:
+  name: github
+  repo: REPLACE_WITH_GITHUB_USERNAME/inovantage-website
+  branch: main
+  use_graphql: true
+
+local_backend: true
+publish_mode: editorial_workflow
+site_url: https://inovantage.co.uk
+display_url: https://inovantage.co.uk
+logo_url: https://inovantage.co.uk/assets/images/inovantage-logo.png
+show_preview_links: true
+locale: en
+
+media_folder: "src/static/assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "insights"
+    label: "Insights"
+    label_singular: "Insight post"
+    folder: "src/content/posts"
+    create: true
+    extension: "md"
+    format: "frontmatter"
+    slug: "{{slug}}"
+    identifier_field: "slug"
+    summary: "{{title}} — {{date}}"
+    sortable_fields: ["date", "title", "category"]
+    view_filters:
+      - label: "AI automation"
+        field: "category"
+        pattern: "AI Automation"
+      - label: "Website design"
+        field: "category"
+        pattern: "Website Design"
+      - label: "Social media"
+        field: "category"
+        pattern: "Social Media"
+      - label: "App development"
+        field: "category"
+        pattern: "App Development"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        hint: "Clear, useful and specific. Aim for 45–65 characters."
+      - label: "URL slug"
+        name: "slug"
+        widget: "string"
+        hint: "Lowercase words separated by hyphens, for example: automate-customer-enquiries"
+        pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers and hyphens only."]
+      - label: "Publish date"
+        name: "date"
+        widget: "datetime"
+        date_format: "DD MMMM YYYY"
+        time_format: false
+        format: "YYYY-MM-DD"
+      - label: "Last updated"
+        name: "updated"
+        widget: "datetime"
+        required: false
+        date_format: "DD MMMM YYYY"
+        time_format: false
+        format: "YYYY-MM-DD"
+      - label: "Search description"
+        name: "description"
+        widget: "text"
+        hint: "A plain-English summary for search results and social sharing. Aim for 120–160 characters."
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - "AI Automation"
+          - "Website Design"
+          - "Social Media"
+          - "App Development"
+          - "Digital Growth"
+      - label: "Author"
+        name: "author"
+        widget: "string"
+        default: "Inovantage"
+      - label: "Featured image"
+        name: "image"
+        widget: "image"
+        required: false
+        hint: "Recommended: 1600 × 900 pixels, compressed JPG or WebP."
+      - label: "Featured image alternative text"
+        name: "imageAlt"
+        widget: "string"
+        required: false
+        hint: "Describe what the image shows for people using screen readers."
+      - label: "Feature on the site"
+        name: "featured"
+        widget: "boolean"
+        default: false
+        required: false
+      - label: "Article"
+        name: "body"
+        widget: "markdown"
+
+  - name: "settings"
+    label: "Site settings"
+    files:
+      - label: "Business details"
+        name: "business"
+        file: "src/data/site.json"
+        format: "json"
+        fields:
+          - { label: "Brand name", name: "name", widget: "string" }
+          - { label: "Legal or trading name", name: "legalName", widget: "string" }
+          - { label: "Website URL", name: "url", widget: "string" }
+          - { label: "Domain", name: "domain", widget: "string" }
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Contact email", name: "email", widget: "string" }
+          - { label: "Telephone", name: "phone", widget: "string", required: false }
+          - { label: "Location line", name: "location", widget: "string" }
+          - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
+          - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
+          - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
+          - { label: "X URL", name: "x", widget: "string", required: false }
