@@ -492,6 +492,12 @@ function renderHeader(activeNav, site) {
 </header>`;
 }
 
+function formatAddress(site) {
+  return [site.addressStreet, site.addressLocality, site.addressRegion, site.addressPostcode]
+    .filter(Boolean)
+    .join(', ');
+}
+
 function renderFooter(site, year) {
   const socials = [
     ['LinkedIn', site.linkedin],
@@ -503,6 +509,7 @@ function renderFooter(site, year) {
     ? `<div class="footer-social">${socials.map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}</div>`
     : '';
   const phone = site.phone ? `<a href="tel:${escapeHtml(site.phone.replace(/\s/g, ''))}">${escapeHtml(site.phone)}</a>` : '';
+  const registeredAddress = formatAddress(site);
 
   return `
 <footer class="site-footer">
@@ -536,6 +543,8 @@ function renderFooter(site, year) {
         <a href="mailto:${escapeHtml(site.email)}">${escapeHtml(site.email)}</a>
         ${phone}
         <span>${escapeHtml(site.location || 'United Kingdom')}</span>
+        ${registeredAddress ? `<span>Registered office: ${escapeHtml(registeredAddress)}</span>` : ''}
+        ${site.companyNumber ? `<span>Company number ${escapeHtml(site.companyNumber)}</span>` : ''}
       </address>
     </div>
   </div>
@@ -555,13 +564,26 @@ function organisationSchema(site) {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: site.name,
+    legalName: site.legalName || site.name,
     url: site.url,
     logo: `${site.url}/assets/images/inovantage-logo.png`,
     email: site.email,
     description: site.tagline,
-    areaServed: 'GB'
+    areaServed: ['GB', 'US']
   };
   if (site.phone) schema.telephone = site.phone;
+  if (site.companyNumber) schema.identifier = site.companyNumber;
+  const registeredAddress = formatAddress(site);
+  if (registeredAddress) {
+    schema.address = {
+      '@type': 'PostalAddress',
+      streetAddress: site.addressStreet,
+      addressLocality: site.addressLocality,
+      addressRegion: site.addressRegion,
+      postalCode: site.addressPostcode,
+      addressCountry: site.addressCountry
+    };
+  }
   const sameAs = [site.linkedin, site.instagram, site.facebook, site.x].filter(Boolean);
   if (sameAs.length) schema.sameAs = sameAs;
   return schema;
@@ -782,6 +804,9 @@ async function build() {
     email: escapeHtml(site.email),
     phone: escapeHtml(site.phone || ''),
     location: escapeHtml(site.location || ''),
+    legalName: escapeHtml(site.legalName || site.name),
+    companyNumber: escapeHtml(site.companyNumber || ''),
+    registeredOffice: escapeHtml(formatAddress(site)),
     latestPosts: renderLatestPosts(posts),
     allPosts: renderAllPosts(posts),
     insightFilters: categoriesFilter(posts),
