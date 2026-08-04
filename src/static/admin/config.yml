@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: REPLACE_WITH_GITHUB_USERNAME/inovantage-website
+  repo: AmmarMetaphor/Inovantage-website
   branch: main
   use_graphql: true
 
