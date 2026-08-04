@@ -108,13 +108,20 @@ collections:
         format: "json"
         fields:
           - { label: "Brand name", name: "name", widget: "string" }
-          - { label: "Legal or trading name", name: "legalName", widget: "string" }
+          - { label: "Legal company name", name: "legalName", widget: "string", hint: "The full registered legal name, for example: INOVANTAGE LTD" }
+          - { label: "Company number", name: "companyNumber", widget: "string", required: false }
+          - { label: "Place of registration", name: "placeOfRegistration", widget: "string", required: false, hint: "Internal field only. Not shown on public pages until this wording is confirmed." }
           - { label: "Website URL", name: "url", widget: "string" }
           - { label: "Domain", name: "domain", widget: "string" }
           - { label: "Tagline", name: "tagline", widget: "string" }
           - { label: "Contact email", name: "email", widget: "string" }
           - { label: "Telephone", name: "phone", widget: "string", required: false }
-          - { label: "Location line", name: "location", widget: "string" }
+          - { label: "Service area", name: "location", widget: "string", hint: "Public-facing service area text, for example: Serving businesses across the United Kingdom and the United States" }
+          - { label: "Registered office — street", name: "addressStreet", widget: "string", required: false }
+          - { label: "Registered office — town/city", name: "addressLocality", widget: "string", required: false }
+          - { label: "Registered office — county/region", name: "addressRegion", widget: "string", required: false }
+          - { label: "Registered office — postcode", name: "addressPostcode", widget: "string", required: false }
+          - { label: "Registered office — country code", name: "addressCountry", widget: "string", required: false, hint: "ISO country code, for example: GB" }
           - { label: "LinkedIn URL", name: "linkedin", widget: "string", required: false }
           - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
           - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
