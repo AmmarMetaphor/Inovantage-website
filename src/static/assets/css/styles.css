@@ -105,7 +105,7 @@ h4 {
 }
 
 h1 {
-  font-size: clamp(2.65rem, 6vw, 5.75rem);
+  font-size: clamp(2.125rem, 6.25vw, 4.25rem);
 }
 
 h2 {
@@ -447,7 +447,7 @@ p {
 .hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(76px, 10vw, 138px);
+  padding-block: clamp(56px, 5vw, 80px);
   background:
     linear-gradient(180deg, rgba(252, 247, 252, 0.8), rgba(255, 255, 255, 0)),
     repeating-linear-gradient(90deg, transparent 0, transparent 74px, rgba(145, 50, 144, 0.035) 75px),
@@ -517,18 +517,17 @@ p {
 
 .system-visual {
   position: relative;
-  min-height: 520px;
+  min-height: 560px;
 }
 
 .system-panel {
   position: absolute;
-  inset: 50% 0 auto;
+  inset: auto 0 0 0;
   padding: 24px;
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid rgba(145, 50, 144, 0.14);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
-  transform: translateY(-50%);
   backdrop-filter: blur(18px);
 }
 
@@ -580,12 +579,17 @@ p {
   align-items: center;
   gap: 13px;
   padding: 14px;
+  color: inherit;
+  text-decoration: none;
   background: var(--surface-soft);
   border: 1px solid transparent;
   border-radius: 14px;
+  transition: background 0.15s ease, border-color 0.15s ease;
 }
 
-.workflow-row.is-active {
+.workflow-row.is-active,
+.workflow-row:hover,
+.workflow-row:focus-visible {
   background: var(--brand-soft);
   border-color: rgba(145, 50, 144, 0.16);
 }
@@ -638,6 +642,7 @@ p {
   position: absolute;
   z-index: 2;
   min-width: 190px;
+  max-width: calc(100% - 24px);
   padding: 16px;
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid var(--line);
@@ -661,13 +666,8 @@ p {
 }
 
 .floating-card-one {
-  top: 30px;
-  right: -24px;
-}
-
-.floating-card-two {
-  bottom: 28px;
-  left: -28px;
+  top: 0;
+  right: 16px;
 }
 
 .connector-line {
@@ -692,17 +692,10 @@ p {
 }
 
 .connector-one {
-  width: 120px;
-  top: 115px;
-  right: 80px;
-  transform: rotate(-28deg);
-}
-
-.connector-two {
-  width: 135px;
-  bottom: 110px;
-  left: 64px;
-  transform: rotate(26deg);
+  width: 70px;
+  top: 60px;
+  right: 70px;
+  transform: rotate(66deg);
 }
 
 .trust-band {
@@ -1215,7 +1208,7 @@ p {
 .page-hero {
   position: relative;
   overflow: hidden;
-  padding-block: clamp(76px, 10vw, 126px);
+  padding-block: clamp(56px, 5vw, 80px);
   background:
     radial-gradient(circle at 88% 8%, rgba(145, 50, 144, 0.14), transparent 28%),
     linear-gradient(180deg, var(--brand-pale), #fff);
@@ -1352,7 +1345,7 @@ p {
 }
 
 .service-detail-hero {
-  padding-block: clamp(78px, 10vw, 130px);
+  padding-block: clamp(56px, 5vw, 80px);
 }
 
 .service-detail-hero .hero-grid {
@@ -2096,10 +2089,38 @@ p {
 }
 
 .footer-social a {
-  padding: 7px 10px;
-  font-size: 0.76rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  color: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
+  border-radius: 50%;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.footer-social a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.36);
+}
+
+.footer-social a:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.social-icon {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+}
+
+.social-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .footer-bottom {
@@ -2171,6 +2192,12 @@ p {
     width: 100%;
   }
 
+  .hero,
+  .page-hero,
+  .service-detail-hero {
+    padding-block: clamp(48px, 5vw, 64px);
+  }
+
   .hero-grid,
   .service-detail-hero .hero-grid,
   .page-hero-grid {
@@ -2183,7 +2210,7 @@ p {
 
   .system-visual {
     width: min(100%, 620px);
-    min-height: 480px;
+    min-height: 560px;
     margin-inline: auto;
   }
 
@@ -2236,6 +2263,12 @@ p {
 }
 
 @media (max-width: 760px) {
+  .hero,
+  .page-hero,
+  .service-detail-hero {
+    padding-block: clamp(36px, 6vw, 52px);
+  }
+
   .container,
   .container-narrow,
   .container-article {
@@ -2381,10 +2414,19 @@ p {
   }
 
   .system-visual {
-    min-height: 430px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 0;
+  }
+
+  .connector-line {
+    display: none;
   }
 
   .system-panel {
+    position: static;
+    inset: auto;
     padding: 16px;
   }
 
@@ -2398,20 +2440,17 @@ p {
   }
 
   .workflow-pill {
-    display: none;
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 6px;
   }
 
   .floating-card {
-    min-width: 154px;
+    position: static;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
     padding: 12px;
-  }
-
-  .floating-card-one {
-    right: -4px;
-  }
-
-  .floating-card-two {
-    left: -4px;
   }
 
   .trust-band .container {

@@ -455,17 +455,17 @@ function icon(name) {
     arrow: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></svg>',
     check: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>',
     menu: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
-    close: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>'
+    close: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>',
+    facebook: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'
   };
   return icons[name] || '';
 }
 
 function renderHeader(activeNav, site) {
   const links = [
-    ['home', '/', 'Home'],
     ['services', '/services/', 'Services'],
-    ['work', '/work/', 'Work'],
-    ['insights', '/insights/', 'Insights'],
+    ['work', '/work/', 'Solutions'],
+    ['insights', '/insights/', 'Articles & Guides'],
     ['about', '/about/', 'About']
   ];
   const navItems = links.map(([key, href, label]) => {
@@ -505,8 +505,13 @@ function renderFooter(site, year) {
     ['Facebook', site.facebook],
     ['X', site.x]
   ].filter(([, url]) => Boolean(url));
+  const socialIcons = { Facebook: icon('facebook') };
   const socialHtml = socials.length
-    ? `<div class="footer-social">${socials.map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}</div>`
+    ? `<div class="footer-social">${socials.map(([label, url]) => {
+        const glyph = socialIcons[label];
+        const content = glyph ? `<span class="social-icon">${glyph}</span>` : label;
+        return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${content}</a>`;
+      }).join('')}</div>`
     : '';
   const phone = site.phone ? `<a href="tel:${escapeHtml(site.phone.replace(/\s/g, ''))}">${escapeHtml(site.phone)}</a>` : '';
   const registeredAddress = formatAddress(site);
