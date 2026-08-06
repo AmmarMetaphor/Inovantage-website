@@ -462,10 +462,9 @@ function icon(name) {
 
 function renderHeader(activeNav, site) {
   const links = [
-    ['home', '/', 'Home'],
     ['services', '/services/', 'Services'],
-    ['work', '/work/', 'Work'],
-    ['insights', '/insights/', 'Insights'],
+    ['work', '/work/', 'Solutions'],
+    ['insights', '/insights/', 'Articles & Guides'],
     ['about', '/about/', 'About']
   ];
   const navItems = links.map(([key, href, label]) => {
@@ -506,7 +505,7 @@ function renderFooter(site, year) {
     ['X', site.x]
   ].filter(([, url]) => Boolean(url));
   const socialHtml = socials.length
-    ? `<div class="footer-social">${socials.map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}</div>`
+    ? `<div class="footer-social">${socials.map(([label, url]) => `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)} (opens in a new tab)">${label}</a>`).join('')}</div>`
     : '';
   const phone = site.phone ? `<a href="tel:${escapeHtml(site.phone.replace(/\s/g, ''))}">${escapeHtml(site.phone)}</a>` : '';
   const registeredAddress = formatAddress(site);
