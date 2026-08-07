@@ -2309,7 +2309,15 @@ p {
   .section-heading {
     align-items: start;
     flex-direction: column;
-    gap: 14px;
+    gap: 20px;
+  }
+
+  #services .section-heading {
+    margin-bottom: 22px;
+  }
+
+  #services .section-heading .eyebrow {
+    margin-bottom: 14px;
   }
 
   #services .section-heading h2 {
@@ -2318,8 +2326,13 @@ p {
   }
 
   .trust-band {
-    padding-block: 10px;
+    padding-top: 6px;
+    padding-bottom: 0;
     background: var(--surface);
+  }
+
+  #services {
+    padding-top: 16px;
   }
 
   .trust-list {
