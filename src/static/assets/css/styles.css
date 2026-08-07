@@ -709,15 +709,18 @@ p {
   background: var(--ink);
 }
 
-.trust-band .container {
+.trust-list {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   gap: 10px 34px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.trust-band span {
+.trust-list li {
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.82rem;
   font-weight: 680;
@@ -2306,6 +2309,49 @@ p {
   .section-heading {
     align-items: start;
     flex-direction: column;
+    gap: 14px;
+  }
+
+  #services .section-heading h2 {
+    font-size: clamp(2rem, 7vw, 2.4rem);
+    line-height: 1.08;
+  }
+
+  .trust-band {
+    padding-block: 10px;
+    background: var(--surface);
+  }
+
+  .trust-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    counter-reset: trust;
+  }
+
+  .trust-list li {
+    position: relative;
+    padding: 14px 14px 14px 16px;
+    color: var(--ink);
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: normal;
+    text-align: left;
+    text-transform: none;
+    background: var(--brand-pale);
+    border: 1px solid rgba(145, 50, 144, 0.18);
+    border-radius: var(--radius-sm);
+    counter-increment: trust;
+  }
+
+  .trust-list li::before {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--brand);
+    content: counter(trust, decimal-leading-zero);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
   }
 
   .services-grid,
@@ -2490,11 +2536,6 @@ p {
     padding: 12px;
   }
 
-  .trust-band .container {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
   .orbit-tag-one {
     left: 0;
   }
@@ -2518,6 +2559,12 @@ p {
   .footer-brand,
   .footer-grid > div:last-child {
     grid-column: auto;
+  }
+}
+
+@media (max-width: 360px) {
+  .trust-list {
+    grid-template-columns: 1fr;
   }
 }
 
