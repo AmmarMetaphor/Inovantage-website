@@ -97,7 +97,8 @@ const pageDefinitions = [
     route: '/thank-you/',
     nav: '',
     title: 'Thank You',
-    description: 'Thank you for contacting Inovantage.'
+    description: 'Thank you for contacting Inovantage.',
+    robots: 'noindex,follow'
   },
   {
     source: 'privacy.html',
@@ -129,7 +130,8 @@ const pageDefinitions = [
     route: '/404.html',
     nav: '',
     title: 'Page Not Found',
-    description: 'The page you requested could not be found.'
+    description: 'The page you requested could not be found.',
+    robots: 'noindex,follow'
   }
 ];
 
@@ -594,7 +596,7 @@ function organisationSchema(site) {
   return schema;
 }
 
-function renderLayout({ site, title, description, route, activeNav, content, image = '', type = 'website', schema = null }) {
+function renderLayout({ site, title, description, route, activeNav, content, image = '', type = 'website', schema = null, robots = 'index,follow,max-image-preview:large' }) {
   const fullTitle = route === '/' ? `${site.name} | ${title}` : `${title} | ${site.name}`;
   const canonical = `${site.url}${route === '/' ? '/' : route}`;
   const socialImage = image ? `${site.url}${image}` : `${site.url}/assets/images/social-card.png`;
@@ -611,7 +613,7 @@ function renderLayout({ site, title, description, route, activeNav, content, ima
   <title>${escapeHtml(fullTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="theme-color" content="#913290">
-  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="robots" content="${escapeHtml(robots)}">
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/assets/images/favicon-192.png">
@@ -834,7 +836,8 @@ async function build() {
       description: page.description,
       route: page.route,
       activeNav: page.nav,
-      content
+      content,
+      robots: page.robots
     });
     await writeOutput(page.output, html);
   }
