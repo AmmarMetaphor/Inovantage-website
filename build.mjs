@@ -1,4 +1,5 @@
 import { mkdir, readFile, readdir, rm, stat, writeFile, copyFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -9,6 +10,8 @@ const STATIC = path.join(SRC, 'static');
 const PAGES = path.join(SRC, 'pages');
 const POSTS_DIR = path.join(SRC, 'content', 'posts');
 const DATA_DIR = path.join(SRC, 'data');
+
+let cssVersion = '';
 
 const pageDefinitions = [
   {
@@ -627,7 +630,7 @@ function renderLayout({ site, title, description, route, activeNav, content, ima
   <meta name="twitter:title" content="${escapeHtml(fullTitle)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
   <meta name="twitter:image" content="${escapeHtml(socialImage)}">
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <link rel="stylesheet" href="/assets/css/styles.css?v=${cssVersion}">
   <script type="application/ld+json">${jsonLd}</script>
   <script src="/assets/js/main.js" defer></script>
 </head>
@@ -800,6 +803,9 @@ async function build() {
   await rm(DIST, { recursive: true, force: true });
   await mkdir(DIST, { recursive: true });
   await copyDirectory(STATIC, DIST);
+
+  const cssSource = await readFile(path.join(STATIC, 'assets', 'css', 'styles.css'));
+  cssVersion = createHash('sha256').update(cssSource).digest('hex').slice(0, 10);
 
   const site = JSON.parse(await readFile(path.join(DATA_DIR, 'site.json'), 'utf8'));
   const posts = await loadPosts();
