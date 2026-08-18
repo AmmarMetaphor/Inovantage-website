@@ -37,6 +37,7 @@ function inovantage_customize_register( $wp_customize ) {
 		'linkedin'         => array( __( 'LinkedIn URL', 'inovantage' ), 'url' ),
 		'instagram'        => array( __( 'Instagram URL', 'inovantage' ), 'url' ),
 		'facebook'         => array( __( 'Facebook URL', 'inovantage' ), 'url' ),
+		'whatsapp'         => array( __( 'WhatsApp number', 'inovantage' ), 'text' ),
 		'x'                => array( __( 'X URL', 'inovantage' ), 'url' ),
 	);
 

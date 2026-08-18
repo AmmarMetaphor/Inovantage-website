@@ -34,6 +34,7 @@ function inovantage_company_defaults() {
 		'instagram'        => '',
 		'facebook'         => 'https://www.facebook.com/1HVYU4LZa1/',
 		'x'                => '',
+		'whatsapp'         => '',
 	);
 }
 
@@ -64,4 +65,21 @@ function inovantage_registered_address() {
 		)
 	);
 	return implode( ', ', $parts );
+}
+
+/**
+ * Builds the wa.me chat link from the Customizer WhatsApp number.
+ *
+ * The number is reduced to digits only (no +, spaces, hyphens or
+ * parentheses) as required by the wa.me URL format, and a pre-filled
+ * enquiry message is appended. The visitor still has to press send.
+ *
+ * @return string Empty string when no WhatsApp number is configured.
+ */
+function inovantage_whatsapp_url() {
+	$digits = preg_replace( '/\D+/', '', inovantage_company( 'whatsapp' ) );
+	if ( '' === $digits ) {
+		return '';
+	}
+	return 'https://wa.me/' . $digits . '?text=' . rawurlencode( 'Hello Inovantage, I would like to discuss a project.' );
 }

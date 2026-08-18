@@ -7,9 +7,17 @@ $inovantage_socials = array(
 	'LinkedIn'  => inovantage_company( 'linkedin' ),
 	'Instagram' => inovantage_company( 'instagram' ),
 	'Facebook'  => inovantage_company( 'facebook' ),
+	'WhatsApp'  => inovantage_whatsapp_url(),
 	'X'         => inovantage_company( 'x' ),
 );
-$inovantage_socials = array_filter( $inovantage_socials );
+$inovantage_socials      = array_filter( $inovantage_socials );
+$inovantage_social_icons = array(
+	'Facebook' => 'facebook',
+	'WhatsApp' => 'whatsapp',
+);
+$inovantage_social_aria  = array(
+	'WhatsApp' => __( 'Chat with Inovantage on WhatsApp', 'inovantage' ),
+);
 $inovantage_phone   = inovantage_company( 'phone' );
 $inovantage_address = inovantage_registered_address();
 ?>
@@ -23,10 +31,13 @@ $inovantage_address = inovantage_registered_address();
 			<p><?php echo esc_html( inovantage_company( 'tagline' ) ); ?></p>
 			<?php if ( ! empty( $inovantage_socials ) ) : ?>
 				<div class="footer-social">
-					<?php foreach ( $inovantage_socials as $label => $url ) : ?>
-						<a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $label ); ?>">
-							<?php if ( 'Facebook' === $label ) : ?>
-								<span class="social-icon"><?php inovantage_icon_e( 'facebook' ); ?></span>
+					<?php foreach ( $inovantage_socials as $label => $url ) :
+						$icon_name  = isset( $inovantage_social_icons[ $label ] ) ? $inovantage_social_icons[ $label ] : '';
+						$aria_label = isset( $inovantage_social_aria[ $label ] ) ? $inovantage_social_aria[ $label ] : $label;
+					?>
+						<a href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php echo esc_attr( $aria_label ); ?>">
+							<?php if ( $icon_name ) : ?>
+								<span class="social-icon"><?php inovantage_icon_e( $icon_name ); ?></span>
 							<?php else : ?>
 								<?php echo esc_html( $label ); ?>
 							<?php endif; ?>

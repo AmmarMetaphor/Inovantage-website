@@ -126,3 +126,4 @@ collections:
           - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
           - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
           - { label: "X URL", name: "x", widget: "string", required: false }
+          - { label: "WhatsApp number", name: "whatsapp", widget: "string", required: false, hint: "Digits only, with country code, for example: 447375803774. Leave blank to hide the WhatsApp icon." }
