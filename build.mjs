@@ -459,9 +459,16 @@ function icon(name) {
     check: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>',
     menu: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg>',
     close: '<svg aria-hidden="true" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></svg>',
-    facebook: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>'
+    facebook: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+    whatsapp: '<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2.05 22l5.25-1.38a9.87 9.87 0 0 0 4.74 1.2h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.13-2.9-7.01A9.83 9.83 0 0 0 12.04 2Zm0 1.67c2.19 0 4.25.85 5.79 2.4a8.16 8.16 0 0 1 2.4 5.84c0 4.55-3.71 8.25-8.27 8.25a8.3 8.3 0 0 1-4.21-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.27-4.4c0-4.55 3.71-8.23 8.35-8.23Zm-4.55 4.4c-.16 0-.42.06-.64.31s-.85.83-.85 2.02.87 2.35.99 2.51c.12.16 1.7 2.7 4.17 3.68 2.06.82 2.48.66 2.93.62.45-.04 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.45-.72-1.68-.8-.22-.08-.39-.12-.55.13-.16.24-.63.8-.77.96-.14.16-.28.18-.52.06-.24-.12-1.01-.37-1.93-1.19-.71-.63-1.19-1.42-1.33-1.66-.14-.24-.02-.37.11-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.34-.76-1.83-.2-.48-.4-.42-.55-.42Z"/></svg>'
   };
   return icons[name] || '';
+}
+
+function whatsappUrl(site) {
+  const digits = (site.whatsapp || '').replace(/\D+/g, '');
+  if (!digits) return '';
+  return `https://wa.me/${digits}?text=${encodeURIComponent('Hello Inovantage, I would like to discuss a project.')}`;
 }
 
 function renderHeader(activeNav, site) {
@@ -506,14 +513,17 @@ function renderFooter(site, year) {
     ['LinkedIn', site.linkedin],
     ['Instagram', site.instagram],
     ['Facebook', site.facebook],
+    ['WhatsApp', whatsappUrl(site)],
     ['X', site.x]
   ].filter(([, url]) => Boolean(url));
-  const socialIcons = { Facebook: icon('facebook') };
+  const socialIcons = { Facebook: icon('facebook'), WhatsApp: icon('whatsapp') };
+  const socialAriaLabels = { WhatsApp: 'Chat with Inovantage on WhatsApp' };
   const socialHtml = socials.length
     ? `<div class="footer-social">${socials.map(([label, url]) => {
         const glyph = socialIcons[label];
         const content = glyph ? `<span class="social-icon">${glyph}</span>` : label;
-        return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(label)}">${content}</a>`;
+        const ariaLabel = socialAriaLabels[label] || label;
+        return `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="${escapeHtml(ariaLabel)}">${content}</a>`;
       }).join('')}</div>`
     : '';
   const phone = site.phone ? `<a href="tel:${escapeHtml(site.phone.replace(/\s/g, ''))}">${escapeHtml(site.phone)}</a>` : '';
