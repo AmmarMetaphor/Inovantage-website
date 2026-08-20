@@ -29,6 +29,28 @@
     });
   }
 
+  const servicesOrbit = document.querySelector('[data-services-orbit]');
+
+  if (servicesOrbit) {
+    // Freezing every card while the pointer is on one keeps the link still
+    // under the cursor. Keyboard focus is handled by :focus-within in CSS.
+    const overCard = (node) => node instanceof Element && node.closest('.orbit-card');
+
+    servicesOrbit.addEventListener('pointerover', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      if (overCard(event.target)) servicesOrbit.classList.add('is-paused');
+    });
+
+    servicesOrbit.addEventListener('pointerout', (event) => {
+      if (event.pointerType !== 'mouse') return;
+      if (!overCard(event.relatedTarget)) servicesOrbit.classList.remove('is-paused');
+    });
+
+    servicesOrbit.addEventListener('pointerleave', () => {
+      servicesOrbit.classList.remove('is-paused');
+    });
+  }
+
   const filterGroup = document.querySelector('[data-filter-group]');
   const insightCards = [...document.querySelectorAll('[data-insight-card]')];
 

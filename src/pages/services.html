@@ -1,11 +1,53 @@
-<section class="page-hero">
-  <div class="container page-hero-grid">
-    <div><p class="eyebrow">Services</p><h1>One partner for the systems customers see and the workflows your team relies on.</h1><p class="lede">Choose a focused project or combine capabilities into a connected digital improvement programme.</p></div>
-    <div class="page-hero-visual"><img src="/assets/images/heroes/services-hero.png" width="1536" height="1024" alt="Connected digital services covering automation, websites, content operations and app development." loading="eager" decoding="async"></div>
+<section class="page-hero services-hero">
+  <div class="services-hero-media" aria-hidden="true">
+    <img class="services-hero-art" src="/assets/images/heroes/services-hero-network.webp" srcset="/assets/images/heroes/services-hero-network-760.webp 760w, /assets/images/heroes/services-hero-network-1180.webp 1180w, /assets/images/heroes/services-hero-network.webp 1672w" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
+  </div>
+  <div class="services-hero-veil" aria-hidden="true"></div>
+  <div class="container services-hero-grid">
+    <div class="services-hero-copy">
+      <p class="eyebrow">Inovantage services</p>
+      <h1>Services designed to <span>scale your business.</span></h1>
+      <p class="lede">AI automation, high-performance websites, social media that connects, and apps that drive growth—working together for real results.</p>
+      <div class="button-row">
+        <a class="button" href="#service-list">Explore Our Services</a>
+        <a class="button button-secondary" href="#ways-to-work">How We Work</a>
+      </div>
+    </div>
+    <div class="services-orbit" data-services-orbit>
+      <svg class="orbit-path" viewBox="0 0 200 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><ellipse cx="100" cy="100" rx="99" ry="99" vector-effect="non-scaling-stroke"></ellipse></svg>
+      <div class="orbit-slot orbit-slot-1">
+        <a class="orbit-card" href="/services/ai-automation/">
+          <span class="orbit-card-index">01</span>
+          <span class="orbit-card-head"><span class="orbit-card-icon">{{iconAutomation}}</span><span class="orbit-card-title">AI Automation</span></span>
+          <span class="orbit-card-text">Streamline operations and scale with intelligent automation.</span>
+        </a>
+      </div>
+      <div class="orbit-slot orbit-slot-2">
+        <a class="orbit-card" href="/services/website-design/">
+          <span class="orbit-card-index">02</span>
+          <span class="orbit-card-head"><span class="orbit-card-icon">{{iconWeb}}</span><span class="orbit-card-title">Website Development</span></span>
+          <span class="orbit-card-text">Fast, secure and scalable websites that turn visitors into customers.</span>
+        </a>
+      </div>
+      <div class="orbit-slot orbit-slot-3">
+        <a class="orbit-card" href="/services/social-media-management/">
+          <span class="orbit-card-index">03</span>
+          <span class="orbit-card-head"><span class="orbit-card-icon">{{iconSocial}}</span><span class="orbit-card-title">Social Media Management</span></span>
+          <span class="orbit-card-text">Engage your audience and grow your brand through a clear content workflow.</span>
+        </a>
+      </div>
+      <div class="orbit-slot orbit-slot-4">
+        <a class="orbit-card" href="/services/app-development/">
+          <span class="orbit-card-index">04</span>
+          <span class="orbit-card-head"><span class="orbit-card-icon">{{iconApp}}</span><span class="orbit-card-title">App Development</span></span>
+          <span class="orbit-card-text">Custom web and mobile applications designed around real business needs.</span>
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="service-list">
   <div class="container">
     <div class="services-grid">
       <article class="service-card"><span class="service-icon">{{iconAutomation}}</span><h2>AI automation</h2><p>Design connected workflows for enquiries, support, documents, reporting, content operations and internal administration.</p><a class="text-link" href="/services/ai-automation/">See AI automation services {{iconArrow}}</a></article>
@@ -16,7 +58,7 @@
   </div>
 </section>
 
-<section class="section section-soft">
+<section class="section section-soft" id="ways-to-work">
   <div class="container">
     <div class="section-heading"><div><p class="eyebrow">Ways to work together</p><h2>Choose the level of support that fits the problem.</h2></div></div>
     <div class="card-grid-3">
