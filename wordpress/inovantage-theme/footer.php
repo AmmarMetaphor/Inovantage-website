@@ -26,7 +26,7 @@ $inovantage_address = inovantage_registered_address();
 	<div class="container footer-grid">
 		<div class="footer-brand">
 			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( inovantage_company( 'name' ) . ' home' ); ?>">
-				<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/inovantage-logo-blue.png" width="2048" height="646" alt="<?php echo esc_attr( inovantage_company( 'name' ) ); ?>">
+				<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/inovantage-logo-full.webp" width="2000" height="686" alt="<?php echo esc_attr( inovantage_company( 'name' ) ); ?>">
 			</a>
 			<p><?php echo esc_html( inovantage_company( 'tagline' ) ); ?></p>
 			<?php if ( ! empty( $inovantage_socials ) ) : ?>

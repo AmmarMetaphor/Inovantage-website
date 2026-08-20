@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 1.5.0
+Version: 1.6.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -14,7 +14,8 @@ Text Domain: inovantage
 Tags: custom-menu, custom-logo, translation-ready, threaded-comments
 
 Inovantage — digital systems that move UK businesses forward. This theme
-carries the Inovantage blue technology palette and preserves the approved
+carries the Inovantage blue technology palette, led by Luminous Cyan with
+Electric Blue as the supporting technology colour, and preserves the approved
 navigation, typography, section spacing,
 hero illustrations, the homepage orbital hero, the Services orbital hero,
 service cards, Solutions workflow illustrations, Articles & Guides content,
@@ -45,28 +46,49 @@ approved static website design.
   --text-muted: #93a6bc;
   --text-on-light: var(--color-void-navy);
   --text-body-on-light: var(--color-steel-blue);
-  --accent: var(--color-electric-blue);
-  --accent-hover: #3b86ff;
+
+  /* Brand hierarchy. Luminous Cyan is the identity colour and carries the
+     primary emphasis; Electric Blue sits behind it as technological depth;
+     Cobalt Core supports both. Navy remains the structural foundation. */
+  --brand-primary: var(--color-luminous-cyan);
+  --brand-secondary: var(--color-electric-blue);
+  --accent: var(--brand-primary);
+  --accent-hover: #5cf0ff;
+  --accent-secondary: var(--brand-secondary);
   --accent-deep: var(--color-cobalt-core);
   --accent-highlight: var(--color-luminous-cyan);
+  /* Label colour for anything filled with solid cyan. Cyan is too luminous to
+     carry white text, so dark navy is the only accessible pairing. */
+  --on-accent: var(--color-void-navy);
+
   --link: var(--color-glacier-ice);
   --link-hover: var(--color-luminous-cyan);
   --link-on-light: var(--color-cobalt-core);
+  /* Cyan cannot be read as text on Glacier Ice, so light surfaces darken their
+     links to Void Navy on hover instead of brightening them. */
+  --link-on-light-hover: var(--color-void-navy);
   --border: rgba(201, 214, 230, 0.14);
   --border-strong: rgba(201, 214, 230, 0.28);
   --border-on-light: rgba(28, 47, 74, 0.16);
   --focus: var(--color-luminous-cyan);
-  --accent-wash: rgba(18, 107, 255, 0.14);
-  --accent-wash-soft: rgba(18, 107, 255, 0.08);
+
+  /* Cyan washes carry the primary emphasis: active states, primary hovers and
+     highlight edges. */
+  --accent-wash: rgba(0, 229, 255, 0.12);
+  --accent-wash-soft: rgba(0, 229, 255, 0.07);
+  --accent-line: rgba(0, 229, 255, 0.28);
+  --accent-ring: rgba(0, 229, 255, 0.55);
+  --accent-glow: rgba(0, 229, 255, 0.3);
   --highlight-wash: rgba(0, 229, 255, 0.2);
 
-  /* Legacy names kept as aliases so every existing var() reference moves to the
-     new system in one step rather than being rewritten in hundreds of places. */
-  --brand: var(--accent);
-  --brand-dark: var(--link);
-  --brand-strong: var(--link-hover);
-  --brand-soft: var(--accent-wash);
-  --brand-pale: var(--accent-wash-soft);
+  /* Electric Blue keeps its own washes for depth, gradients, glows and the
+     quieter card tints it is better suited to than cyan. */
+  --secondary-wash: rgba(18, 107, 255, 0.14);
+  --secondary-wash-soft: rgba(18, 107, 255, 0.08);
+  --secondary-glow: rgba(18, 107, 255, 0.32);
+
+  /* Short names for the two text colours and the surfaces, kept because they
+     read better inside component rules than the longer semantic names. */
   --ink: var(--text-primary);
   --ink-soft: var(--text-secondary);
   --muted: var(--text-muted);
@@ -141,13 +163,13 @@ a {
 }
 
 a {
-  color: var(--brand-dark);
+  color: var(--link);
   text-decoration-thickness: 0.08em;
   text-underline-offset: 0.18em;
 }
 
 a:hover {
-  color: var(--brand-strong);
+  color: var(--link-hover);
 }
 
 p,
@@ -190,12 +212,12 @@ p {
 }
 
 ::selection {
-  color: #fff;
-  background: var(--brand);
+  color: var(--on-accent);
+  background: var(--accent);
 }
 
 :focus-visible {
-  outline: 3px solid rgba(0, 229, 255, 0.75);
+  outline: 3px solid var(--focus);
   outline-offset: 4px;
 }
 
@@ -279,11 +301,17 @@ p {
 }
 
 .section-light a:not(.button):hover {
-  color: var(--accent);
+  color: var(--link-on-light-hover);
 }
 
 .section-light .eyebrow {
   color: var(--link-on-light);
+}
+
+/* Cyan is only 1.36:1 against Glacier Ice, so a cyan focus ring would be
+   invisible here. Light surfaces take the Cobalt Core ring instead, at 8.56:1. */
+.section-light :focus-visible {
+  outline-color: var(--color-cobalt-core);
 }
 
 .section-light .button-secondary {
@@ -291,17 +319,19 @@ p {
   border-color: var(--color-steel-blue);
 }
 
+/* Cyan reads well as a wash behind dark text on a light surface, but not as a
+   hairline, so the structural border stays Cobalt Core. */
 .section-light .button-secondary:hover {
   color: var(--text-on-light);
-  background: rgba(18, 107, 255, 0.12);
-  border-color: var(--accent);
+  background: rgba(0, 229, 255, 0.16);
+  border-color: var(--color-cobalt-core);
 }
 
 .section-dark {
   color: #fff;
   background:
-    radial-gradient(circle at 15% 20%, rgba(11, 61, 156, 0.42), transparent 34%),
-    radial-gradient(circle at 90% 80%, rgba(0, 229, 255, 0.12), transparent 30%),
+    radial-gradient(circle at 15% 20%, rgba(11, 61, 156, 0.4), transparent 34%),
+    radial-gradient(circle at 90% 80%, rgba(0, 229, 255, 0.18), transparent 32%),
     var(--surface-dark);
 }
 
@@ -322,7 +352,7 @@ p {
   align-items: center;
   gap: 9px;
   margin-bottom: 18px;
-  color: var(--brand-dark);
+  color: var(--accent);
   font-size: 0.78rem;
   font-weight: 780;
   letter-spacing: 0.14em;
@@ -381,23 +411,27 @@ p {
   justify-content: center;
   min-height: 52px;
   padding: 13px 22px;
-  color: #fff;
+  /* Solid cyan is far too luminous for white text, so the label is Void Navy:
+     12.24:1 against #00E5FF, where white would be 1.54:1. */
+  color: var(--on-accent);
   font-weight: 730;
   line-height: 1.1;
   text-decoration: none;
-  background: var(--brand);
-  border: 1px solid var(--brand);
+  background: var(--accent);
+  border: 1px solid var(--accent);
   border-radius: 999px;
-  box-shadow: 0 12px 30px rgba(18, 107, 255, 0.3);
+  box-shadow: 0 12px 30px rgba(0, 229, 255, 0.26);
   cursor: pointer;
   transition: transform 180ms ease, background 180ms ease, box-shadow 180ms ease;
 }
 
+/* Hover brightens the cyan and layers an Electric Blue glow underneath it, so
+   the two brand colours read in their new order rather than swapping. */
 .button:hover {
-  color: #fff;
+  color: var(--on-accent);
   background: var(--accent-hover);
   border-color: var(--accent-hover);
-  box-shadow: 0 16px 34px rgba(18, 107, 255, 0.4);
+  box-shadow: 0 16px 34px rgba(0, 229, 255, 0.34), 0 10px 26px var(--secondary-glow);
   transform: translateY(-2px);
 }
 
@@ -439,7 +473,7 @@ p {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: var(--brand-dark);
+  color: var(--accent);
   font-weight: 720;
   text-decoration: none;
 }
@@ -483,8 +517,13 @@ p {
   flex: 0 0 auto;
 }
 
+/* The official wordmark is supplied on a fixed 2000x686 canvas whose artwork
+   occupies the middle band, so it is sized by height against the header and
+   left to derive its own width. These heights reproduce the footprint the
+   previous logo occupied, so the header geometry is unchanged. */
 .brand img {
-  width: clamp(170px, 18vw, 228px);
+  width: auto;
+  height: clamp(58px, 6.4vw, 88px);
 }
 
 .primary-navigation {
@@ -522,12 +561,12 @@ p {
   background: rgba(201, 214, 230, 0.08);
 }
 
-/* The current page is marked with a restrained blue wash, deliberately quieter
-   than the primary call to action beside it. */
+/* The current page is marked with a restrained cyan wash, deliberately quieter
+   than the primary call to action beside it — a tinted pill, never a solid one. */
 .primary-navigation li a.is-current {
-  color: var(--color-glacier-ice);
+  color: var(--accent);
   background: var(--accent-wash);
-  border-color: rgba(0, 229, 255, 0.2);
+  border-color: rgba(0, 229, 255, 0.25);
 }
 
 .menu-toggle {
@@ -600,7 +639,7 @@ p {
 }
 
 .hero-copy h1 span {
-  color: var(--brand);
+  color: var(--accent);
 }
 
 .hero-copy > p:not(.eyebrow):not(.hero-proof) {
@@ -631,7 +670,7 @@ p {
   width: 7px;
   height: 7px;
   content: "";
-  background: var(--brand);
+  background: var(--accent);
   border-radius: 50%;
 }
 
@@ -646,7 +685,7 @@ p {
   /* Lighter sky for the small uppercase eyebrow, which sits over the brightest
      part of the artwork once the layout stacks. */
   --orbital-sky-soft: var(--color-glacier-ice);
-  --orbital-electric: var(--accent);
+  --orbital-electric: var(--accent-secondary);
   --orbital-text: var(--color-glacier-ice);
   --hero-x: 0;
   --hero-y: 0;
@@ -772,14 +811,14 @@ p {
 
 .hero-orbital .button {
   background: var(--accent);
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 14px 34px rgba(18, 107, 255, 0.34);
+  border-color: var(--accent);
+  box-shadow: 0 14px 34px rgba(0, 229, 255, 0.3), 0 10px 28px rgba(18, 107, 255, 0.28);
 }
 
 .hero-orbital .button:hover {
   background: var(--accent-hover);
-  border-color: rgba(0, 229, 255, 0.6);
-  box-shadow: 0 18px 40px rgba(18, 107, 255, 0.45);
+  border-color: var(--accent-hover);
+  box-shadow: 0 18px 40px rgba(0, 229, 255, 0.38), 0 12px 32px rgba(18, 107, 255, 0.36);
 }
 
 .hero-orbital .button-secondary {
@@ -791,13 +830,13 @@ p {
 
 .hero-orbital .button-secondary:hover {
   color: #fff;
-  background: rgba(18, 107, 255, 0.2);
-  border-color: rgba(0, 229, 255, 0.55);
+  background: rgba(0, 229, 255, 0.16);
+  border-color: var(--accent-ring);
   box-shadow: none;
 }
 
 .hero-orbital :focus-visible {
-  outline-color: rgba(0, 229, 255, 0.9);
+  outline-color: var(--focus);
 }
 
 .services-grid {
@@ -824,14 +863,14 @@ p {
   right: -120px;
   bottom: -125px;
   content: "";
-  background: var(--brand-soft);
+  background: var(--secondary-wash);
   border-radius: 50%;
   transition: transform 240ms ease;
 }
 
 .service-card:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: var(--shadow-sm);
+  border-color: var(--accent-ring);
+  box-shadow: var(--shadow-sm), 0 0 34px -14px var(--accent-glow);
   transform: translateY(-4px);
 }
 
@@ -839,6 +878,8 @@ p {
   transform: scale(1.18);
 }
 
+/* The icon is the card's primary accent, so it is cyan; the Electric Blue
+   bloom behind the card (::after) stays as the depth layer. */
 .service-icon {
   position: relative;
   z-index: 1;
@@ -847,8 +888,9 @@ p {
   height: 58px;
   place-items: center;
   margin-bottom: 30px;
-  color: var(--brand-dark);
-  background: var(--brand-soft);
+  color: var(--accent);
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-line);
   border-radius: 16px;
 }
 
@@ -899,10 +941,10 @@ p {
   height: 38px;
   place-items: center;
   margin-bottom: 22px;
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.85rem;
   font-weight: 800;
-  background: var(--brand);
+  background: var(--accent);
   border-radius: 50%;
 }
 
@@ -936,7 +978,7 @@ p {
   top: 24px;
   left: 58px;
   content: "";
-  background: linear-gradient(90deg, var(--brand), var(--line));
+  background: linear-gradient(90deg, var(--accent), var(--line));
 }
 
 .process-number {
@@ -947,9 +989,9 @@ p {
   height: 48px;
   place-items: center;
   margin-bottom: 24px;
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 800;
-  background: var(--brand);
+  background: var(--accent);
   border-radius: 50%;
   box-shadow: 0 0 0 8px var(--surface);
 }
@@ -1036,7 +1078,7 @@ p {
 }
 
 .approval-column.is-review {
-  background: var(--brand-soft);
+  background: var(--secondary-wash);
 }
 
 .approval-column.is-ready {
@@ -1061,8 +1103,8 @@ p {
 }
 
 .insight-card:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: var(--shadow-sm);
+  border-color: var(--accent-ring);
+  box-shadow: var(--shadow-sm), 0 0 34px -14px var(--accent-glow);
   transform: translateY(-4px);
 }
 
@@ -1070,7 +1112,7 @@ p {
   display: block;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  background: var(--brand-soft);
+  background: var(--secondary-wash);
   text-decoration: none;
 }
 
@@ -1085,6 +1127,11 @@ p {
   transform: scale(1.035);
 }
 
+/* The article tile keeps its geometry, but the flat Electric Blue field is
+   replaced by a dark base that deepens into cobalt and electric, with the node,
+   its orbit ring and the connecting line rendered in cyan. Cyan is therefore
+   the brightest thing in the tile and sits at its point of emphasis, rather
+   than the whole block reading as one saturated colour. */
 .insight-card-pattern {
   position: relative;
   display: grid;
@@ -1094,16 +1141,17 @@ p {
   padding: 24px;
   color: #fff;
   background:
-    radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.28) 0 8%, transparent 8.5%),
-    radial-gradient(circle at 82% 18%, transparent 0 17%, rgba(255, 255, 255, 0.16) 17.5% 18.5%, transparent 19%),
-    linear-gradient(135deg, var(--accent-deep), var(--accent));
+    radial-gradient(circle at 82% 18%, rgba(0, 229, 255, 0.95) 0 8%, transparent 8.5%),
+    radial-gradient(circle at 82% 18%, transparent 0 17%, rgba(0, 229, 255, 0.42) 17.5% 18.5%, transparent 19%),
+    radial-gradient(circle at 82% 18%, rgba(0, 229, 255, 0.28), transparent 40%),
+    linear-gradient(135deg, var(--background-secondary) 0%, var(--background-secondary) 28%, var(--accent-deep) 80%, var(--accent-secondary) 100%);
 }
 
 .insight-card-pattern::before,
 .insight-card-pattern::after {
   position: absolute;
   content: "";
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 229, 255, 0.75);
 }
 
 .insight-card-pattern::before {
@@ -1118,7 +1166,7 @@ p {
   height: 10px;
   top: calc(35% - 4px);
   right: 14%;
-  border: 2px solid #fff;
+  border: 2px solid var(--color-luminous-cyan);
   border-radius: 50%;
 }
 
@@ -1150,7 +1198,7 @@ p {
 }
 
 .insight-meta span:first-child {
-  color: var(--brand-dark);
+  color: var(--accent);
 }
 
 .insight-card h3 {
@@ -1218,9 +1266,9 @@ p {
 
 .filter-button:hover,
 .filter-button.is-active {
-  color: var(--brand-dark);
-  background: var(--brand-soft);
-  border-color: rgba(0, 229, 255, 0.2);
+  color: var(--accent);
+  background: var(--accent-wash);
+  border-color: var(--accent-line);
 }
 
 .insight-card[hidden] {
@@ -1236,9 +1284,13 @@ p {
   gap: 36px;
   padding: clamp(38px, 6vw, 70px);
   color: #fff;
+  /* Was a single flat Electric Blue field. It is now a navy-to-cobalt depth
+     gradient lit by an Electric Blue bloom and a brighter cyan one, so the
+     panel reads as depth and the cyan call to action inside it leads. */
   background:
-    radial-gradient(circle at 85% 15%, rgba(0, 229, 255, 0.18), transparent 26%),
-    linear-gradient(135deg, var(--accent-deep), var(--accent));
+    radial-gradient(circle at 84% 14%, rgba(0, 229, 255, 0.26), transparent 32%),
+    radial-gradient(circle at 6% 94%, rgba(18, 107, 255, 0.36), transparent 46%),
+    linear-gradient(135deg, var(--background-secondary), var(--accent-deep));
   border-radius: var(--radius-lg);
   box-shadow: 0 30px 80px rgba(4, 26, 70, 0.5);
 }
@@ -1250,7 +1302,7 @@ p {
   right: -80px;
   bottom: -110px;
   content: "";
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(0, 229, 255, 0.3);
   border-radius: 50%;
 }
 
@@ -1275,15 +1327,16 @@ p {
 .cta-panel .button {
   position: relative;
   z-index: 1;
-  color: var(--color-void-navy);
-  background: var(--color-glacier-ice);
-  border-color: var(--color-glacier-ice);
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
   box-shadow: none;
 }
 
 .cta-panel .button:hover {
-  color: var(--color-void-navy);
-  background: var(--brand-soft);
+  color: var(--on-accent);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 .page-hero {
@@ -1355,7 +1408,7 @@ p {
 .services-hero {
   --svc-navy: var(--color-void-navy);
   --svc-cyan: var(--color-luminous-cyan);
-  --svc-electric: var(--accent);
+  --svc-electric: var(--accent-secondary);
   --svc-text: var(--color-glacier-ice);
   --svc-eyebrow: var(--color-silver-mist);
   /* The orbit reaches into the page margin beside the container, which buys
@@ -1458,14 +1511,14 @@ p {
 
 .services-hero .button {
   background: var(--accent);
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 14px 34px rgba(18, 107, 255, 0.34);
+  border-color: var(--accent);
+  box-shadow: 0 14px 34px rgba(0, 229, 255, 0.3), 0 10px 28px rgba(18, 107, 255, 0.28);
 }
 
 .services-hero .button:hover {
   background: var(--accent-hover);
-  border-color: rgba(158, 219, 255, 0.7);
-  box-shadow: 0 18px 40px rgba(18, 107, 255, 0.45);
+  border-color: var(--accent-hover);
+  box-shadow: 0 18px 40px rgba(0, 229, 255, 0.38), 0 12px 32px rgba(18, 107, 255, 0.36);
 }
 
 .services-hero .button-secondary {
@@ -1477,13 +1530,13 @@ p {
 
 .services-hero .button-secondary:hover {
   color: #fff;
-  background: rgba(18, 107, 255, 0.2);
-  border-color: rgba(0, 229, 255, 0.5);
+  background: rgba(0, 229, 255, 0.16);
+  border-color: var(--accent-ring);
   box-shadow: none;
 }
 
 .services-hero :focus-visible {
-  outline-color: rgba(0, 229, 255, 0.9);
+  outline-color: var(--focus);
 }
 
 .services-orbit {
@@ -1565,7 +1618,7 @@ p {
   color: var(--svc-text);
   text-decoration: none;
   background: rgba(11, 26, 43, 0.9);
-  border: 1px solid rgba(0, 229, 255, 0.24);
+  border: 1px solid var(--accent-line);
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(3, 9, 18, 0.45);
   backdrop-filter: blur(10px);
@@ -1589,8 +1642,8 @@ p {
   align-items: center;
   justify-content: center;
   color: var(--svc-cyan);
-  background: rgba(0, 229, 255, 0.12);
-  border: 1px solid rgba(0, 229, 255, 0.22);
+  background: rgba(0, 229, 255, 0.14);
+  border: 1px solid var(--accent-line);
   border-radius: 10px;
 }
 
@@ -1629,11 +1682,13 @@ p {
   line-height: 1.4;
 }
 
+/* The lifted card is edged in cyan; the Electric Blue bloom stays underneath it
+   as the depth layer, so movement and geometry are untouched. */
 .orbit-slot:hover .orbit-card,
 .orbit-card:focus-visible {
   background: rgba(28, 47, 74, 0.94);
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 16px 45px rgba(18, 107, 255, 0.28);
+  border-color: var(--accent-ring);
+  box-shadow: 0 16px 45px rgba(0, 229, 255, 0.24), 0 10px 34px rgba(18, 107, 255, 0.28);
   transform: translateY(-8px) scale(1.07);
 }
 
@@ -1708,7 +1763,7 @@ p {
   height: 25px;
   margin-top: 2px;
   fill: none;
-  stroke: var(--brand);
+  stroke: var(--accent);
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 2;
@@ -1800,7 +1855,9 @@ p {
   height: 120px;
   place-items: center;
   color: #fff;
-  background: var(--brand);
+  /* Orbital illumination stays Electric Blue: it reads as depth behind the
+     cyan ring and tags around it, not as the identity colour. */
+  background: var(--accent-secondary);
   border-radius: 34px;
   box-shadow: 0 28px 70px rgba(18, 107, 255, 0.34);
   transform: rotate(8deg);
@@ -1821,11 +1878,11 @@ p {
   position: absolute;
   z-index: 3;
   padding: 9px 13px;
-  color: var(--brand-dark);
+  color: var(--accent);
   font-size: 0.74rem;
   font-weight: 730;
   background: rgba(28, 47, 74, 0.66);
-  border: 1px solid var(--line);
+  border: 1px solid var(--accent-line);
   border-radius: 999px;
   box-shadow: var(--shadow-sm);
 }
@@ -1883,8 +1940,8 @@ p {
   display: grid;
   place-items: center;
   content: "+";
-  color: var(--brand-dark);
-  background: var(--brand-soft);
+  color: var(--accent);
+  background: var(--accent-wash);
   border-radius: 50%;
 }
 
@@ -1916,7 +1973,7 @@ p {
 
 .blueprint-visual {
   padding: clamp(28px, 4vw, 40px);
-  background: var(--brand-pale);
+  background: var(--secondary-wash-soft);
   border-right: 1px solid var(--line);
 }
 
@@ -1924,7 +1981,7 @@ p {
   display: inline-flex;
   margin-bottom: 22px;
   padding: 7px 10px;
-  color: var(--brand-dark);
+  color: var(--accent);
   font-size: 0.7rem;
   font-weight: 760;
   letter-spacing: 0.08em;
@@ -1962,7 +2019,7 @@ p {
   left: 16px;
   width: 2px;
   content: "";
-  background: var(--brand);
+  background: var(--accent);
   opacity: 0.25;
 }
 
@@ -1973,12 +2030,12 @@ p {
   width: 34px;
   height: 34px;
   place-items: center;
-  color: #fff;
+  color: var(--on-accent);
   font-size: 0.85rem;
   font-weight: 800;
-  background: var(--brand);
+  background: var(--accent);
   border-radius: 50%;
-  box-shadow: 0 0 0 4px var(--brand-pale);
+  box-shadow: 0 0 0 4px var(--accent-wash-soft);
 }
 
 .workflow-step-card {
@@ -2024,7 +2081,7 @@ p {
   top: 0.55em;
   left: 0;
   content: "";
-  background: var(--brand);
+  background: var(--accent);
   border-radius: 50%;
 }
 
@@ -2048,7 +2105,7 @@ p {
 .value-card span {
   display: block;
   margin-bottom: 20px;
-  color: var(--brand);
+  color: var(--accent);
   font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -2156,8 +2213,8 @@ p {
 .field select:focus,
 .field textarea:focus {
   outline: none;
-  border-color: var(--brand);
-  box-shadow: 0 0 0 4px rgba(18, 107, 255, 0.22);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(0, 229, 255, 0.24);
 }
 
 .checkbox-field {
@@ -2171,7 +2228,7 @@ p {
   width: 18px;
   min-height: 18px;
   margin-top: 4px;
-  accent-color: var(--brand);
+  accent-color: var(--accent);
 }
 
 .checkbox-field label {
@@ -2225,7 +2282,7 @@ p {
 }
 
 .legal-nav a:hover {
-  color: var(--brand-dark);
+  color: var(--accent);
 }
 
 .prose {
@@ -2273,8 +2330,8 @@ p {
   padding: 22px 26px;
   margin-block: 30px;
   color: var(--ink);
-  background: var(--brand-soft);
-  border-left: 4px solid var(--brand);
+  background: var(--secondary-wash);
+  border-left: 4px solid var(--accent);
   border-radius: 0 12px 12px 0;
 }
 
@@ -2292,10 +2349,10 @@ p {
 
 .prose code {
   padding: 0.14em 0.35em;
-  color: var(--brand-strong);
+  color: var(--link-hover);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   font-size: 0.9em;
-  background: var(--brand-soft);
+  background: var(--secondary-wash);
   border-radius: 5px;
 }
 
@@ -2317,10 +2374,12 @@ p {
   color: var(--text-body-on-light);
 }
 
+/* Cyan disappears against Glacier Ice, so the rule on a light surface keeps the
+   secondary blue, which still reads at 4.26:1 as a non-text graphic. */
 .section-light .prose blockquote {
   color: var(--text-on-light);
-  background: rgba(18, 107, 255, 0.1);
-  border-left-color: var(--accent);
+  background: rgba(0, 229, 255, 0.12);
+  border-left-color: var(--accent-secondary);
 }
 
 .section-light .prose code {
@@ -2397,7 +2456,7 @@ p {
   gap: 24px;
   padding: 30px;
   margin-top: var(--section-space-tight);
-  background: var(--brand-soft);
+  background: var(--secondary-wash);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
@@ -2439,8 +2498,8 @@ p {
   height: 72px;
   place-items: center;
   margin: 0 auto 26px;
-  color: #fff;
-  background: var(--brand);
+  color: var(--on-accent);
+  background: var(--accent);
   border-radius: 22px;
   transform: rotate(6deg);
 }
@@ -2476,7 +2535,8 @@ p {
 }
 
 .footer-brand img {
-  width: 210px;
+  width: auto;
+  height: 78px;
   margin-bottom: 24px;
 }
 
@@ -2905,7 +2965,7 @@ p {
     height: calc(100% - 35px);
     top: 54px;
     left: 24px;
-    background: linear-gradient(180deg, var(--brand), var(--line));
+    background: linear-gradient(180deg, var(--accent), var(--line));
   }
 
   .process-card:nth-child(2)::after {
@@ -3005,7 +3065,7 @@ p {
   }
 
   .brand img {
-    width: 158px;
+    height: 54px;
   }
 
   .button-row {
@@ -3099,10 +3159,10 @@ p {
 .form-alert {
   padding: 16px 18px;
   margin-bottom: 22px;
-  color: var(--accent-highlight);
+  color: var(--accent);
   font-size: 0.92rem;
   font-weight: 620;
   background: var(--accent-wash);
-  border: 1px solid rgba(0, 229, 255, 0.28);
+  border: 1px solid var(--accent-line);
   border-radius: 12px;
 }

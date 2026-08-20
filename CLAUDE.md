@@ -43,18 +43,29 @@ Run `npm run verify` after every meaningful change. Do not claim success if it f
   - Void navy `#07121F` — primary dark surface
   - Deep ocean `#0B1A2B` — secondary dark surface
   - Steel blue `#1C2F4A` — elevated cards and panels
-  - Cobalt core `#0B3D9C` — links on light surfaces
-  - Electric blue `#126BFF` — primary interactive/CTA colour
-  - Luminous cyan `#00E5FF` — restrained technological highlight, not a button colour
+  - Cobalt core `#0B3D9C` — deep supporting accent; links and focus on light
+  - Electric blue `#126BFF` — secondary technology colour: depth, gradients,
+    glows, orbital illumination, quiet card tints
+  - Luminous cyan `#00E5FF` — the primary brand accent
   - Glacier ice `#E6F2FF` — light contrast sections and long-form reading
   - Silver mist `#C9D6E6` — body text on dark
-- Purple is retired from the UI. The former brand purple `#913290` and brand
-  grey `#7D7D7D` survive only inside legacy raster artwork listed below.
-- Primary logo: `src/static/assets/images/inovantage-logo-blue.png` (recoloured
-  into the palette; the original purple `inovantage-logo.png` is kept unused).
-- Still carrying the old purple/lavender artwork and due for regeneration:
-  `inovantage-mark.png` (unused), `social-card.png`, the favicons, and the
-  per-page hero illustrations in `assets/images/heroes/`.
+- The hierarchy is cyan first, electric blue second, navy as the structural
+  foundation. Cyan carries primary buttons, active navigation, eyebrows, icons,
+  bullets, arrows, small markers and focus rings on dark surfaces.
+- Never set white text on solid cyan (1.54:1). Use `--on-accent` (void navy).
+- Cyan is decorative only on light surfaces; it is 1.36:1 against glacier ice.
+  Text, links and focus rings there use cobalt core.
+- Purple is retired. The former brand purple `#913290` and brand grey `#7D7D7D`
+  survive only inside the legacy raster artwork listed below.
+- Official logos, both supplied by the owner and stored unmodified:
+  - `src/static/assets/images/inovantage-logo-full.webp` — long horizontal
+    wordmark, used in the site header and footer brand block. Its artwork sits
+    in the middle band of a 2000x686 canvas, so size it by height and let the
+    width derive; never set both dimensions.
+  - `src/static/assets/images/inovantage-logo-mark.png` — compact V mark, the
+    source for `favicon-32.png`, `favicon-192.png` and `apple-touch-icon.png`.
+- Still carrying the old artwork and due for regeneration: `social-card.png`
+  and the per-page hero illustrations in `assets/images/heroes/`.
 - Keep the design clean, confident, modern, accessible and business-focused.
 - Do not distort, recolour or recreate the supplied logo unless explicitly asked.
 - Preserve generous spacing, clear hierarchy and responsive behaviour.

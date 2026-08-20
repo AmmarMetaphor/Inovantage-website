@@ -487,7 +487,7 @@ function renderHeader(activeNav, site) {
 <header class="site-header" data-header>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="${escapeHtml(site.name)} home">
-      <img src="/assets/images/inovantage-logo-blue.png" width="2048" height="646" alt="${escapeHtml(site.name)}">
+      <img src="/assets/images/inovantage-logo-full.webp" width="2000" height="686" alt="${escapeHtml(site.name)}">
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
       <span class="menu-open-icon">${icon('menu')}</span>
@@ -533,7 +533,7 @@ function renderFooter(site, year) {
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a href="/" aria-label="${escapeHtml(site.name)} home"><img src="/assets/images/inovantage-logo-blue.png" width="2048" height="646" alt="${escapeHtml(site.name)}"></a>
+      <a href="/" aria-label="${escapeHtml(site.name)} home"><img src="/assets/images/inovantage-logo-full.webp" width="2000" height="686" alt="${escapeHtml(site.name)}"></a>
       <p>${escapeHtml(site.tagline)}</p>
       ${socialHtml}
     </div>
@@ -584,7 +584,7 @@ function organisationSchema(site) {
     name: site.name,
     legalName: site.legalName || site.name,
     url: site.url,
-    logo: `${site.url}/assets/images/inovantage-logo-blue.png`,
+    logo: `${site.url}/assets/images/inovantage-logo-full.webp`,
     email: site.email,
     description: site.tagline,
     areaServed: ['GB', 'US']
@@ -712,7 +712,7 @@ ${relatedHtml}`;
     publisher: {
       '@type': 'Organization',
       name: site.name,
-      logo: { '@type': 'ImageObject', url: `${site.url}/assets/images/inovantage-logo-blue.png` }
+      logo: { '@type': 'ImageObject', url: `${site.url}/assets/images/inovantage-logo-full.webp` }
     },
     mainEntityOfPage: `${site.url}${post.url}`
   };
