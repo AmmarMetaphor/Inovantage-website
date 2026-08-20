@@ -21,8 +21,37 @@ The public domain is `https://inovantage.co.uk`.
 - Netlify runs `npm run build` and publishes `dist/`.
 - Never edit `dist/` by hand. It is regenerated on every build.
 - Insight articles are Markdown files in `src/content/posts/`.
+- Case studies are entries in `src/data/case-studies.json`. See "Case studies".
 - Decap CMS is exposed at `/admin/` and uses the direct GitHub backend.
 - Netlify Forms processes the form named `project-enquiry`.
+
+## Routes
+
+- `/solutions/` is the service overview with the approved orbital hero.
+- `/case-studies/` is the client-proof page with the interactive proof hero.
+- The four service detail pages keep their original URLs under `/services/`.
+- `/services/` and `/work/` are retired. `netlify.toml` redirects them (301) to
+  `/solutions/` and `/case-studies/` respectively, and the WordPress theme does
+  the same in `inc/case-studies.php`. Do not reintroduce either as a page.
+
+## Case studies
+
+- Every entry on `/case-studies/` comes from `src/data/case-studies.json`, which
+  holds three lists: `caseStudies`, `testimonials` and `clients`. It ships empty.
+- A case study needs `slug`, `client`, `title` and a `category` of
+  `ai-automation`, `website-development`, `social-media-management` or
+  `app-development`. Anything without those four is skipped.
+- Each valid entry builds a `/case-studies/<slug>/` page and joins the sitemap.
+  Entries are never generated for projects without real content.
+- Never write a client name, quotation, role, logo, figure or rating that the
+  client has not supplied and approved. Leave the field out instead. The page is
+  designed to look finished while the lists are empty, so there is never a
+  reason to fill a gap with an example.
+- The four hero cards are the four service categories, not case studies. A card
+  only offers "View case study" once a published study exists for its category.
+- In WordPress the same content is a `case_study` post type with a
+  `case_service` taxonomy, built from core fields only — no plugin, no custom
+  field layer. The narrative goes in the post content.
 
 ## Commands
 
@@ -75,7 +104,8 @@ Run `npm run verify` after every meaningful change. Do not claim success if it f
 - Use British English.
 - Be specific and practical; avoid inflated AI claims and empty buzzwords.
 - Never invent clients, testimonials, certifications, awards, project results or business statistics.
-- The `/work/` page intentionally presents solution blueprints rather than fake case studies.
+- `/case-studies/` publishes only approved client stories. While none exist it
+  shows an honest empty state rather than illustrative examples.
 - Keep named human approval before external publication or sensitive automated actions.
 - Do not imply that AI replaces accountability.
 - Do not publish a legal claim as final legal advice. Legal pages are drafts for professional review.
