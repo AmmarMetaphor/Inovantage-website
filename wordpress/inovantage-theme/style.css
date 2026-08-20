@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 1.6.0
+Version: 1.7.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -1720,6 +1720,579 @@ p {
   100% { transform: translate(calc(-50% + var(--orbit-rx) * 1.00000), calc(-50% + var(--orbit-ry) * -0.00000)); }
 }
 
+/* ------------------------------------------------------------------ *
+ * Case studies hero
+ *
+ * A glowing cyan core with concentric rings sits behind four proof cards
+ * that orbit it. The orbit reuses the sampled-ellipse keyframes above by
+ * setting the same --orbit-* custom properties, so both heroes share one
+ * animation and one set of responsive and reduced-motion cutovers.
+ * --case-x / --case-y are the pointer position, -1 to 1, written once per
+ * frame by main.js; --case-near rises as the pointer nears the core.
+ * ------------------------------------------------------------------ */
+.case-hero {
+  --case-x: 0;
+  --case-y: 0;
+  --case-near: 0;
+  --orbit-rx: clamp(172px, 18.2vw, 274px);
+  --orbit-ry: clamp(112px, 11.6vw, 168px);
+  --orbit-card-w: clamp(184px, 14.2vw, 216px);
+  --orbit-card-h: clamp(96px, 7.4vw, 112px);
+  --orbit-duration: 34s;
+  position: relative;
+  display: grid;
+  align-content: center;
+  overflow: hidden;
+  /* Header plus hero fills the opening viewport, from the same header
+     variable the layout already uses rather than fixed padding. */
+  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
+  padding-block: clamp(38px, 4vw, 62px);
+  background:
+    radial-gradient(circle at 74% 46%, rgba(11, 61, 156, 0.34), transparent 46%),
+    linear-gradient(180deg, var(--background-secondary), var(--background-primary));
+}
+
+.case-hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  align-items: center;
+  gap: clamp(28px, 3.6vw, 56px);
+}
+
+.case-hero-copy {
+  max-width: 620px;
+}
+
+/* Sized so "connected systems" holds one line in this column, which is what
+   gives the three-line headline of the approved composition. */
+.case-hero-copy h1 {
+  margin-bottom: var(--content-gap-md);
+  font-size: clamp(2.25rem, 3.72vw, 3.3rem);
+  line-height: 1.05;
+}
+
+.case-hero-copy h1 span {
+  color: var(--accent);
+}
+
+.case-hero-copy .lede {
+  margin-bottom: clamp(20px, 2.2vw, 32px);
+  color: rgba(211, 228, 245, 0.88);
+  font-size: clamp(1.02rem, 1.4vw, 1.14rem);
+}
+
+/* Decorative field. It shares the orbit's coordinate space, so the core sits
+   at the centre the cards turn around and the drawn path is the ring they
+   actually travel. It alone carries the pointer parallax: the copy, the
+   filters and the card links never move. */
+.case-hero-field {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  transform: translate3d(calc(var(--case-x) * 14px), calc(var(--case-y) * 11px), 0);
+  transition: transform 120ms linear;
+}
+
+.case-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--orbit-ry) * 2.15);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+
+.case-core-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 50%, #ffffff 0 1.6%, transparent 2.4%),
+    radial-gradient(circle at 50% 50%, rgba(0, 229, 255, 0.98) 0 4.6%, transparent 6%),
+    radial-gradient(circle at 50% 50%, rgba(0, 229, 255, calc(0.4 + var(--case-near) * 0.2)), transparent 34%),
+    radial-gradient(circle at 50% 50%, rgba(18, 107, 255, 0.34), transparent 62%);
+}
+
+.case-core-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(0, 229, 255, calc(0.24 + var(--case-near) * 0.24));
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.case-core-ring-1 { width: 17%; height: 17%; border-color: rgba(0, 229, 255, calc(0.68 + var(--case-near) * 0.3)); }
+.case-core-ring-2 { width: 32%; height: 32%; border-color: rgba(0, 229, 255, calc(0.44 + var(--case-near) * 0.3)); }
+.case-core-ring-3 { width: 50%; height: 50%; }
+.case-core-ring-4 { width: 72%; height: 72%; border-style: dashed; }
+
+/* Sized from the orbit radii, so the middle ellipse is exactly the path the
+   cards travel and the other two sit inside and outside it for depth. */
+.case-orbit-path {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--orbit-rx) * 2);
+  height: calc(var(--orbit-ry) * 2);
+  overflow: visible;
+  transform: translate(-50%, -50%);
+}
+
+.case-orbit-path ellipse {
+  fill: none;
+  stroke: rgba(0, 229, 255, calc(0.34 + var(--case-near) * 0.26));
+  stroke-width: 1.2;
+  stroke-dasharray: 5 11;
+}
+
+.case-orbit-path-outer {
+  stroke: rgba(0, 229, 255, calc(0.16 + var(--case-near) * 0.18));
+  stroke-dasharray: 3 14;
+}
+
+.case-orbit-path-inner {
+  stroke: rgba(18, 107, 255, calc(0.42 + var(--case-near) * 0.26));
+  stroke-dasharray: 3 8;
+}
+
+/* Small connection points around the field. They brighten together as the
+   pointer approaches, which reads as the network responding. */
+.case-node {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.8);
+  opacity: calc(0.42 + var(--case-near) * 0.5);
+}
+
+.case-node-1 { top: 16%; left: 22%; }
+.case-node-2 { top: 8%;  left: 62%; width: 5px; height: 5px; }
+.case-node-3 { top: 34%; left: 8%;  width: 5px; height: 5px; }
+.case-node-4 { top: 58%; left: 15%; }
+.case-node-5 { top: 84%; left: 40%; width: 5px; height: 5px; }
+.case-node-6 { top: 74%; left: 82%; }
+.case-node-7 { top: 30%; left: 92%; width: 5px; height: 5px; }
+.case-node-8 { top: 52%; left: 70%; width: 5px; height: 5px; }
+
+.case-orbit {
+  position: relative;
+  z-index: 2;
+  min-height: calc(var(--orbit-ry) * 2 + var(--orbit-card-h));
+}
+
+/* A hovered or focused card freezes every card, so the link never moves out
+   from under the pointer, and resumes from the same point on release. */
+.case-orbit.is-paused .orbit-slot,
+.case-orbit:focus-within .orbit-slot {
+  animation-play-state: paused;
+}
+
+.case-card {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px 16px 15px;
+  color: var(--color-glacier-ice);
+  text-decoration: none;
+  background: rgba(11, 26, 43, 0.9);
+  border: 1px solid var(--accent-line);
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(3, 9, 18, 0.45);
+  backdrop-filter: blur(10px);
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+.case-card-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.case-card-icon {
+  display: inline-flex;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  background: rgba(0, 229, 255, 0.14);
+  border: 1px solid var(--accent-line);
+  border-radius: 9px;
+}
+
+.case-card-icon svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.case-card-tag {
+  color: rgba(0, 229, 255, 0.85);
+  font-size: 0.63rem;
+  font-weight: 780;
+  letter-spacing: 0.11em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.case-card-title {
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 730;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.case-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  color: var(--color-silver-mist);
+  font-size: 0.76rem;
+  font-weight: 680;
+}
+
+.case-card-action svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+  transition: transform 180ms ease;
+}
+
+.orbit-slot:hover .case-card,
+.case-card:focus-visible {
+  background: rgba(28, 47, 74, 0.94);
+  border-color: var(--accent-ring);
+  box-shadow: 0 16px 45px rgba(0, 229, 255, 0.24), 0 10px 34px rgba(18, 107, 255, 0.28);
+  transform: translateY(-8px) scale(1.07);
+}
+
+.orbit-slot:hover .case-card-action,
+.case-card:focus-visible .case-card-action {
+  color: var(--accent);
+}
+
+.orbit-slot:hover .case-card-action svg,
+.case-card:focus-visible .case-card-action svg {
+  transform: translateX(3px);
+}
+
+.case-scroll {
+  position: absolute;
+  z-index: 2;
+  bottom: clamp(18px, 2.4vw, 34px);
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 620;
+  text-decoration: none;
+  transform: translateX(-50%);
+}
+
+.case-scroll:hover {
+  color: var(--accent);
+}
+
+.case-scroll-mouse {
+  position: relative;
+  width: 19px;
+  height: 30px;
+  flex: none;
+  border: 1.5px solid currentColor;
+  border-radius: 11px;
+}
+
+.case-scroll-mouse::after {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  width: 3px;
+  height: 6px;
+  content: "";
+  background: var(--accent);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  animation: case-scroll-hint 1.9s ease-in-out infinite;
+}
+
+@keyframes case-scroll-hint {
+  0%, 100% { opacity: 1; transform: translate(-50%, 0); }
+  55% { opacity: 0.25; transform: translate(-50%, 8px); }
+}
+
+/* Active category is a solid cyan pill, matching the approved reference.
+   Cyan can only carry a dark label, so it takes --on-accent. */
+.case-filter-bar {
+  margin-bottom: 0;
+}
+
+.case-filter-bar .filter-button.is-active {
+  color: var(--on-accent);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ------------------------------------------------------------------ *
+ * Case studies page body
+ * ------------------------------------------------------------------ */
+.case-featured-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
+  align-items: start;
+  gap: clamp(32px, 4.4vw, 64px);
+}
+
+.case-study-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(268px, 1fr));
+  gap: 20px;
+}
+
+.case-study-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.case-study-card:hover {
+  border-color: var(--accent-ring);
+  box-shadow: var(--shadow-sm), 0 0 34px -14px var(--accent-glow);
+  transform: translateY(-4px);
+}
+
+.case-study-card[hidden] {
+  display: none;
+}
+
+.case-study-media {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--secondary-wash);
+  text-decoration: none;
+}
+
+.case-study-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case-study-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px;
+}
+
+.case-study-tag {
+  margin: 0;
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 760;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.case-study-body h3 {
+  margin-bottom: 0;
+  font-size: 1.16rem;
+}
+
+.case-study-body h3 a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.case-study-body p {
+  margin-bottom: 0;
+  font-size: 0.92rem;
+}
+
+.case-study-body .text-link {
+  margin-top: auto;
+  font-size: 0.88rem;
+}
+
+.case-outcome {
+  color: var(--color-glacier-ice);
+  font-weight: 650;
+}
+
+.case-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.case-metrics li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--accent-wash);
+  border: 1px solid var(--accent-line);
+  border-radius: 999px;
+}
+
+.case-metrics strong {
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.case-metrics span {
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+}
+
+.case-metrics-lg {
+  margin-top: var(--content-gap-md);
+}
+
+/* Shown until an approved client story exists. */
+.case-empty {
+  padding: clamp(28px, 4vw, 46px);
+  background: var(--surface-elevated);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+
+.case-empty h3 {
+  margin-bottom: 14px;
+  font-size: 1.32rem;
+}
+
+.case-empty p {
+  max-width: 62ch;
+  font-size: 0.96rem;
+}
+
+.case-empty-flow {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+
+.case-empty-flow li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 14px;
+  color: var(--color-glacier-ice);
+  font-size: 0.92rem;
+  font-weight: 620;
+  background: rgba(7, 18, 31, 0.5);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.case-empty-flow li span {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.testimonial {
+  margin: 0;
+  padding: clamp(24px, 3vw, 34px);
+  background: var(--surface-elevated);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.testimonial blockquote {
+  margin: 0 0 18px;
+  padding: 0;
+  border: 0;
+}
+
+.testimonial blockquote p {
+  margin-bottom: 0;
+  color: #fff;
+  font-size: 1.04rem;
+  line-height: 1.6;
+}
+
+.testimonial figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 720;
+}
+
+.testimonial figcaption span {
+  color: var(--text-secondary);
+  font-size: 0.84rem;
+  font-weight: 550;
+}
+
+.client-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(20px, 4vw, 54px);
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.client-strip li span {
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.client-strip img {
+  width: auto;
+  height: 30px;
+  opacity: 0.82;
+}
+
 .split-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -2664,7 +3237,8 @@ p {
 
   /* No room to orbit reliably, so the cards settle into a stable grid and the
      decorative path is dropped. Every card keeps its link and hover state. */
-  .services-orbit {
+  .services-orbit,
+  .case-orbit {
     display: grid;
     min-height: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2674,6 +3248,34 @@ p {
   .services-orbit::before,
   .orbit-path {
     display: none;
+  }
+
+  /* Hero stacks to eyebrow, headline, supporting text, filters, then cards. */
+  .case-hero {
+    min-height: 0;
+  }
+
+  .case-hero-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(26px, 4vw, 40px);
+  }
+
+  .case-hero-copy {
+    max-width: none;
+  }
+
+  /* The field stays as atmosphere behind the stacked content rather than
+     competing with it, and stops tracking the pointer. */
+  .case-hero-field {
+    top: 42%;
+    right: -12%;
+    width: min(88vw, 620px);
+    opacity: 0.42;
+    transform: translate3d(0, -50%, 0);
+  }
+
+  .case-featured-grid {
+    grid-template-columns: 1fr;
   }
 
   .orbit-slot {
@@ -3060,7 +3662,8 @@ p {
 }
 
 @media (max-width: 520px) {
-  .services-orbit {
+  .services-orbit,
+  .case-orbit {
     grid-template-columns: 1fr;
   }
 
@@ -3131,7 +3734,8 @@ p {
     max-width: none;
   }
 
-  .services-orbit {
+  .services-orbit,
+  .case-orbit {
     display: grid;
     min-height: 0;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3152,6 +3756,33 @@ p {
 
   .orbit-slot:hover .orbit-card,
   .orbit-card:focus-visible {
+    transform: translateY(-5px) scale(1.02);
+  }
+
+  /* No orbit, no pointer parallax: the field is pinned and the cards sit in
+     a stable grid, keeping every link, label and hover state. */
+  .case-hero {
+    min-height: 0;
+  }
+
+  .case-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-hero-copy {
+    max-width: none;
+  }
+
+  .case-hero-field {
+    top: 42%;
+    right: -12%;
+    width: min(88vw, 620px);
+    opacity: 0.4;
+    transform: translate3d(0, -50%, 0) !important;
+  }
+
+  .orbit-slot:hover .case-card,
+  .case-card:focus-visible {
     transform: translateY(-5px) scale(1.02);
   }
 }

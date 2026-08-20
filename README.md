@@ -64,12 +64,13 @@ The project uses Decap's direct **GitHub backend**, not Netlify Git Gateway. Git
 ### Public pages
 
 - `/` — home
-- `/services/` — services overview
+- `/solutions/` — solutions overview with the interactive orbital hero
 - `/services/ai-automation/`
 - `/services/website-design/`
 - `/services/social-media-management/`
 - `/services/app-development/`
-- `/work/` — transparent solution blueprints rather than invented case studies
+- `/case-studies/` — client proof, driven by `src/data/case-studies.json`
+- `/case-studies/<slug>/` — one page per approved case study
 - `/insights/` — articles and category filtering
 - `/about/`
 - `/contact/`
@@ -77,6 +78,20 @@ The project uses Decap's direct **GitHub backend**, not Netlify Git Gateway. Git
 - `/cookies/`
 - `/terms/`
 - custom 404 and thank-you pages
+
+`/services/` and `/work/` were retired in favour of `/solutions/` and
+`/case-studies/`. Both redirect permanently (301) from `netlify.toml`, and the
+WordPress theme mirrors those redirects. The four service detail pages keep
+their original `/services/…` URLs.
+
+### Adding a case study
+
+Case studies live in `src/data/case-studies.json` (editable at `/admin/` under
+"Case studies"). Each entry needs a `slug`, `client`, `title` and one of the four
+`category` values; it then builds `/case-studies/<slug>/` and joins the sitemap.
+Only publish a client name, quotation, role, logo or figure the client has
+approved — leave the field out otherwise. The page is designed to look finished
+while the file is empty, so a gap never needs filling with an example.
 
 ### Publishing and operational features
 

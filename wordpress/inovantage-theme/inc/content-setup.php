@@ -80,8 +80,15 @@ function inovantage_default_author_id() {
  */
 function inovantage_bootstrap_pages() {
 	$home_id     = inovantage_get_or_create( 'page', 'home', __( 'Home', 'inovantage' ), 0, __( 'Inovantage helps ambitious businesses automate repetitive work, build high-performing websites, manage social media with approval controls, and launch practical web and mobile apps.', 'inovantage' ) );
-	$services_id = inovantage_get_or_create( 'page', 'services', __( 'Services', 'inovantage' ), 0, __( 'Explore Inovantage services across AI automation, website design, social media management, and app development.', 'inovantage' ) );
-	$work_id     = inovantage_get_or_create( 'page', 'work', __( 'Solutions', 'inovantage' ), 0, __( 'Explore examples of the digital systems Inovantage can design: automated lead operations, approval-led content engines, and customer portals.', 'inovantage' ) );
+
+	/* The four service detail pages are children of the "services" page, so
+	   that page has to stay in place for /services/<service>/ to keep
+	   resolving. It carries no template of its own any more: the overview
+	   moved to "solutions", and inovantage_legacy_redirects() sends
+	   /services/ there permanently. */
+	$services_id   = inovantage_get_or_create( 'page', 'services', __( 'Services', 'inovantage' ), 0, '' );
+	$solutions_id  = inovantage_get_or_create( 'page', 'solutions', __( 'Solutions', 'inovantage' ), 0, __( 'Explore Inovantage solutions across AI automation, website design, social media management, and app development.', 'inovantage' ) );
+	$cases_id      = inovantage_get_or_create( 'page', 'case-studies', __( 'Case Studies', 'inovantage' ), 0, __( 'How Inovantage connects automation, websites, social media and apps into systems that move a business forward.', 'inovantage' ) );
 	$insights_id = inovantage_get_or_create( 'page', 'insights', __( 'Insights', 'inovantage' ), 0, __( 'Practical guidance on AI automation, website performance, social media operations, and app development.', 'inovantage' ) );
 	$about_id    = inovantage_get_or_create( 'page', 'about', __( 'About', 'inovantage' ), 0, __( 'A practical digital partner focused on useful automation, clear communication, thoughtful design, and dependable delivery.', 'inovantage' ) );
 	$contact_id  = inovantage_get_or_create( 'page', 'contact', __( 'Contact', 'inovantage' ), 0, __( 'Tell Inovantage what you want to improve, build, or automate. Start with a clear, no-pressure discovery conversation.', 'inovantage' ) );
@@ -96,8 +103,8 @@ function inovantage_bootstrap_pages() {
 	$app_id    = inovantage_get_or_create( 'page', 'app-development', __( 'App Development', 'inovantage' ), $services_id, __( 'From discovery and prototype to production, Inovantage builds practical apps, portals, dashboards, and internal tools.', 'inovantage' ) );
 
 	$templates = array(
-		$services_id => 'page-services.php',
-		$work_id     => 'page-work.php',
+		$solutions_id => 'page-solutions.php',
+		$cases_id     => 'page-case-studies.php',
 		$about_id    => 'page-about.php',
 		$contact_id  => 'page-contact.php',
 		$privacy_id  => 'page-privacy.php',
@@ -232,7 +239,7 @@ function inovantage_bootstrap_insight_posts() {
 }
 
 /**
- * Creates the "Inovantage Primary" navigation menu (Services, Solutions,
+ * Creates the "Inovantage Primary" navigation menu (Solutions, Case Studies,
  * Articles & Guides, About) if no menu is already assigned to the
  * "primary" theme location, and assigns it. "Start a project" is
  * rendered separately in header.php as a call-to-action button, not as a
@@ -261,8 +268,8 @@ function inovantage_bootstrap_menu() {
 	}
 
 	$items = array(
-		array( __( 'Services', 'inovantage' ), home_url( '/services/' ) ),
-		array( __( 'Solutions', 'inovantage' ), home_url( '/work/' ) ),
+		array( __( 'Solutions', 'inovantage' ), home_url( '/solutions/' ) ),
+		array( __( 'Case Studies', 'inovantage' ), home_url( '/case-studies/' ) ),
 		array( __( 'Articles & Guides', 'inovantage' ), home_url( '/insights/' ) ),
 		array( __( 'About', 'inovantage' ), home_url( '/about/' ) ),
 	);
@@ -294,6 +301,7 @@ function inovantage_bootstrap_menu() {
  */
 function inovantage_bootstrap_content() {
 	inovantage_bootstrap_pages();
+	inovantage_bootstrap_case_services();
 	inovantage_bootstrap_categories();
 	inovantage_bootstrap_insight_posts();
 	inovantage_bootstrap_menu();

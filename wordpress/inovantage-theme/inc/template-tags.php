@@ -42,24 +42,26 @@ function inovantage_icon_e( $name ) {
  * Determines which primary navigation item, if any, represents the
  * current request so the correct link can carry aria-current/is-current.
  *
- * @return string services|work|insights|about|''
+ * @return string solutions|case-studies|insights|about|''
  */
 function inovantage_nav_section() {
 	if ( is_singular( 'post' ) || is_home() || is_category() ) {
 		return 'insights';
 	}
 
-	if ( is_page( 'work' ) ) {
-		return 'work';
+	if ( is_singular( 'case_study' ) || is_post_type_archive( 'case_study' ) || is_tax( 'case_service' ) || is_page( 'case-studies' ) ) {
+		return 'case-studies';
 	}
 
 	if ( is_page( 'about' ) ) {
 		return 'about';
 	}
 
-	$services_slugs = array( 'services', 'ai-automation', 'website-design', 'social-media-management', 'app-development' );
-	if ( is_page( $services_slugs ) ) {
-		return 'services';
+	// The service detail pages still live under /services/, and they keep
+	// highlighting the Solutions item they sit beneath.
+	$solutions_slugs = array( 'solutions', 'ai-automation', 'website-design', 'social-media-management', 'app-development' );
+	if ( is_page( $solutions_slugs ) ) {
+		return 'solutions';
 	}
 
 	return '';
@@ -72,10 +74,10 @@ function inovantage_nav_section() {
 function inovantage_default_nav_items() {
 	$current = inovantage_nav_section();
 	$links   = array(
-		'services' => array( home_url( '/services/' ), __( 'Services', 'inovantage' ) ),
-		'work'     => array( home_url( '/work/' ), __( 'Solutions', 'inovantage' ) ),
-		'insights' => array( home_url( '/insights/' ), __( 'Articles & Guides', 'inovantage' ) ),
-		'about'    => array( home_url( '/about/' ), __( 'About', 'inovantage' ) ),
+		'solutions'    => array( home_url( '/solutions/' ), __( 'Solutions', 'inovantage' ) ),
+		'case-studies' => array( home_url( '/case-studies/' ), __( 'Case Studies', 'inovantage' ) ),
+		'insights'     => array( home_url( '/insights/' ), __( 'Articles & Guides', 'inovantage' ) ),
+		'about'        => array( home_url( '/about/' ), __( 'About', 'inovantage' ) ),
 	);
 
 	$html = '';
@@ -107,10 +109,10 @@ function inovantage_nav_fallback( $args ) {
 function inovantage_nav_menu_css_class( $classes, $item ) {
 	$current = inovantage_nav_section();
 	$map     = array(
-		'/services/' => 'services',
-		'/work/'     => 'work',
-		'/insights/' => 'insights',
-		'/about/'    => 'about',
+		'/solutions/'    => 'solutions',
+		'/case-studies/' => 'case-studies',
+		'/insights/'     => 'insights',
+		'/about/'        => 'about',
 	);
 	$path = wp_parse_url( $item->url, PHP_URL_PATH );
 	if ( $path && isset( $map[ $path ] ) && $map[ $path ] === $current ) {
@@ -123,10 +125,10 @@ add_filter( 'nav_menu_css_class', 'inovantage_nav_menu_css_class', 10, 2 );
 function inovantage_nav_menu_link_attributes( $atts, $item ) {
 	$current = inovantage_nav_section();
 	$map     = array(
-		'/services/' => 'services',
-		'/work/'     => 'work',
-		'/insights/' => 'insights',
-		'/about/'    => 'about',
+		'/solutions/'    => 'solutions',
+		'/case-studies/' => 'case-studies',
+		'/insights/'     => 'insights',
+		'/about/'        => 'about',
 	);
 	$path = wp_parse_url( $item->url, PHP_URL_PATH );
 	if ( $path && isset( $map[ $path ] ) && $map[ $path ] === $current ) {

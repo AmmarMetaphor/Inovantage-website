@@ -23,18 +23,26 @@ const pageDefinitions = [
     description: 'Inovantage helps ambitious businesses automate repetitive work, build high-performing websites, manage social media with approval controls, and launch practical web and mobile apps.'
   },
   {
-    source: 'services.html',
-    output: 'services/index.html',
-    route: '/services/',
-    nav: 'services',
-    title: 'Digital Services',
-    description: 'Explore Inovantage services across AI automation, website design, social media management, and app development.'
+    source: 'solutions.html',
+    output: 'solutions/index.html',
+    route: '/solutions/',
+    nav: 'solutions',
+    title: 'Solutions',
+    description: 'Explore Inovantage solutions across AI automation, website design, social media management, and app development.'
+  },
+  {
+    source: 'case-studies.html',
+    output: 'case-studies/index.html',
+    route: '/case-studies/',
+    nav: 'case-studies',
+    title: 'Case Studies',
+    description: 'How Inovantage connects automation, websites, social media and apps into systems that move a business forward.'
   },
   {
     source: 'ai-automation.html',
     output: 'services/ai-automation/index.html',
     route: '/services/ai-automation/',
-    nav: 'services',
+    nav: 'solutions',
     title: 'AI Automation Services',
     description: 'Practical AI automation for lead handling, customer support, reporting, data entry, content operations, and connected business workflows.'
   },
@@ -42,7 +50,7 @@ const pageDefinitions = [
     source: 'website-design.html',
     output: 'services/website-design/index.html',
     route: '/services/website-design/',
-    nav: 'services',
+    nav: 'solutions',
     title: 'Website Design & Development',
     description: 'Fast, accessible, conversion-focused websites designed around your brand, customers, content, and growth goals.'
   },
@@ -50,7 +58,7 @@ const pageDefinitions = [
     source: 'social-media-management.html',
     output: 'services/social-media-management/index.html',
     route: '/services/social-media-management/',
-    nav: 'services',
+    nav: 'solutions',
     title: 'Social Media Management',
     description: 'Strategy, content planning, design, captions, approval workflows, scheduling, community support, and clear performance reporting.'
   },
@@ -58,7 +66,7 @@ const pageDefinitions = [
     source: 'app-development.html',
     output: 'services/app-development/index.html',
     route: '/services/app-development/',
-    nav: 'services',
+    nav: 'solutions',
     title: 'Web & Mobile App Development',
     description: 'From discovery and prototype to production, Inovantage builds practical apps, portals, dashboards, and internal tools.'
   },
@@ -69,14 +77,6 @@ const pageDefinitions = [
     nav: 'about',
     title: 'About Inovantage',
     description: 'A practical digital partner focused on useful automation, clear communication, thoughtful design, and dependable delivery.'
-  },
-  {
-    source: 'work.html',
-    output: 'work/index.html',
-    route: '/work/',
-    nav: 'work',
-    title: 'Solution Blueprints',
-    description: 'Explore examples of the digital systems Inovantage can design: automated lead operations, approval-led content engines, and customer portals.'
   },
   {
     source: 'insights.html',
@@ -473,8 +473,8 @@ function whatsappUrl(site) {
 
 function renderHeader(activeNav, site) {
   const links = [
-    ['services', '/services/', 'Services'],
-    ['work', '/work/', 'Solutions'],
+    ['solutions', '/solutions/', 'Solutions'],
+    ['case-studies', '/case-studies/', 'Case Studies'],
     ['insights', '/insights/', 'Articles & Guides'],
     ['about', '/about/', 'About']
   ];
@@ -550,7 +550,7 @@ function renderFooter(site, year) {
       <h2>Company</h2>
       <ul>
         <li><a href="/about/">About</a></li>
-        <li><a href="/work/">Work</a></li>
+        <li><a href="/case-studies/">Case studies</a></li>
         <li><a href="/insights/">Insights</a></li>
         <li><a href="/contact/">Contact</a></li>
       </ul>
@@ -731,6 +731,228 @@ ${relatedHtml}`;
   });
 }
 
+/* ------------------------------------------------------------------ *
+ * Case studies
+ *
+ * Everything on /case-studies/ is driven by src/data/case-studies.json.
+ * That file ships empty on purpose: this site never publishes a client
+ * name, quote, logo or figure that has not been supplied and approved,
+ * so the page renders an honest empty state until real entries exist and
+ * grows into the full design the moment they do.
+ * ------------------------------------------------------------------ */
+
+/* `capability` is a short factual description of the service, taken from the
+   wording already published elsewhere on this site. It is deliberately not an
+   outcome or a result: a card only makes a client claim once a real, approved
+   case study exists to back it. */
+const CASE_CATEGORIES = [
+  { key: 'ai-automation', label: 'AI Automation', icon: 'automation', service: '/services/ai-automation/', capability: 'Connected workflows' },
+  { key: 'website-development', label: 'Website Development', icon: 'web', service: '/services/website-design/', capability: 'Conversion-focused websites' },
+  { key: 'social-media-management', label: 'Social Media Management', icon: 'social', service: '/services/social-media-management/', capability: 'Approval-led content' },
+  { key: 'app-development', label: 'App Development', icon: 'app', service: '/services/app-development/', capability: 'Practical apps and portals' }
+];
+
+const categoryByKey = new Map(CASE_CATEGORIES.map((category) => [category.key, category]));
+
+async function loadCaseStudies() {
+  let raw;
+  try {
+    raw = JSON.parse(await readFile(path.join(DATA_DIR, 'case-studies.json'), 'utf8'));
+  } catch {
+    return { caseStudies: [], testimonials: [], clients: [] };
+  }
+
+  const caseStudies = (Array.isArray(raw.caseStudies) ? raw.caseStudies : [])
+    .filter((entry) => entry && entry.slug && entry.title && categoryByKey.has(entry.category))
+    .map((entry) => ({
+      ...entry,
+      url: `/case-studies/${entry.slug}/`,
+      categoryLabel: categoryByKey.get(entry.category).label,
+      metrics: Array.isArray(entry.metrics) ? entry.metrics.filter((m) => m && m.value && m.label) : []
+    }));
+
+  return {
+    caseStudies,
+    testimonials: (Array.isArray(raw.testimonials) ? raw.testimonials : []).filter((t) => t && t.quote && t.author),
+    clients: (Array.isArray(raw.clients) ? raw.clients : []).filter((c) => c && c.name)
+  };
+}
+
+/* The four hero cards are the four real service categories. A card only
+   offers "View case study" once a published study exists for it. */
+function caseOrbitCards(caseStudies) {
+  return CASE_CATEGORIES.map((category, index) => {
+    const study = caseStudies.find((entry) => entry.category === category.key);
+    const href = study ? study.url : category.service;
+    const title = study ? study.title : category.capability;
+    const action = study ? 'View case study' : 'See the service';
+    return `
+      <div class="orbit-slot orbit-slot-${index + 1}">
+        <a class="case-card" href="${href}">
+          <span class="case-card-head">
+            <span class="case-card-icon">${icon(category.icon)}</span>
+            <span class="case-card-tag">${escapeHtml(category.label)}</span>
+          </span>
+          <span class="case-card-title">${escapeHtml(title)}</span>
+          <span class="case-card-action">${action} ${icon('arrow')}</span>
+        </a>
+      </div>`;
+  }).join('');
+}
+
+function caseFilters() {
+  const buttons = [
+    '<button class="filter-button is-active" type="button" data-case-filter="all" aria-pressed="true">All</button>',
+    ...CASE_CATEGORIES.map((category) =>
+      `<button class="filter-button" type="button" data-case-filter="${category.key}" aria-pressed="false">${escapeHtml(category.label)}</button>`)
+  ];
+  return `<div class="filter-bar case-filter-bar" role="group" aria-label="Filter case studies by service" data-case-filter-group>${buttons.join('')}</div>`;
+}
+
+function caseStudyCard(entry) {
+  const media = entry.image
+    ? `<img src="${escapeHtml(entry.image)}" alt="${escapeHtml(entry.imageAlt || '')}" loading="lazy" decoding="async">`
+    : `<div class="insight-card-pattern"><span>${escapeHtml(entry.categoryLabel)}</span></div>`;
+  const metrics = entry.metrics.length
+    ? `<ul class="case-metrics">${entry.metrics.map((metric) =>
+        `<li><strong>${escapeHtml(metric.value)}</strong> <span>${escapeHtml(metric.label)}</span></li>`).join('')}</ul>`
+    : '';
+  const outcome = entry.outcome ? `<p class="case-outcome">${escapeHtml(entry.outcome)}</p>` : '';
+  return `
+    <article class="case-study-card" data-case-card data-category="${escapeHtml(entry.category)}">
+      <a class="case-study-media" href="${escapeHtml(entry.url)}" tabindex="-1" aria-hidden="true">${media}</a>
+      <div class="case-study-body">
+        <p class="case-study-tag">${escapeHtml(entry.categoryLabel)}</p>
+        <h3><a href="${escapeHtml(entry.url)}">${escapeHtml(entry.client || entry.title)}</a></h3>
+        <p>${escapeHtml(entry.summary || '')}</p>
+        ${outcome}
+        ${metrics}
+        <span class="text-link" aria-hidden="true">View case study ${icon('arrow')}</span>
+      </div>
+    </article>`;
+}
+
+/* Shown while no approved case study exists. It states the position
+   plainly rather than dressing an empty grid as "coming soon". */
+function caseStudyEmptyState() {
+  return `
+    <div class="case-empty">
+      <h3>No case studies are published yet.</h3>
+      <p>Inovantage only publishes a client story once that client has confirmed the wording, the figures and the permission to name them. Nothing on this page is illustrative.</p>
+      <p>Each published study will follow the same structure:</p>
+      <ol class="case-empty-flow">
+        <li><span>01</span>The challenge the business brought to us</li>
+        <li><span>02</span>What we built</li>
+        <li><span>03</span>How it worked in practice</li>
+        <li><span>04</span>The outcome</li>
+        <li><span>05</span>The client's own words</li>
+      </ol>
+      <div class="button-row">
+        <a class="button" href="/contact/">Start a project</a>
+        <a class="button button-secondary" href="/solutions/">Explore solutions</a>
+      </div>
+    </div>`;
+}
+
+function caseStudyGrid(caseStudies) {
+  if (!caseStudies.length) return caseStudyEmptyState();
+  return `<div class="case-study-grid" data-case-grid>${caseStudies.map(caseStudyCard).join('')}</div>`;
+}
+
+function testimonialBlock(testimonial) {
+  const attribution = [testimonial.role, testimonial.company].filter(Boolean).join(', ');
+  return `
+    <figure class="testimonial">
+      <blockquote><p>${escapeHtml(testimonial.quote)}</p></blockquote>
+      <figcaption>${escapeHtml(testimonial.author)}${attribution ? `<span>${escapeHtml(attribution)}</span>` : ''}</figcaption>
+    </figure>`;
+}
+
+function testimonialSection(testimonials, { heading, eyebrow, limit }) {
+  const list = testimonials.slice(0, limit);
+  if (!list.length) return '';
+  return `
+<section class="section section-soft">
+  <div class="container">
+    <div class="section-heading"><div><p class="eyebrow">${escapeHtml(eyebrow)}</p><h2>${escapeHtml(heading)}</h2></div></div>
+    <div class="testimonial-grid">${list.map(testimonialBlock).join('')}</div>
+  </div>
+</section>`;
+}
+
+/* Client names are rendered as text unless a real logo file is supplied,
+   so an absent asset can never become an invented one. */
+function clientSection(clients) {
+  if (!clients.length) return '';
+  const items = clients.map((client) => client.logo
+    ? `<li><img src="${escapeHtml(client.logo)}" alt="${escapeHtml(client.name)}" loading="lazy" decoding="async"></li>`
+    : `<li><span>${escapeHtml(client.name)}</span></li>`).join('');
+  return `
+<section class="section section-tight">
+  <div class="container">
+    <p class="eyebrow">Clients we work with</p>
+    <ul class="client-strip">${items}</ul>
+  </div>
+</section>`;
+}
+
+function renderCaseStudy(entry, site, related) {
+  const narrative = [
+    ['The challenge', entry.challenge],
+    ['What we built', entry.built],
+    ['How it worked', entry.howItWorked],
+    ['The outcome', entry.result]
+  ].filter(([, body]) => Boolean(body));
+
+  const metrics = entry.metrics.length
+    ? `<ul class="case-metrics case-metrics-lg">${entry.metrics.map((metric) =>
+        `<li><strong>${escapeHtml(metric.value)}</strong> <span>${escapeHtml(metric.label)}</span></li>`).join('')}</ul>`
+    : '';
+
+  const quote = entry.testimonial && entry.testimonial.quote && entry.testimonial.author
+    ? `<section class="section section-soft"><div class="container container-article">${testimonialBlock(entry.testimonial)}</div></section>`
+    : '';
+
+  const others = related.filter((item) => item.slug !== entry.slug).slice(0, 3);
+  const more = others.length
+    ? `<section class="section"><div class="container"><div class="section-heading"><div><h2>More case studies</h2></div><a class="text-link" href="/case-studies/">All case studies ${icon('arrow')}</a></div><div class="case-study-grid">${others.map(caseStudyCard).join('')}</div></div></section>`
+    : '';
+
+  const content = `
+<section class="page-hero">
+  <div class="container page-hero-grid">
+    <div>
+      <p class="eyebrow">${escapeHtml(entry.categoryLabel)}</p>
+      <h1>${escapeHtml(entry.title)}</h1>
+      ${entry.client ? `<p class="lede">${escapeHtml(entry.client)}</p>` : ''}
+      ${entry.summary ? `<p>${escapeHtml(entry.summary)}</p>` : ''}
+      ${metrics}
+    </div>
+  </div>
+</section>
+<section class="section section-light">
+  <div class="container container-article">
+    <article class="prose">
+      ${narrative.map(([title, body]) => `<h2>${escapeHtml(title)}</h2><p>${escapeHtml(body)}</p>`).join('')}
+    </article>
+  </div>
+</section>
+${quote}
+${more}
+<section class="section section-tight"><div class="container"><div class="cta-panel"><div><h2>Have a challenge worth solving?</h2><p>Tell us what is slowing your team down or what you want to build.</p></div><a class="button" href="/contact/">Start a project</a></div></div></section>`;
+
+  return renderLayout({
+    site,
+    title: `${entry.client || entry.title} case study`,
+    description: entry.summary || `How Inovantage delivered ${entry.title}.`,
+    route: entry.url,
+    activeNav: 'case-studies',
+    content,
+    image: entry.image || '',
+    type: 'article'
+  });
+}
+
 function replaceTokens(html, replacements) {
   return html.replace(/{{\s*([A-Za-z0-9_.-]+)\s*}}/g, (match, key) => {
     if (Object.hasOwn(replacements, key)) return replacements[key];
@@ -775,12 +997,13 @@ function contactForm(site) {
   </form>`;
 }
 
-async function generateSitemap(site, posts) {
+async function generateSitemap(site, posts, caseStudies = []) {
   const staticUrls = pageDefinitions
     .filter((page) => !['/thank-you/', '/404.html'].includes(page.route))
     .map((page) => ({ loc: `${site.url}${page.route}`, date: null }));
   const postUrls = posts.map((post) => ({ loc: `${site.url}${post.url}`, date: post.updated || post.date }));
-  const urls = [...staticUrls, ...postUrls];
+  const caseUrls = caseStudies.map((entry) => ({ loc: `${site.url}${entry.url}`, date: entry.updated || entry.date || null }));
+  const urls = [...staticUrls, ...caseUrls, ...postUrls];
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map(({ loc, date }) => `  <url>\n    <loc>${escapeXml(loc)}</loc>${date ? `\n    <lastmod>${escapeXml(date)}</lastmod>` : ''}\n  </url>`).join('\n')}
@@ -819,6 +1042,9 @@ async function build() {
 
   const site = JSON.parse(await readFile(path.join(DATA_DIR, 'site.json'), 'utf8'));
   const posts = await loadPosts();
+  const { caseStudies, testimonials, clients } = await loadCaseStudies();
+  const featuredCases = caseStudies.filter((entry) => entry.featured);
+  const remainingCases = caseStudies.filter((entry) => !entry.featured);
   const replacements = {
     siteName: escapeHtml(site.name),
     siteTagline: escapeHtml(site.tagline),
@@ -832,6 +1058,15 @@ async function build() {
     allPosts: renderAllPosts(posts),
     insightFilters: categoriesFilter(posts),
     contactForm: contactForm(site),
+    caseOrbitCards: caseOrbitCards(caseStudies),
+    caseFilters: caseFilters(),
+    caseStudiesFeatured: caseStudyGrid(featuredCases.length ? featuredCases : caseStudies),
+    caseStudiesMore: remainingCases.length && featuredCases.length
+      ? `<section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">More work</p><h2>Further case studies</h2></div></div>${caseStudyGrid(remainingCases)}</div></section>`
+      : '',
+    caseTestimonialMid: testimonialSection(testimonials, { eyebrow: 'In their words', heading: 'What clients say about working with us', limit: 1 }),
+    caseTestimonialsAll: testimonialSection(testimonials.slice(1), { eyebrow: 'Client voices', heading: 'More from the people we work with', limit: 4 }),
+    caseClients: clientSection(clients),
     currentYear: String(new Date().getUTCFullYear()),
     iconAutomation: icon('automation'),
     iconWeb: icon('web'),
@@ -859,12 +1094,17 @@ async function build() {
     await writeOutput(`insights/${post.slug}/index.html`, renderPost(post, site, posts));
   }
 
-  await generateSitemap(site, posts);
+  // A detail route only exists for a case study that has real content.
+  for (const entry of caseStudies) {
+    await writeOutput(`case-studies/${entry.slug}/index.html`, renderCaseStudy(entry, site, caseStudies));
+  }
+
+  await generateSitemap(site, posts, caseStudies);
   await generateRss(site, posts);
   await writeOutput('robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${site.url}/sitemap.xml\n`);
-  await writeOutput('llms.txt', `# ${site.name}\n\n${site.tagline}\n\n## Core services\n- AI automation\n- Website design and development\n- Social media management with approval workflows\n- Web and mobile app development\n\n## Important pages\n- ${site.url}/services/\n- ${site.url}/work/\n- ${site.url}/insights/\n- ${site.url}/contact/\n`);
+  await writeOutput('llms.txt', `# ${site.name}\n\n${site.tagline}\n\n## Core services\n- AI automation\n- Website design and development\n- Social media management with approval workflows\n- Web and mobile app development\n\n## Important pages\n- ${site.url}/solutions/\n- ${site.url}/case-studies/\n- ${site.url}/insights/\n- ${site.url}/contact/\n`);
 
-  console.log(`Built ${pageDefinitions.length} pages and ${posts.length} insight posts into ${path.relative(ROOT, DIST)}/`);
+  console.log(`Built ${pageDefinitions.length} pages, ${posts.length} insight posts and ${caseStudies.length} case studies into ${path.relative(ROOT, DIST)}/`);
 }
 
 build().catch((error) => {

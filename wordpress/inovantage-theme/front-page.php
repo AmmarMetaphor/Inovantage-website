@@ -27,7 +27,7 @@ $inovantage_hero_art_srcset = sprintf(
 			<p><?php esc_html_e( 'Inovantage designs connected workflows, websites, content operations and business apps that reduce friction while keeping people in control.', 'inovantage' ); ?></p>
 			<div class="button-row">
 				<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project', 'inovantage' ); ?></a>
-				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'Explore services', 'inovantage' ); ?></a>
+				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'Explore solutions', 'inovantage' ); ?></a>
 			</div>
 			<p class="hero-proof"><span><?php esc_html_e( 'Built for UK businesses', 'inovantage' ); ?></span><span><?php esc_html_e( 'Clear scope and milestones', 'inovantage' ); ?></span><span><?php esc_html_e( 'Human review before publication', 'inovantage' ); ?></span></p>
 		</div>
@@ -38,7 +38,7 @@ $inovantage_hero_art_srcset = sprintf(
 	<div class="container">
 		<div class="section-heading">
 			<div><p class="eyebrow"><?php esc_html_e( 'Four connected capabilities', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Everything you need to build a more capable digital business.', 'inovantage' ); ?></h2></div>
-			<a class="text-link" href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'View all services', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+			<a class="text-link" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'View all solutions', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 		</div>
 		<div class="services-grid">
 			<article class="service-card">
