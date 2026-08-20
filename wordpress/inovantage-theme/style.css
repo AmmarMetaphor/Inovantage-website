@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 1.3.0
+Version: 1.4.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -15,10 +15,10 @@ Tags: custom-menu, custom-logo, translation-ready, threaded-comments
 
 Inovantage — digital systems that move UK businesses forward. This theme
 preserves the approved navigation, typography, colours, section spacing,
-hero illustrations, the homepage orbital hero, service cards, Solutions workflow
-illustrations, Articles & Guides content, About content, company
-information, Facebook link and legal content from the approved static
-website design.
+hero illustrations, the homepage orbital hero, the Services orbital hero,
+service cards, Solutions workflow illustrations, Articles & Guides content,
+About content, company information, Facebook link and legal content from the
+approved static website design.
 */
 
 :root {
@@ -1257,6 +1257,304 @@ p {
   mask-image: radial-gradient(circle farthest-corner at center, #000 55%, transparent 96%);
 }
 
+/* Services hero: four service cards travelling a slow elliptical orbit over the
+   network artwork. The motion is a single CSS animation sampled around an
+   ellipse, so the cards stay upright, and animation-play-state lets a hover or
+   a focus freeze every card mid-orbit and resume from the same point. */
+.services-hero {
+  --svc-navy: #051023;
+  --svc-sky: #38bdf8;
+  --svc-cyan: #22d3ee;
+  --svc-electric: #0ea5e9;
+  --svc-text: #f3f9ff;
+  --svc-eyebrow: #a9e2ff;
+  /* The orbit reaches into the page margin beside the container, which buys
+     the radius the cards need to stay clear of one another. */
+  --orbit-bleed: clamp(0px, calc(50vw - 614px), 92px);
+  --orbit-rx: clamp(164px, 17.4vw, 256px);
+  --orbit-ry: clamp(130px, 13.6vw, 172px);
+  --orbit-card-w: clamp(196px, 14.4vw, 208px);
+  --orbit-card-h: clamp(180px, 12.7vw, 183px);
+  --orbit-duration: 32s;
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(40px, 4.2vw, 64px);
+  color: var(--svc-text);
+  background: var(--svc-navy);
+  isolation: isolate;
+}
+
+.services-hero-media {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.services-hero-art {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 58%;
+}
+
+/* Keeps the artwork's dark navy behind the copy and its cyan network on the
+   right, where the cards travel. */
+.services-hero-veil {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5, 16, 35, 0.97) 0%, rgba(5, 16, 35, 0.88) 34%, rgba(5, 16, 35, 0.48) 55%, rgba(5, 16, 35, 0.12) 78%, rgba(5, 16, 35, 0.05) 100%),
+    linear-gradient(180deg, rgba(5, 16, 35, 0.42) 0%, rgba(5, 16, 35, 0) 26%, rgba(5, 16, 35, 0) 70%, rgba(5, 16, 35, 0.5) 100%);
+}
+
+.services-hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(20px, 2.2vw, 34px);
+}
+
+.services-hero-copy {
+  max-width: 560px;
+}
+
+.services-hero .eyebrow {
+  color: var(--svc-eyebrow);
+}
+
+.services-hero h1 {
+  max-width: none;
+  margin-bottom: var(--content-gap-md);
+  color: #fff;
+  font-size: clamp(2rem, 3.3vw, 2.95rem);
+  text-shadow: 0 2px 26px rgba(2, 8, 20, 0.55);
+}
+
+.services-hero h1 span {
+  color: var(--svc-cyan);
+}
+
+.services-hero .lede {
+  margin-bottom: var(--content-gap-lg);
+  color: rgba(211, 228, 245, 0.88);
+  font-size: clamp(1.04rem, 1.45vw, 1.18rem);
+}
+
+.services-hero .button {
+  background: linear-gradient(135deg, var(--svc-electric), var(--svc-sky));
+  border-color: rgba(126, 205, 255, 0.5);
+  box-shadow: 0 14px 34px rgba(8, 68, 132, 0.45);
+}
+
+.services-hero .button:hover {
+  background: linear-gradient(135deg, #0b84d4, #4fc3ff);
+  border-color: rgba(158, 219, 255, 0.7);
+  box-shadow: 0 18px 40px rgba(8, 68, 132, 0.55);
+}
+
+.services-hero .button-secondary {
+  color: #eaf4ff;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(148, 202, 245, 0.42);
+  box-shadow: none;
+}
+
+.services-hero .button-secondary:hover {
+  color: #fff;
+  background: rgba(56, 189, 248, 0.16);
+  border-color: rgba(56, 189, 248, 0.7);
+  box-shadow: none;
+}
+
+.services-hero :focus-visible {
+  outline-color: rgba(125, 211, 252, 0.9);
+}
+
+.services-orbit {
+  position: relative;
+  margin-right: calc(var(--orbit-bleed) * -1);
+  min-height: calc(var(--orbit-ry) * 2 + var(--orbit-card-h));
+}
+
+.services-orbit::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  content: "";
+  background: radial-gradient(circle at 50% 50%, rgba(34, 211, 238, 0.12), transparent 62%);
+  pointer-events: none;
+}
+
+.orbit-path {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: calc(var(--orbit-rx) * 2);
+  height: calc(var(--orbit-ry) * 2);
+  overflow: visible;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.orbit-path ellipse {
+  fill: none;
+  stroke: rgba(56, 189, 248, 0.52);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 10;
+}
+
+.orbit-slot {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  width: var(--orbit-card-w);
+  height: var(--orbit-card-h);
+  animation: services-orbit var(--orbit-duration) linear infinite;
+  will-change: transform;
+}
+
+.orbit-slot-2 {
+  animation-delay: calc(var(--orbit-duration) / -4);
+}
+
+.orbit-slot-3 {
+  animation-delay: calc(var(--orbit-duration) / -2);
+}
+
+.orbit-slot-4 {
+  animation-delay: calc(var(--orbit-duration) / -4 * 3);
+}
+
+/* A hovered or focused card freezes every card, so the link never moves out
+   from under the pointer, and resumes from the same point on release. */
+.services-orbit.is-paused .orbit-slot,
+.services-orbit:focus-within .orbit-slot {
+  animation-play-state: paused;
+}
+
+.orbit-slot:hover,
+.orbit-slot:focus-within {
+  z-index: 4;
+}
+
+.orbit-card {
+  position: relative;
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 6px;
+  padding: 15px 16px 16px;
+  color: var(--svc-text);
+  text-decoration: none;
+  background: rgba(7, 27, 52, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.34);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(2, 10, 24, 0.42);
+  backdrop-filter: blur(10px);
+  transition: transform 200ms ease, background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+
+/* Icon above the title, so the title always gets the card's full width and the
+   long service names still wrap to two lines in the narrowest orbiting card. */
+.orbit-card-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.orbit-card-icon {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--svc-cyan);
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.24);
+  border-radius: 10px;
+}
+
+.orbit-card-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+/* Sits in the corner so it costs the card no layout height. */
+.orbit-card-index {
+  position: absolute;
+  top: 15px;
+  right: 16px;
+  color: rgba(125, 211, 252, 0.72);
+  font-size: 0.7rem;
+  font-weight: 780;
+  letter-spacing: 0.12em;
+}
+
+.orbit-card-title {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 740;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.orbit-card-text {
+  color: rgba(202, 220, 238, 0.85);
+  font-size: 0.8rem;
+  line-height: 1.4;
+}
+
+.orbit-slot:hover .orbit-card,
+.orbit-card:focus-visible {
+  background: rgba(9, 33, 62, 0.94);
+  border-color: rgba(56, 189, 248, 0.8);
+  box-shadow: 0 16px 45px rgba(14, 165, 233, 0.22);
+  transform: translateY(-8px) scale(1.07);
+}
+
+@keyframes services-orbit {
+  0% { transform: translate(calc(-50% + var(--orbit-rx) * 1.00000), calc(-50% + var(--orbit-ry) * 0.00000)); }
+  4.16667% { transform: translate(calc(-50% + var(--orbit-rx) * 0.96593), calc(-50% + var(--orbit-ry) * 0.25882)); }
+  8.33333% { transform: translate(calc(-50% + var(--orbit-rx) * 0.86603), calc(-50% + var(--orbit-ry) * 0.50000)); }
+  12.5% { transform: translate(calc(-50% + var(--orbit-rx) * 0.70711), calc(-50% + var(--orbit-ry) * 0.70711)); }
+  16.6667% { transform: translate(calc(-50% + var(--orbit-rx) * 0.50000), calc(-50% + var(--orbit-ry) * 0.86603)); }
+  20.8333% { transform: translate(calc(-50% + var(--orbit-rx) * 0.25882), calc(-50% + var(--orbit-ry) * 0.96593)); }
+  25% { transform: translate(calc(-50% + var(--orbit-rx) * 0.00000), calc(-50% + var(--orbit-ry) * 1.00000)); }
+  29.1667% { transform: translate(calc(-50% + var(--orbit-rx) * -0.25882), calc(-50% + var(--orbit-ry) * 0.96593)); }
+  33.3333% { transform: translate(calc(-50% + var(--orbit-rx) * -0.50000), calc(-50% + var(--orbit-ry) * 0.86603)); }
+  37.5% { transform: translate(calc(-50% + var(--orbit-rx) * -0.70711), calc(-50% + var(--orbit-ry) * 0.70711)); }
+  41.6667% { transform: translate(calc(-50% + var(--orbit-rx) * -0.86603), calc(-50% + var(--orbit-ry) * 0.50000)); }
+  45.8333% { transform: translate(calc(-50% + var(--orbit-rx) * -0.96593), calc(-50% + var(--orbit-ry) * 0.25882)); }
+  50% { transform: translate(calc(-50% + var(--orbit-rx) * -1.00000), calc(-50% + var(--orbit-ry) * 0.00000)); }
+  54.1667% { transform: translate(calc(-50% + var(--orbit-rx) * -0.96593), calc(-50% + var(--orbit-ry) * -0.25882)); }
+  58.3333% { transform: translate(calc(-50% + var(--orbit-rx) * -0.86603), calc(-50% + var(--orbit-ry) * -0.50000)); }
+  62.5% { transform: translate(calc(-50% + var(--orbit-rx) * -0.70711), calc(-50% + var(--orbit-ry) * -0.70711)); }
+  66.6667% { transform: translate(calc(-50% + var(--orbit-rx) * -0.50000), calc(-50% + var(--orbit-ry) * -0.86603)); }
+  70.8333% { transform: translate(calc(-50% + var(--orbit-rx) * -0.25882), calc(-50% + var(--orbit-ry) * -0.96593)); }
+  75% { transform: translate(calc(-50% + var(--orbit-rx) * -0.00000), calc(-50% + var(--orbit-ry) * -1.00000)); }
+  79.1667% { transform: translate(calc(-50% + var(--orbit-rx) * 0.25882), calc(-50% + var(--orbit-ry) * -0.96593)); }
+  83.3333% { transform: translate(calc(-50% + var(--orbit-rx) * 0.50000), calc(-50% + var(--orbit-ry) * -0.86603)); }
+  87.5% { transform: translate(calc(-50% + var(--orbit-rx) * 0.70711), calc(-50% + var(--orbit-ry) * -0.70711)); }
+  91.6667% { transform: translate(calc(-50% + var(--orbit-rx) * 0.86603), calc(-50% + var(--orbit-ry) * -0.50000)); }
+  95.8333% { transform: translate(calc(-50% + var(--orbit-rx) * 0.96593), calc(-50% + var(--orbit-ry) * -0.25882)); }
+  100% { transform: translate(calc(-50% + var(--orbit-rx) * 1.00000), calc(-50% + var(--orbit-ry) * -0.00000)); }
+}
+
 .split-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
@@ -2157,6 +2455,63 @@ p {
   text-decoration: none;
 }
 
+/* Below roughly 1240px the ellipse can no longer hold four readable cards clear
+   of one another, so the hero switches to a controlled static arrangement rather
+   than forcing the orbit into a frame that cannot take it. */
+@media (max-width: 1240px) {
+  .services-hero-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(26px, 4vw, 40px);
+  }
+
+  .services-hero-copy {
+    max-width: none;
+  }
+
+  /* No room to orbit reliably, so the cards settle into a stable grid and the
+     decorative path is dropped. Every card keeps its link and hover state. */
+  .services-orbit {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .services-orbit::before,
+  .orbit-path {
+    display: none;
+  }
+
+  .orbit-slot {
+    position: static;
+    width: auto;
+    animation: none;
+    transform: none;
+  }
+
+  .orbit-slot:hover .orbit-card,
+  .orbit-card:focus-visible {
+    transform: translateY(-5px) scale(1.02);
+  }
+
+  .services-orbit {
+    margin-right: 0;
+    height: auto;
+  }
+
+  /* Once the copy runs the full width it crosses the bright side of the
+     artwork, so the veil flattens out and darkens rather than fading right. */
+  .services-hero-veil {
+    background:
+      linear-gradient(90deg, rgba(5, 16, 35, 0.95) 0%, rgba(5, 16, 35, 0.88) 46%, rgba(5, 16, 35, 0.8) 100%),
+      linear-gradient(180deg, rgba(5, 16, 35, 0.4) 0%, rgba(5, 16, 35, 0.15) 38%, rgba(5, 16, 35, 0.55) 100%);
+  }
+
+  .orbit-slot {
+    height: auto;
+  }
+}
+
 @media (max-width: 1040px) {
   :root {
     --header-height: 76px;
@@ -2507,6 +2862,10 @@ p {
 }
 
 @media (max-width: 520px) {
+  .services-orbit {
+    grid-template-columns: 1fr;
+  }
+
   .brand img {
     width: 158px;
   }
@@ -2556,11 +2915,46 @@ p {
     animation-iteration-count: 1 !important;
   }
 
-  /* Keep the hero composition identical, but never move the artwork. */
+  /* Homepage hero: keep the composition identical, but never move the artwork. */
   .hero-orbital-art {
     transform: none !important;
     transition: none !important;
     will-change: auto;
+  }
+
+  /* Services hero: no orbiting at all — the four cards sit in the same stable
+     grid the narrow layout uses, keeping their links, hover and focus states. */
+  .services-hero-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(26px, 4vw, 40px);
+  }
+
+  .services-hero-copy {
+    max-width: none;
+  }
+
+  .services-orbit {
+    display: grid;
+    min-height: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .services-orbit::before,
+  .orbit-path {
+    display: none;
+  }
+
+  .orbit-slot {
+    position: static;
+    width: auto;
+    animation: none !important;
+    transform: none;
+  }
+
+  .orbit-slot:hover .orbit-card,
+  .orbit-card:focus-visible {
+    transform: translateY(-5px) scale(1.02);
   }
 }
 

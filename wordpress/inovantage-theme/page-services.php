@@ -8,20 +8,80 @@ while ( have_posts() ) :
 	the_post();
 	?>
 
-<section class="page-hero">
-	<div class="container page-hero-grid">
-		<div>
-			<p class="eyebrow"><?php esc_html_e( 'Services', 'inovantage' ); ?></p>
-			<h1><?php esc_html_e( 'One partner for the systems customers see and the workflows your team relies on.', 'inovantage' ); ?></h1>
-			<p class="lede"><?php esc_html_e( 'Choose a focused project or combine capabilities into a connected digital improvement programme.', 'inovantage' ); ?></p>
+<?php
+$inovantage_services_art        = INOVANTAGE_URI . '/assets/images/heroes/services-hero-network.webp';
+$inovantage_services_art_srcset = sprintf(
+	'%1$s/assets/images/heroes/services-hero-network-760.webp 760w, %1$s/assets/images/heroes/services-hero-network-1180.webp 1180w, %1$s/assets/images/heroes/services-hero-network.webp 1672w',
+	INOVANTAGE_URI
+);
+
+$inovantage_orbit_services = array(
+	array(
+		'slot' => 1,
+		'icon' => 'automation',
+		'index' => '01',
+		'title' => __( 'AI Automation', 'inovantage' ),
+		'text' => __( 'Streamline operations and scale with intelligent automation.', 'inovantage' ),
+		'url' => home_url( '/services/ai-automation/' ),
+	),
+	array(
+		'slot' => 2,
+		'icon' => 'web',
+		'index' => '02',
+		'title' => __( 'Website Development', 'inovantage' ),
+		'text' => __( 'Fast, secure and scalable websites that turn visitors into customers.', 'inovantage' ),
+		'url' => home_url( '/services/website-design/' ),
+	),
+	array(
+		'slot' => 3,
+		'icon' => 'social',
+		'index' => '03',
+		'title' => __( 'Social Media Management', 'inovantage' ),
+		'text' => __( 'Engage your audience and grow your brand through a clear content workflow.', 'inovantage' ),
+		'url' => home_url( '/services/social-media-management/' ),
+	),
+	array(
+		'slot' => 4,
+		'icon' => 'app',
+		'index' => '04',
+		'title' => __( 'App Development', 'inovantage' ),
+		'text' => __( 'Custom web and mobile applications designed around real business needs.', 'inovantage' ),
+		'url' => home_url( '/services/app-development/' ),
+	),
+);
+?>
+
+<section class="page-hero services-hero">
+	<div class="services-hero-media" aria-hidden="true">
+		<img class="services-hero-art" src="<?php echo esc_url( $inovantage_services_art ); ?>" srcset="<?php echo esc_attr( $inovantage_services_art_srcset ); ?>" sizes="100vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
+	</div>
+	<div class="services-hero-veil" aria-hidden="true"></div>
+	<div class="container services-hero-grid">
+		<div class="services-hero-copy">
+			<p class="eyebrow"><?php esc_html_e( 'Inovantage services', 'inovantage' ); ?></p>
+			<h1><?php esc_html_e( 'Services designed to ', 'inovantage' ); ?><span><?php esc_html_e( 'scale your business.', 'inovantage' ); ?></span></h1>
+			<p class="lede"><?php esc_html_e( 'AI automation, high-performance websites, social media that connects, and apps that drive growth—working together for real results.', 'inovantage' ); ?></p>
+			<div class="button-row">
+				<a class="button" href="#service-list"><?php esc_html_e( 'Explore Our Services', 'inovantage' ); ?></a>
+				<a class="button button-secondary" href="#ways-to-work"><?php esc_html_e( 'How We Work', 'inovantage' ); ?></a>
+			</div>
 		</div>
-		<div class="page-hero-visual">
-			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/services-hero.png" width="1536" height="1024" alt="<?php esc_attr_e( 'Connected digital services covering automation, websites, content operations and app development.', 'inovantage' ); ?>" loading="eager" decoding="async">
+		<div class="services-orbit" data-services-orbit>
+			<svg class="orbit-path" viewBox="0 0 200 200" preserveAspectRatio="none" aria-hidden="true" focusable="false"><ellipse cx="100" cy="100" rx="99" ry="99" vector-effect="non-scaling-stroke"></ellipse></svg>
+			<?php foreach ( $inovantage_orbit_services as $inovantage_service ) : ?>
+				<div class="orbit-slot orbit-slot-<?php echo esc_attr( $inovantage_service['slot'] ); ?>">
+					<a class="orbit-card" href="<?php echo esc_url( $inovantage_service['url'] ); ?>">
+						<span class="orbit-card-index"><?php echo esc_html( $inovantage_service['index'] ); ?></span>
+						<span class="orbit-card-head"><span class="orbit-card-icon"><?php inovantage_icon_e( $inovantage_service['icon'] ); ?></span><span class="orbit-card-title"><?php echo esc_html( $inovantage_service['title'] ); ?></span></span>
+						<span class="orbit-card-text"><?php echo esc_html( $inovantage_service['text'] ); ?></span>
+					</a>
+				</div>
+			<?php endforeach; ?>
 		</div>
 	</div>
 </section>
 
-<section class="section">
+<section class="section" id="service-list">
 	<div class="container">
 		<div class="services-grid">
 			<article class="service-card"><span class="service-icon"><?php inovantage_icon_e( 'automation' ); ?></span><h2><?php esc_html_e( 'AI automation', 'inovantage' ); ?></h2><p><?php esc_html_e( 'Design connected workflows for enquiries, support, documents, reporting, content operations and internal administration.', 'inovantage' ); ?></p><a class="text-link" href="<?php echo esc_url( home_url( '/services/ai-automation/' ) ); ?>"><?php esc_html_e( 'See AI automation services', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a></article>
@@ -32,7 +92,7 @@ while ( have_posts() ) :
 	</div>
 </section>
 
-<section class="section section-soft">
+<section class="section section-soft" id="ways-to-work">
 	<div class="container">
 		<div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'Ways to work together', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Choose the level of support that fits the problem.', 'inovantage' ); ?></h2></div></div>
 		<div class="card-grid-3">
