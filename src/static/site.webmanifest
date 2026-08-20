@@ -3,8 +3,8 @@
   "short_name": "Inovantage",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#913290",
+  "background_color": "#07121f",
+  "theme_color": "#07121f",
   "icons": [
     {
       "src": "/assets/images/favicon-192.png",

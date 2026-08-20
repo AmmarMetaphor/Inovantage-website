@@ -37,10 +37,24 @@ Run `npm run verify` after every meaningful change. Do not claim success if it f
 
 ## Brand rules
 
-- Brand purple: `#913290`
-- Brand grey: `#7D7D7D`
-- Primary logo: `src/static/assets/images/inovantage-logo.png`
-- Mark: `src/static/assets/images/inovantage-mark.png`
+- The site uses the Inovantage blue technology palette. Every colour is defined
+  once in the `:root` block of `src/static/assets/css/styles.css`; use those
+  tokens rather than new hex literals.
+  - Void navy `#07121F` — primary dark surface
+  - Deep ocean `#0B1A2B` — secondary dark surface
+  - Steel blue `#1C2F4A` — elevated cards and panels
+  - Cobalt core `#0B3D9C` — links on light surfaces
+  - Electric blue `#126BFF` — primary interactive/CTA colour
+  - Luminous cyan `#00E5FF` — restrained technological highlight, not a button colour
+  - Glacier ice `#E6F2FF` — light contrast sections and long-form reading
+  - Silver mist `#C9D6E6` — body text on dark
+- Purple is retired from the UI. The former brand purple `#913290` and brand
+  grey `#7D7D7D` survive only inside legacy raster artwork listed below.
+- Primary logo: `src/static/assets/images/inovantage-logo-blue.png` (recoloured
+  into the palette; the original purple `inovantage-logo.png` is kept unused).
+- Still carrying the old purple/lavender artwork and due for regeneration:
+  `inovantage-mark.png` (unused), `social-card.png`, the favicons, and the
+  per-page hero illustrations in `assets/images/heroes/`.
 - Keep the design clean, confident, modern, accessible and business-focused.
 - Do not distort, recolour or recreate the supplied logo unless explicitly asked.
 - Preserve generous spacing, clear hierarchy and responsive behaviour.
