@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 1.7.0
+Version: 1.8.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -3784,6 +3784,776 @@ p {
   .orbit-slot:hover .case-card,
   .case-card:focus-visible {
     transform: translateY(-5px) scale(1.02);
+  }
+}
+
+/* =========================================================================
+   ABOUT PAGE — one continuous editorial canvas.
+
+   Every selector here is scoped under .about-canvas. No :root token is added
+   or changed, and no other page is affected.
+
+   CONTRAST GUARANTEE
+   ------------------
+   .about-field carries opacity: 0.26, which makes it a composite group: the
+   plates, the display words and the grain are flattened together inside the
+   group and then composited exactly once over the body's opaque Void Navy.
+   The brightest pixel the group can physically emit is opaque #FFFFFF, so the
+   brightest pixel the FIELD can paint - and the field is the backdrop for
+   every run of flowed text on this page - is
+
+       0.26 x #FFFFFF over #07121F  =  #475059,  relative luminance 0.0780
+
+   Against that worst possible pixel:
+
+       #FFFFFF   8.20:1   headings, card titles, strong
+       #E6F2FF   7.23:1   ledes, quotes, secondary button label
+       #C9D6E6   5.57:1   body copy, list items
+       #00E5FF   5.33:1   labels, links, rules, focus ring
+       #93A6BC   3.29:1   FAILS - --text-muted is neutralised below
+       #126BFF   1.79:1   FAILS - never text or a visible border here
+
+   The guarantee is frame independent: it holds for every frame the drift can
+   produce, and for anything added inside the group later. 0.26 is the cap that
+   keeps the least contrasty ink in use (cyan) above 5:1 while giving the field
+   enough luminosity to read as depth. Raising it, or putting a blend mode on
+   .about-field itself, breaks the proof.
+
+   SCOPE. The cap bounds the field only. Components in .about-flow paint above
+   it and are not multiplied by 0.26 - .button fills opaque #00E5FF, and the
+   value card carries a cyan gradient edge. Those are governed by their own
+   pairs (the button label is #07121F on #00E5FF, 12.24:1) and none of them
+   carries text over a bright fill. Anything new that paints its own light
+   surface under text must be checked separately; the table above does not
+   cover it.
+   ========================================================================= */
+
+.about-canvas {
+  position: relative;
+  /* Neutralised page-wide so any inherited component that reaches for the
+     muted ink lands on a compliant colour instead. */
+  --muted: var(--color-silver-mist);
+  --text-muted: var(--color-silver-mist);
+  /* Pointer offset, -1..1, and scroll progress, 0..1, both written once per
+     frame by main.js. Declared here so the page renders correctly with no JS. */
+  --about-px: 0;
+  --about-py: 0;
+  --about-p: 0;
+  /* MUST NOT receive transform, filter, perspective, backdrop-filter or
+     contain: paint. Any of those would make it the containing block for the
+     fixed field and pin the field to the document instead of the viewport. */
+}
+
+.about-flow {
+  position: relative;
+}
+
+/* One editorial grid spans every movement. Rhythm comes from margin between
+   movements, never from padding on a painted surface — that is what removes
+   the section seams the previous layout had. */
+.about-movement {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(14px, 1.8vw, 26px);
+  row-gap: clamp(16px, 2vw, 30px);
+  width: min(calc(100% - 40px), var(--max-width));
+  margin-inline: auto;
+  margin-block-start: clamp(80px, 11vh, 150px);
+}
+
+/* The gap between movements is deliberately uneven. An identical gap five
+   times over rebuilds the section boundary out of rhythm alone, even with
+   nothing painted, and a reader starts counting sections again. These run
+   short, long, short, long-ish, so the page breathes instead of ticking. */
+.about-story   { margin-block-start: clamp(52px, 6vh, 84px); }
+.about-asks    { margin-block-start: clamp(92px, 13vh, 170px); }
+.about-values  { margin-block-start: clamp(62px, 8vh, 108px); }
+.about-stories { margin-block-start: clamp(104px, 15vh, 186px); }
+.about-close   { margin-block-start: clamp(72px, 9.5vh, 128px); }
+
+.about-overture {
+  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
+  /* Set low in the opening screen rather than dead centre: centring leaves a
+     full screen of void beneath the lede before the first movement arrives,
+     which reads as a hero rather than as the first bar of a continuous page. */
+  align-content: end;
+  padding-block-end: clamp(72px, 12vh, 150px);
+  margin-block-start: 0;
+}
+
+/* ---------- The field ---------------------------------------------------- */
+
+.about-field {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  opacity: 0.26;
+  isolation: isolate;
+  pointer-events: none;
+  contain: paint;
+  background:
+    radial-gradient(150% 120% at 76% 8%, #123a54 0%, #0b2135 42%, #07121f 76%),
+    var(--color-void-navy);
+}
+
+/* Each plate is a wide sheet of palette light cut by a fractal-noise mask.
+   The mask is a static SVG rasterised once by the browser and then only ever
+   transformed, so there is no per-frame filter cost. Because each plate's mask
+   drifts at its own rate over its own light gradient, the visible cloud edges
+   are re-cut continuously: the shapes change, not just their positions.
+   Animation is limited to transform, which stays on the compositor. */
+.about-plate {
+  position: absolute;
+  inset: -30%;
+  background-repeat: no-repeat;
+  -webkit-mask-repeat: repeat;
+  mask-repeat: repeat;
+  -webkit-mask-size: 130% 130%;
+  mask-size: 130% 130%;
+  backface-visibility: hidden;
+  transform: translate3d(
+    calc(var(--about-px) * var(--plate-amp-x, 0px)),
+    calc(var(--about-py) * var(--plate-amp-y, 0px)),
+    0);
+}
+
+/* Far: cobalt volume, the slow back wall. */
+.about-plate-far {
+  --plate-amp-x: 5px;
+  --plate-amp-y: 4px;
+  -webkit-mask-image: var(--about-noise-b);
+  mask-image: var(--about-noise-b);
+  background-image:
+    radial-gradient(64% 54% at 22% 18%, rgba(11, 61, 156, 0.95), transparent 72%),
+    radial-gradient(70% 58% at 84% 46%, rgba(11, 61, 156, 0.72), transparent 74%);
+  animation: about-drift-far 96s ease-in-out infinite alternate;
+}
+
+/* Mid: electric blue body. */
+.about-plate-mid {
+  --plate-amp-x: 9px;
+  --plate-amp-y: 7px;
+  -webkit-mask-image: var(--about-noise-a);
+  mask-image: var(--about-noise-a);
+  background-image:
+    radial-gradient(58% 50% at 70% 58%, rgba(18, 107, 255, 0.88), transparent 76%),
+    radial-gradient(52% 44% at 26% 76%, rgba(18, 107, 255, 0.58), transparent 74%);
+  animation: about-drift-mid 74s ease-in-out infinite alternate;
+}
+
+/* Near: cyan cores, the fastest and brightest layer. */
+.about-plate-near {
+  --plate-amp-x: 15px;
+  --plate-amp-y: 11px;
+  -webkit-mask-image: var(--about-noise-c);
+  mask-image: var(--about-noise-c);
+  background-image:
+    radial-gradient(62% 52% at 36% 32%, rgba(0, 229, 255, 0.98), transparent 74%),
+    radial-gradient(40% 34% at 78% 82%, rgba(0, 229, 255, 0.62), transparent 72%);
+  animation: about-drift-near 58s ease-in-out infinite alternate;
+}
+
+.about-canvas {
+  --about-noise-a: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006' numOctaves='5' seed='7'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.3 0 0 0 -0.36'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23n)'/%3E%3C/svg%3E");
+  --about-noise-b: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0036' numOctaves='4' seed='41'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.5 0 0 0 -0.5'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23n)'/%3E%3C/svg%3E");
+  --about-noise-c: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='900' height='900'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.0096' numOctaves='4' seed='91'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 1.2 0 0 0 -0.42'/%3E%3C/filter%3E%3Crect width='900' height='900' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes about-drift-far {
+  from { transform: translate3d(-3%, -2%, 0) scale(1.02) rotate(0deg); }
+  to   { transform: translate3d(3%, 3%, 0) scale(1.12) rotate(4deg); }
+}
+
+@keyframes about-drift-mid {
+  from { transform: translate3d(3%, 3%, 0) scale(1.1) rotate(2deg); }
+  to   { transform: translate3d(-4%, -3%, 0) scale(1.0) rotate(-5deg); }
+}
+
+@keyframes about-drift-near {
+  from { transform: translate3d(-4%, 3%, 0) scale(1.16) rotate(-3deg); }
+  to   { transform: translate3d(4%, -4%, 0) scale(1.02) rotate(5deg); }
+}
+
+/* Static grain. Never transformed, never animated: a static feTurbulence is
+   rasterised once and cached. It exists to break the 8-bit banding that these
+   very low composited luminances would otherwise show on large flat areas. */
+.about-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+}
+
+/* ---------- Oversized display words -------------------------------------- */
+
+/* They live inside the field group deliberately. Painted at high alpha here,
+   they are still bounded by the one 0.26 cap, so there is a single number to
+   prove rather than a second compositing path to reason about. Each is a word
+   that appears verbatim in the approved copy of the movement it sits behind;
+   nothing here is written for the effect. */
+.about-marks {
+  position: absolute;
+  inset: 0;
+}
+
+.ed-mark {
+  position: absolute;
+  font-family: ui-serif, Georgia, "Times New Roman", serif;
+  font-size: clamp(5rem, 15vw, 13.5rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 0.8;
+  color: var(--color-glacier-ice);
+  white-space: nowrap;
+  /* Each word is pinned to a point on the scroll continuum: it sits centred
+     when --about-p reaches its own anchor and is carried well off-screen either
+     side of it, so one word at a time drifts through the field. --mark-lag
+     below 1 means it travels more slowly than the copy beside it, which is what
+     makes it read as depth rather than as a heading.
+
+     The anchors below are the fallback. main.js measures where each movement
+     actually sits and rewrites --mark-anchor on load and on resize, so a word
+     stays with its movement instead of drifting into the gap between two of
+     them when the layout reflows. */
+  --mark-travel: 620vh;
+  transform: translate3d(0, calc((var(--mark-anchor, 0) - var(--about-p)) * var(--mark-lag, 0.8) * var(--mark-travel)), 0);
+}
+
+.ed-mark-open    { top: 34%; right: -5vw;  --mark-anchor: 0.015; --mark-lag: 0.82; opacity: 0.44; }
+.ed-mark-story   { top: 40%; left: -7vw;   --mark-anchor: 0.21;  --mark-lag: 0.9;  opacity: 0.48; }
+.ed-mark-asks    { top: 46%; right: -13vw; --mark-anchor: 0.4;   --mark-lag: 0.86; opacity: 0.36; }
+.ed-mark-values  { top: 38%; left: -4vw;   --mark-anchor: 0.59;  --mark-lag: 0.94; opacity: 0.42; }
+.ed-mark-stories { top: 44%; right: -3vw;  --mark-anchor: 0.81;  --mark-lag: 0.88; opacity: 0.4; }
+.ed-mark-close   { top: 42%; left: -2vw;   --mark-anchor: 0.97;  --mark-lag: 0.84; opacity: 0.34; }
+
+/* ---------- Editorial typography ----------------------------------------- */
+
+.ed-label {
+  grid-column: 1 / span 3;
+  margin: 0 0 4px;
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 780;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.ed-statement {
+  grid-column: 4 / span 8;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(1.9rem, 3.5vw, 3.05rem);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+.ed-statement-lead {
+  font-size: clamp(2.3rem, 4.6vw, 4.1rem);
+}
+
+.ed-lede {
+  grid-column: 4 / span 6;
+  margin: 0;
+  color: var(--color-glacier-ice);
+  font-size: clamp(1.04rem, 1.5vw, 1.22rem);
+  line-height: 1.62;
+}
+
+.ed-body {
+  grid-column: 4 / span 6;
+  display: grid;
+  gap: 16px;
+}
+
+.ed-body p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.ed-subhead {
+  grid-column: 4 / span 8;
+  margin: clamp(14px, 2vw, 26px) 0 0;
+  color: var(--text-primary);
+  font-size: clamp(1.1rem, 1.6vw, 1.32rem);
+}
+
+.ed-action {
+  grid-column: 4 / span 8;
+  margin: clamp(10px, 1.4vw, 18px) 0 0;
+}
+
+/* Numbered practice list. The rule is a hairline between rows rather than a
+   box around them, so nothing reads as a panel. */
+.ed-enumeration {
+  grid-column: 4 / span 7;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  list-style: none;
+}
+
+.ed-enumeration li {
+  display: grid;
+  align-items: baseline;
+  grid-template-columns: 46px minmax(0, 1fr);
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+
+.ed-enumeration li:first-child {
+  border-top: 0;
+}
+
+.ed-enumeration p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.ed-enum-index {
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+/* The four client asks: a ledger, not four cards. */
+.ed-asks {
+  grid-column: 4 / span 8;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(18px, 2.4vw, 34px) clamp(24px, 3.4vw, 52px);
+  margin: clamp(8px, 1.2vw, 16px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ed-ask {
+  display: grid;
+  gap: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.ed-ask-index {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.ed-ask h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.06rem;
+}
+
+.ed-ask p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+}
+
+/* ---------- Value cards --------------------------------------------------- */
+
+/* Held inside the same measure as the statements above them (which end at
+   column 11) rather than running wider than every other block on the page — a
+   wider band is what would make the values read as a panelled region inserted
+   into the canvas. */
+.value-stack {
+  grid-column: 3 / span 9;
+  display: grid;
+  gap: clamp(22px, 3.4vw, 52px);
+  margin: clamp(10px, 1.6vw, 22px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One wide card per value, stacked and alternately inset, so they read as
+   elements floating in the field rather than a grid of dashboard tiles. The
+   inset is kept at every width, only reduced: it is what stops six identical
+   rectangles forming a column, and that matters most on the narrow screens
+   where each card fills the most of the display. */
+.value-stack > li:nth-child(odd)  { margin-inline-end: clamp(14px, 4vw, 64px); }
+.value-stack > li:nth-child(even) { margin-inline-start: clamp(14px, 4vw, 64px); }
+
+.value-brief {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 55fr) 1px minmax(0, 45fr);
+  align-items: start;
+  gap: clamp(18px, 2.6vw, 40px);
+  padding: clamp(22px, 2.8vw, 38px);
+  background: linear-gradient(158deg, rgba(11, 26, 43, 0.74) 0%, rgba(7, 18, 31, 0.56) 100%);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+/* Thin gradient edge. The reference runs its border cyan to magenta; purple
+   and magenta are retired here, so the equivalent is the brand's own two
+   colour axis. The flat cyan border above stands where masking is absent. */
+@supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  .value-brief {
+    border-color: transparent;
+  }
+
+  .value-brief::before {
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    content: "";
+    background: linear-gradient(118deg, rgba(0, 229, 255, 0.78) 0%, rgba(18, 107, 255, 0.58) 54%, rgba(0, 229, 255, 0.14) 100%);
+    border-radius: inherit;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+.value-body {
+  min-width: 0;
+}
+
+/* A corner bracket drawn from two 1px borders, rotated per index. It fills the
+   reference's small cyan icon slot without inventing six pictograms or six
+   meanings, and adds no asset. */
+.value-mark {
+  display: block;
+  width: 26px;
+  height: 26px;
+  margin-bottom: clamp(14px, 1.8vw, 22px);
+  border-top: 1px solid var(--accent);
+  border-left: 1px solid var(--accent);
+  border-radius: 2px 0 0;
+  transform: rotate(calc((var(--v-i) - 1) * 60deg));
+  transition: transform 220ms ease;
+}
+
+.value-body h3 {
+  margin: 0 0 10px;
+  color: var(--text-primary);
+  font-size: clamp(1.16rem, 1.9vw, 1.5rem);
+}
+
+.value-body p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* The reference splits its card with a thin vertical rule. Here that rule is
+   literally the "/" of the approved string "01 / USEFUL", promoted from a
+   character to a divider. */
+.value-rule {
+  align-self: stretch;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, var(--accent-line) 16%, var(--accent-line) 84%, transparent 100%);
+}
+
+/* The right column carries the value's own index: the numeral takes the
+   reference's bold label slot and the key word takes its statement slot. Both
+   already exist in the approved copy, so nothing is written to fill it. */
+.value-index {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  margin: 0;
+  padding-top: 2px;
+}
+
+.value-index-num {
+  color: var(--accent);
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-weight: 760;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.value-index-word {
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.value-brief:hover {
+  border-color: var(--accent-ring);
+  box-shadow: 0 16px 44px rgba(0, 229, 255, 0.16), 0 8px 26px rgba(18, 107, 255, 0.2);
+  transform: translateY(-5px);
+}
+
+@supports ((mask-composite: exclude) or (-webkit-mask-composite: xor)) {
+  .value-brief:hover {
+    border-color: transparent;
+  }
+
+  .value-brief:hover::before {
+    background: linear-gradient(118deg, rgba(0, 229, 255, 0.95) 0%, rgba(18, 107, 255, 0.7) 54%, rgba(0, 229, 255, 0.3) 100%);
+  }
+}
+
+.value-brief:hover .value-mark {
+  transform: rotate(calc((var(--v-i) - 1) * 60deg)) translate(2px, -2px);
+}
+
+/* ---------- Success stories ---------------------------------------------- */
+
+/* No rule above this block. A cyan hairline directly under a heading is a
+   section divider wherever it is drawn, and at tablet width it would run the
+   full content measure. Separation here is space only. */
+.about-stories-empty {
+  grid-column: 4 / span 6;
+  display: grid;
+  gap: clamp(10px, 1.2vw, 16px);
+  margin-top: clamp(18px, 2.4vw, 30px);
+}
+
+.about-stories-empty p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.about-stories-empty .ed-action {
+  grid-column: auto;
+  margin-top: 6px;
+}
+
+/* Populated state, in the same family as the value cards so the page reads as
+   one system the moment approved quotes exist. */
+.about-quotes {
+  grid-column: 3 / span 9;
+  display: grid;
+  gap: clamp(22px, 3.4vw, 52px);
+  margin-top: clamp(12px, 1.6vw, 22px);
+}
+
+/* Exactly the value card's treatment, alternately inset the same way. A 2px
+   solid cyan edge here would be the strongest line on the page and would turn
+   the success stories back into a boxed testimonials block the day the first
+   approved quote lands. */
+.about-quotes > :nth-child(odd)  { margin-inline-end: clamp(14px, 4vw, 64px); }
+.about-quotes > :nth-child(even) { margin-inline-start: clamp(14px, 4vw, 64px); }
+
+.about-quote {
+  position: relative;
+  margin: 0;
+  padding: clamp(22px, 2.8vw, 38px);
+  background: linear-gradient(158deg, rgba(11, 26, 43, 0.74) 0%, rgba(7, 18, 31, 0.56) 100%);
+  border: 1px solid var(--accent-line);
+  border-radius: var(--radius);
+}
+
+.about-quote blockquote {
+  margin: 0 0 16px;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+
+.about-quote blockquote p {
+  margin: 0;
+  color: var(--color-glacier-ice);
+  font-size: clamp(1.06rem, 1.8vw, 1.4rem);
+  line-height: 1.5;
+}
+
+.about-quote figcaption {
+  display: grid;
+  gap: 3px;
+}
+
+.about-quote-author {
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.about-quote-role {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+/* ---------- Close and the dissolve into the footer ------------------------ */
+
+/* An in-flow block paints above the negatively stacked field, so this gradient
+   physically covers the field over the last stretch of the page and resolves to
+   the footer's exact background colour. No seam, no global CSS change. */
+/* The ramp is eased, not linear and not front-loaded. A three-stop gradient
+   puts over half its alpha change into the first half of the band, which reads
+   as an edge sweeping upward rather than as the canvas resolving; these stops
+   approximate a smoothstep so no part of the band changes fast enough to draw
+   a line. The band is also taller than the gap above it, so the resolution is
+   longer than the pause that precedes it. */
+.about-dissolve {
+  height: clamp(230px, 30vh, 400px);
+  margin-block-start: clamp(56px, 8vh, 104px);
+  background: linear-gradient(
+    180deg,
+    rgba(7, 18, 31, 0) 0%,
+    rgba(7, 18, 31, 0.04) 14%,
+    rgba(7, 18, 31, 0.14) 28%,
+    rgba(7, 18, 31, 0.31) 42%,
+    rgba(7, 18, 31, 0.52) 56%,
+    rgba(7, 18, 31, 0.72) 70%,
+    rgba(7, 18, 31, 0.88) 82%,
+    rgba(7, 18, 31, 0.97) 92%,
+    var(--color-void-navy) 100%
+  );
+}
+
+.about-canvas .button {
+  box-shadow: 0 14px 34px rgba(0, 229, 255, 0.3), 0 10px 28px rgba(18, 107, 255, 0.28);
+}
+
+/* ---------- Scroll reveal ------------------------------------------------- */
+
+/* Applied by JS only, and only once it has confirmed it can also remove it, so
+   content is never hidden when scripting or IntersectionObserver is absent.
+
+   The unit is one element, not one movement. Revealing a whole movement at
+   once animates the page in six discrete blocks — the same six units the
+   layout above spends its effort dissolving — and for the values that meant
+   six tall cards appearing together. main.js marks each unit with
+   data-ed-reveal and observes it individually, so the page resolves
+   continuously as it is scrolled. --r-i staggers neighbours that happen to
+   enter together, capped so a long list never runs a visible queue. */
+.about-canvas.is-observed [data-ed-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 620ms ease, transform 620ms ease;
+  transition-delay: calc(min(var(--r-i, 0), 3) * 55ms);
+}
+
+.about-canvas.is-observed [data-ed-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Responsive ---------------------------------------------------- */
+
+@media (max-width: 1024px) {
+  .ed-statement,
+  .ed-lede,
+  .ed-body,
+  .ed-subhead,
+  .ed-enumeration,
+  .ed-asks,
+  .ed-action,
+  .about-stories-empty {
+    grid-column: 1 / -1;
+  }
+
+  .ed-label {
+    grid-column: 1 / -1;
+  }
+
+  .value-stack,
+  .about-quotes {
+    grid-column: 1 / -1;
+  }
+
+  .ed-mark {
+    font-size: clamp(4rem, 17vw, 9rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .about-movement {
+    margin-block-start: clamp(56px, 9vh, 92px);
+  }
+
+  .about-overture {
+    min-height: 0;
+    padding-block-start: clamp(48px, 9vh, 88px);
+  }
+
+  .value-brief {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+
+  /* The rule becomes horizontal so the index still reads as a separate field. */
+  .value-rule {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent-line) 16%, var(--accent-line) 84%, transparent 100%);
+  }
+
+  .value-index {
+    grid-auto-flow: column;
+    align-items: baseline;
+    justify-content: start;
+    gap: 14px;
+  }
+
+  .value-index-num {
+    font-size: 1.7rem;
+  }
+
+  .ed-asks {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* In one column each rule would span the full content measure with air above
+     it, which is a section divider rather than a list hairline. The numerals
+     already delimit the items. */
+  .ed-ask {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  /* Three of the six words are dropped so each remaining one owns its
+     movement instead of crowding a narrow screen. */
+  .ed-mark-asks,
+  .ed-mark-values,
+  .ed-mark-close {
+    display: none;
+  }
+
+  .ed-mark {
+    font-size: clamp(3.4rem, 21vw, 6rem);
+  }
+}
+
+/* ---------- Reduced motion ------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-plate {
+    animation: none;
+    transform: none;
+  }
+
+  /* Pinning the words is not enough. With the scroll transform removed all six
+     collapse onto their static offsets, overlapping in a band across the middle
+     of the viewport for the whole page — the opposite of the one-word-at-a-time
+     depth the moving version gives. One word is kept, the rest are dropped. */
+  .ed-mark {
+    transform: none;
+  }
+
+  .ed-mark:not(.ed-mark-open) {
+    display: none;
+  }
+
+  .ed-mark-open {
+    top: 32%;
+    opacity: 0.4;
+  }
+
+  .about-canvas.is-observed [data-ed-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .value-brief:hover {
+    transform: none;
   }
 }
 

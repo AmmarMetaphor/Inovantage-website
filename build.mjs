@@ -880,6 +880,40 @@ function testimonialSection(testimonials, { heading, eyebrow, limit }) {
 </section>`;
 }
 
+/* The About page's Success Stories movement. Built from the same approved
+   testimonial list the Case Studies page uses, so a quote appears here only
+   once a client has supplied and approved it. While the list is empty this
+   states that plainly instead of showing an example, and always emits the
+   heading the section is labelled by. */
+function aboutSuccessStories(testimonials) {
+  const heading = `      <p class="ed-label">Our success stories</p>
+      <h2 class="ed-statement" id="about-stories-h">What the work is worth is what a client will say about it.</h2>`;
+
+  if (!testimonials.length) {
+    return `${heading}
+      <div class="about-stories-empty">
+        <p>We publish a client's words only once that client has approved them, so there is nothing quoted here yet. The same rule governs every figure and every named example on this site.</p>
+        <p>It is the fifth of the principles above, applied to our own marketing.</p>
+        <p class="ed-action"><a class="text-link" href="/case-studies/">See how a case study is structured ${icon('arrow')}</a></p>
+      </div>`;
+  }
+
+  return `${heading}
+      <div class="about-quotes">
+        ${testimonials.slice(0, 4).map((testimonial) => {
+          const attribution = [testimonial.role, testimonial.company].filter(Boolean).join(', ');
+          return `<figure class="about-quote">
+          <blockquote><p>${escapeHtml(testimonial.quote)}</p></blockquote>
+          <figcaption>
+            <span class="about-quote-author">${escapeHtml(testimonial.author)}</span>
+            ${attribution ? `<span class="about-quote-role">${escapeHtml(attribution)}</span>` : ''}
+          </figcaption>
+        </figure>`;
+        }).join('\n        ')}
+      </div>
+      <p class="ed-action"><a class="text-link" href="/case-studies/">Explore case studies ${icon('arrow')}</a></p>`;
+}
+
 /* Client names are rendered as text unless a real logo file is supplied,
    so an absent asset can never become an invented one. */
 function clientSection(clients) {
@@ -1067,6 +1101,7 @@ async function build() {
     caseTestimonialMid: testimonialSection(testimonials, { eyebrow: 'In their words', heading: 'What clients say about working with us', limit: 1 }),
     caseTestimonialsAll: testimonialSection(testimonials.slice(1), { eyebrow: 'Client voices', heading: 'More from the people we work with', limit: 4 }),
     caseClients: clientSection(clients),
+    aboutSuccessStories: aboutSuccessStories(testimonials),
     currentYear: String(new Date().getUTCFullYear()),
     iconAutomation: icon('automation'),
     iconWeb: icon('web'),
