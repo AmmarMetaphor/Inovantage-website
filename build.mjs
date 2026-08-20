@@ -487,7 +487,7 @@ function renderHeader(activeNav, site) {
 <header class="site-header" data-header>
   <div class="container header-inner">
     <a class="brand" href="/" aria-label="${escapeHtml(site.name)} home">
-      <img src="/assets/images/inovantage-logo.png" width="2048" height="646" alt="${escapeHtml(site.name)}">
+      <img src="/assets/images/inovantage-logo-blue.png" width="2048" height="646" alt="${escapeHtml(site.name)}">
     </a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
       <span class="menu-open-icon">${icon('menu')}</span>
@@ -533,7 +533,7 @@ function renderFooter(site, year) {
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a href="/" aria-label="${escapeHtml(site.name)} home"><img src="/assets/images/inovantage-logo.png" width="2048" height="646" alt="${escapeHtml(site.name)}"></a>
+      <a href="/" aria-label="${escapeHtml(site.name)} home"><img src="/assets/images/inovantage-logo-blue.png" width="2048" height="646" alt="${escapeHtml(site.name)}"></a>
       <p>${escapeHtml(site.tagline)}</p>
       ${socialHtml}
     </div>
@@ -584,7 +584,7 @@ function organisationSchema(site) {
     name: site.name,
     legalName: site.legalName || site.name,
     url: site.url,
-    logo: `${site.url}/assets/images/inovantage-logo.png`,
+    logo: `${site.url}/assets/images/inovantage-logo-blue.png`,
     email: site.email,
     description: site.tagline,
     areaServed: ['GB', 'US']
@@ -623,7 +623,7 @@ function renderLayout({ site, title, description, route, activeNav, content, ima
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escapeHtml(fullTitle)}</title>
   <meta name="description" content="${escapeHtml(description)}">
-  <meta name="theme-color" content="#913290">
+  <meta name="theme-color" content="#07121f">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32.png">
@@ -686,7 +686,7 @@ function renderPost(post, site, allPosts) {
     ${heroImage}
   </div>
 </section>
-<section class="section article-section">
+<section class="section section-light article-section">
   <div class="container container-article">
     <article class="prose">${post.html}</article>
     <aside class="article-cta">
@@ -712,7 +712,7 @@ ${relatedHtml}`;
     publisher: {
       '@type': 'Organization',
       name: site.name,
-      logo: { '@type': 'ImageObject', url: `${site.url}/assets/images/inovantage-logo.png` }
+      logo: { '@type': 'ImageObject', url: `${site.url}/assets/images/inovantage-logo-blue.png` }
     },
     mainEntityOfPage: `${site.url}${post.url}`
   };

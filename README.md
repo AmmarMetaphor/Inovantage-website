@@ -713,24 +713,42 @@ Edit:
 src/static/assets/css/styles.css
 ```
 
-Keep the brand values:
+All colours are defined once, as design tokens, at the top of that file. Use
+the semantic tokens rather than adding new hex values:
 
 ```css
---brand: #913290;
---grey: #7d7d7d;
+/* palette */
+--color-void-navy: #07121f;    /* primary dark surface   */
+--color-deep-ocean: #0b1a2b;   /* secondary dark surface */
+--color-steel-blue: #1c2f4a;   /* elevated cards         */
+--color-cobalt-core: #0b3d9c;  /* links on light         */
+--color-electric-blue: #126bff;/* primary CTA            */
+--color-luminous-cyan: #00e5ff;/* highlight, not a button*/
+--color-glacier-ice: #e6f2ff;  /* light sections         */
+--color-silver-mist: #c9d6e6;  /* body text on dark      */
+
+/* semantic — reference these from components */
+--background-primary, --background-secondary, --surface-elevated,
+--background-light, --text-primary, --text-secondary, --text-muted,
+--accent, --accent-highlight, --link, --border, --focus
 ```
 
-Run a visual check at mobile and desktop widths after every layout change.
+Sections alternate between `--background-primary`, `.section-soft` and
+`.section-light` so boundaries stay visible. Run a visual check at mobile and
+desktop widths after every layout change.
 
 ### Change the logo
 
 Replace the file only with an approved Inovantage asset using the same filename where possible:
 
 ```text
-src/static/assets/images/inovantage-logo.png
+src/static/assets/images/inovantage-logo-blue.png
 ```
 
-Keep the image transparent, do not stretch it, and regenerate favicons/social artwork when the official identity changes.
+That file is the purple original recoloured into the blue palette; the untouched
+original is kept alongside it as `inovantage-logo.png`. Keep the image
+transparent, do not stretch it, and regenerate favicons/social artwork when the
+official identity changes — those assets still carry the previous purple.
 
 ---
 
