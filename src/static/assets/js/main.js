@@ -283,6 +283,201 @@
     });
   }
 
+  // About page only: initialises solely when the continuous canvas is present.
+  //
+  // One rAF loop drives the whole page. It writes three custom properties and
+  // nothing else: --about-p (scroll progress 0..1, which the display words ride)
+  // and --about-px/--about-py (eased pointer offset, -1..1, which shifts the
+  // field plates by a few pixels each). The field's own drift is CSS keyframes
+  // on transform, so the compositor owns it and the loop never touches it.
+  const aboutCanvas = document.querySelector('[data-about-canvas]');
+
+  if (aboutCanvas) {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
+
+    const EASE = 0.08;
+    const SETTLED = 0.0008;
+    const TOUCH_GRACE = 900;
+
+    let frame = 0;
+    let pointerX = 0;
+    let pointerY = 0;
+    let lastTouchAt = -Infinity;
+    let scrollDirty = true;
+
+    const target = { x: 0, y: 0 };
+    const current = { x: 0, y: 0, p: -1 };
+
+    const clamp = (value) => Math.max(-1, Math.min(1, value));
+
+    // Progress of the canvas through the viewport, 0 at the top of the page to
+    // 1 when its end reaches the bottom. Read once per frame, never per event.
+    const readProgress = () => {
+      const rect = aboutCanvas.getBoundingClientRect();
+      const travel = rect.height - window.innerHeight;
+      if (travel <= 0) return 0;
+      return Math.max(0, Math.min(1, -rect.top / travel));
+    };
+
+    const render = () => {
+      let moving = false;
+
+      if (scrollDirty) {
+        const p = readProgress();
+        if (Math.abs(p - current.p) > 0.0005) {
+          current.p = p;
+          aboutCanvas.style.setProperty('--about-p', p.toFixed(4));
+        }
+        scrollDirty = false;
+      }
+
+      for (const key of ['x', 'y']) {
+        const delta = target[key] - current[key];
+        if (Math.abs(delta) < SETTLED) {
+          current[key] = target[key];
+        } else {
+          current[key] += delta * EASE;
+          moving = true;
+        }
+      }
+      aboutCanvas.style.setProperty('--about-px', current.x.toFixed(4));
+      aboutCanvas.style.setProperty('--about-py', current.y.toFixed(4));
+
+      frame = moving ? requestAnimationFrame(render) : 0;
+    };
+
+    const schedule = () => {
+      if (!frame && !document.hidden) frame = requestAnimationFrame(render);
+    };
+
+    const onScroll = () => {
+      scrollDirty = true;
+      schedule();
+    };
+
+    // Only a real mouse moves the field, and only by a few pixels. Touch
+    // reports its own pointerType, and the synthetic mouse events that follow a
+    // tap are ignored for a moment afterwards.
+    const track = (event) => {
+      if (event.pointerType !== 'mouse') {
+        lastTouchAt = event.timeStamp;
+        return;
+      }
+      if (reducedMotion.matches || coarsePointer.matches) return;
+      if (event.timeStamp - lastTouchAt < TOUCH_GRACE) return;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      target.x = clamp((pointerX / window.innerWidth) * 2 - 1);
+      target.y = clamp((pointerY / window.innerHeight) * 2 - 1);
+      schedule();
+    };
+
+    const rest = () => {
+      target.x = 0;
+      target.y = 0;
+      schedule();
+    };
+
+    // Each display word is pinned to the movement it belongs to. The CSS
+    // anchors are a fallback for fractions of the whole document; those drift
+    // out of step with the movements as the viewport height changes, which can
+    // park a word in the empty band between two of them. Measuring puts every
+    // word centred on its own movement at any width.
+    const marks = [...aboutCanvas.querySelectorAll('[data-ed-mark]')];
+
+    const placeMarks = () => {
+      if (!marks.length) return;
+      const canvasTop = aboutCanvas.getBoundingClientRect().top + window.scrollY;
+      const travel = aboutCanvas.offsetHeight - window.innerHeight;
+      if (travel <= 0) return;
+
+      for (const mark of marks) {
+        const movement = aboutCanvas.querySelector(
+          '[data-ed-anchor="' + mark.dataset.edMark + '"]'
+        );
+        if (!movement) continue;
+        const box = movement.getBoundingClientRect();
+        const centre = box.top + window.scrollY + box.height / 2;
+        const anchor = (centre - window.innerHeight / 2 - canvasTop) / travel;
+        mark.style.setProperty('--mark-anchor', Math.max(0, Math.min(1, anchor)).toFixed(4));
+      }
+    };
+
+    let placeTimer = 0;
+    const replaceMarks = () => {
+      window.clearTimeout(placeTimer);
+      placeTimer = window.setTimeout(placeMarks, 140);
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { onScroll(); replaceMarks(); }, { passive: true });
+    document.addEventListener('pointermove', track, { passive: true });
+    document.addEventListener('pointerleave', rest, { passive: true });
+
+    // Nothing renders while the tab is in the background.
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        if (frame) cancelAnimationFrame(frame);
+        frame = 0;
+      } else {
+        scrollDirty = true;
+        schedule();
+      }
+    });
+
+    onScroll();
+    placeMarks();
+
+    // Scroll reveal. The hiding class is only added once this code is running
+    // and IntersectionObserver is known to exist, so content is never hidden by
+    // a stylesheet that no script can undo.
+    if ('IntersectionObserver' in window && !reducedMotion.matches) {
+      // One unit per element rather than one per movement: a movement-sized
+      // unit animates the page in six blocks, which re-segments exactly what
+      // the layout dissolves. The value cards are units in their own right,
+      // so the six of them arrive as the reader reaches each one.
+      const units = [];
+      for (const movement of aboutCanvas.querySelectorAll('.about-movement')) {
+        for (const child of movement.children) {
+          if (child.classList.contains('value-stack')) {
+            for (const item of child.children) units.push(item);
+          } else {
+            units.push(child);
+          }
+        }
+      }
+
+      units.forEach((unit, index) => {
+        unit.setAttribute('data-ed-reveal', '');
+        unit.style.setProperty('--r-i', String(index % 4));
+      });
+      aboutCanvas.classList.add('is-observed');
+
+      const observer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+
+      for (const unit of units) observer.observe(unit);
+
+      // Whatever is already on screen is shown immediately, and a backstop
+      // reveals everything if any observation never fires.
+      window.setTimeout(() => {
+        for (const unit of units) unit.classList.add('is-visible');
+      }, 2600);
+    }
+
+    if (typeof reducedMotion.addEventListener === 'function') {
+      reducedMotion.addEventListener('change', () => {
+        if (reducedMotion.matches) rest();
+      });
+    }
+  }
+
   const filterGroup = document.querySelector('[data-filter-group]');
   const insightCards = [...document.querySelectorAll('[data-insight-card]')];
 

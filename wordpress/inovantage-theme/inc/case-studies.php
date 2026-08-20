@@ -183,3 +183,63 @@ function inovantage_case_study_empty_state() {
 	</div>
 	<?php
 }
+
+/**
+ * The About page's Success Stories movement.
+ *
+ * A client's words are published only once that client has supplied and
+ * approved them. This theme carries no custom field layer for testimonials, so
+ * there is deliberately no place for an unapproved quote to be typed: the list
+ * comes from a filter, which an owner-supplied snippet can populate when real
+ * approved quotes exist.
+ *
+ *     add_filter( 'inovantage_about_testimonials', function () {
+ *         return array(
+ *             array( 'quote' => '...', 'author' => '...', 'role' => '...' ),
+ *         );
+ *     } );
+ *
+ * Until then it states the position plainly rather than showing an example,
+ * and it always emits the heading the section is labelled by.
+ */
+function inovantage_about_success_stories() {
+	$quotes = apply_filters( 'inovantage_about_testimonials', array() );
+	$quotes = is_array( $quotes ) ? $quotes : array();
+
+	// Anything without both a quotation and a named source is not publishable.
+	$quotes = array_filter(
+		$quotes,
+		function ( $item ) {
+			return is_array( $item ) && ! empty( $item['quote'] ) && ! empty( $item['author'] );
+		}
+	);
+	?>
+	<p class="ed-label"><?php esc_html_e( 'Our success stories', 'inovantage' ); ?></p>
+	<h2 class="ed-statement" id="about-stories-h"><?php esc_html_e( 'What the work is worth is what a client will say about it.', 'inovantage' ); ?></h2>
+	<?php if ( empty( $quotes ) ) : ?>
+		<div class="about-stories-empty">
+			<p><?php esc_html_e( "We publish a client's words only once that client has approved them, so there is nothing quoted here yet. The same rule governs every figure and every named example on this site.", 'inovantage' ); ?></p>
+			<p><?php esc_html_e( 'It is the fifth of the principles above, applied to our own marketing.', 'inovantage' ); ?></p>
+			<p class="ed-action"><a class="text-link" href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'See how a case study is structured', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a></p>
+		</div>
+	<?php else : ?>
+		<div class="about-quotes">
+			<?php foreach ( array_slice( $quotes, 0, 4 ) as $item ) : ?>
+				<?php
+				$attribution = trim( implode( ', ', array_filter( array( isset( $item['role'] ) ? $item['role'] : '', isset( $item['company'] ) ? $item['company'] : '' ) ) ) );
+				?>
+				<figure class="about-quote">
+					<blockquote><p><?php echo esc_html( $item['quote'] ); ?></p></blockquote>
+					<figcaption>
+						<span class="about-quote-author"><?php echo esc_html( $item['author'] ); ?></span>
+						<?php if ( $attribution ) : ?>
+							<span class="about-quote-role"><?php echo esc_html( $attribution ); ?></span>
+						<?php endif; ?>
+					</figcaption>
+				</figure>
+			<?php endforeach; ?>
+		</div>
+		<p class="ed-action"><a class="text-link" href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'Explore case studies', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a></p>
+	<?php endif; ?>
+	<?php
+}
