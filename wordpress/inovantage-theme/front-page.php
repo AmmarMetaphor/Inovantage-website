@@ -1,15 +1,26 @@
 <?php
 /**
- * The homepage template — preserves the approved hero, dashboard,
- * services grid, outcomes, process, review-first panel and latest
- * insights sections.
+ * The homepage template — preserves the approved hero copy, services grid,
+ * outcomes, process, review-first panel and latest insights sections. The
+ * hero renders the orbital artwork as a decorative background layer; the
+ * headline, body copy and calls to action stay as semantic markup.
  */
 
 get_header();
+
+$inovantage_hero_art        = INOVANTAGE_URI . '/assets/images/heroes/home-hero-orbital.webp';
+$inovantage_hero_art_srcset = sprintf(
+	'%1$s/assets/images/heroes/home-hero-orbital-760.webp 760w, %1$s/assets/images/heroes/home-hero-orbital-1180.webp 1180w, %1$s/assets/images/heroes/home-hero-orbital.webp 1672w',
+	INOVANTAGE_URI
+);
 ?>
 
-<section class="hero">
-	<div class="container hero-grid">
+<section class="hero hero-orbital" data-hero-parallax>
+	<div class="hero-orbital-media" aria-hidden="true">
+		<img class="hero-orbital-art" src="<?php echo esc_url( $inovantage_hero_art ); ?>" srcset="<?php echo esc_attr( $inovantage_hero_art_srcset ); ?>" sizes="(max-width: 760px) 156vw, (max-width: 900px) 142vw, (max-width: 1040px) 100vw, 78vw" width="1672" height="941" alt="" fetchpriority="high" decoding="async">
+	</div>
+	<div class="hero-orbital-veil" aria-hidden="true"></div>
+	<div class="container hero-orbital-inner">
 		<div class="hero-copy">
 			<p class="eyebrow"><?php esc_html_e( 'Automation, design and development', 'inovantage' ); ?></p>
 			<h1><?php esc_html_e( 'Digital systems that help your business ', 'inovantage' ); ?><span><?php esc_html_e( 'work better.', 'inovantage' ); ?></span></h1>
@@ -19,19 +30,6 @@ get_header();
 				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/services/' ) ); ?>"><?php esc_html_e( 'Explore services', 'inovantage' ); ?></a>
 			</div>
 			<p class="hero-proof"><span><?php esc_html_e( 'Built for UK businesses', 'inovantage' ); ?></span><span><?php esc_html_e( 'Clear scope and milestones', 'inovantage' ); ?></span><span><?php esc_html_e( 'Human review before publication', 'inovantage' ); ?></span></p>
-		</div>
-		<div class="system-visual">
-			<span class="connector-line connector-one" aria-hidden="true"></span>
-			<div class="floating-card floating-card-one"><strong><?php esc_html_e( 'Lead qualified', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Assigned automatically', 'inovantage' ); ?></span></div>
-			<div class="system-panel">
-				<div class="panel-top"><span class="panel-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="panel-status"><?php esc_html_e( 'Systems active', 'inovantage' ); ?></span></div>
-				<div class="workflow-list">
-					<a class="workflow-row is-active" href="<?php echo esc_url( home_url( '/services/ai-automation/' ) ); ?>"><span class="workflow-icon"><?php inovantage_icon_e( 'automation' ); ?></span><span class="workflow-copy"><strong><?php esc_html_e( 'AI automation', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Enquiries, data and reporting', 'inovantage' ); ?></span></span><span class="workflow-pill"><?php esc_html_e( 'Connected', 'inovantage' ); ?></span></a>
-					<a class="workflow-row" href="<?php echo esc_url( home_url( '/services/website-design/' ) ); ?>"><span class="workflow-icon"><?php inovantage_icon_e( 'web' ); ?></span><span class="workflow-copy"><strong><?php esc_html_e( 'Website', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Fast, clear and conversion-ready', 'inovantage' ); ?></span></span><span class="workflow-pill"><?php esc_html_e( 'Live', 'inovantage' ); ?></span></a>
-					<a class="workflow-row" href="<?php echo esc_url( home_url( '/services/social-media-management/' ) ); ?>"><span class="workflow-icon"><?php inovantage_icon_e( 'social' ); ?></span><span class="workflow-copy"><strong><?php esc_html_e( 'Social content', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Draft, review, approve, publish', 'inovantage' ); ?></span></span><span class="workflow-pill"><?php esc_html_e( 'Published', 'inovantage' ); ?></span></a>
-					<a class="workflow-row" href="<?php echo esc_url( home_url( '/services/app-development/' ) ); ?>"><span class="workflow-icon"><?php inovantage_icon_e( 'app' ); ?></span><span class="workflow-copy"><strong><?php esc_html_e( 'Business app', 'inovantage' ); ?></strong><span><?php esc_html_e( 'One useful product, fewer workarounds', 'inovantage' ); ?></span></span><span class="workflow-pill"><?php esc_html_e( 'Building', 'inovantage' ); ?></span></a>
-				</div>
-			</div>
 		</div>
 	</div>
 </section>

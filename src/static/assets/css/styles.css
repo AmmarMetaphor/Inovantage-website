@@ -521,187 +521,139 @@ p {
   border-radius: 50%;
 }
 
-.system-visual {
-  position: relative;
-  min-height: 560px;
+/* Homepage hero: orbital artwork as an atmospheric background layer.
+   --hero-x and --hero-y are set from pointer position by main.js and are
+   unitless values in the range -1 to 1. Only the artwork layer moves. */
+.hero-orbital {
+  --orbital-slate: #08121e;
+  --orbital-sky: #5cc8ff;
+  /* Lighter sky for the small uppercase eyebrow, which sits over the brightest
+     part of the artwork once the layout stacks. */
+  --orbital-sky-soft: #a9e2ff;
+  --orbital-electric: #2b86ff;
+  --orbital-text: #f3f8ff;
+  --hero-x: 0;
+  --hero-y: 0;
+  --hero-lift: 0px;
+  display: grid;
+  align-content: center;
+  min-height: clamp(400px, 50vh, 520px);
+  padding-block: clamp(44px, 4.6vw, 64px);
+  color: var(--orbital-text);
+  background: var(--orbital-slate);
+  isolation: isolate;
 }
 
-.system-panel {
+.hero-orbital::before {
+  content: none;
+}
+
+.hero-orbital-media {
   position: absolute;
-  inset: auto 0 0 0;
-  padding: 24px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(145, 50, 144, 0.14);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
-}
-
-.panel-top {
+  z-index: 0;
+  inset: -26px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  justify-content: flex-end;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.panel-dots {
-  display: flex;
-  gap: 6px;
+/* Sized from the hero height so the orbital form is never cropped, anchored
+   right, and feathered top and bottom so it dissolves into the slate ground. */
+.hero-orbital-art {
+  flex: none;
+  width: auto;
+  max-width: none;
+  height: 84%;
+  transform: translate3d(calc(var(--hero-x) * 12px), calc(var(--hero-y) * 9px + var(--hero-lift)), 0);
+  transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
 }
 
-.panel-dots i {
-  width: 8px;
-  height: 8px;
-  background: #d8d0d9;
-  border-radius: 50%;
+.hero-orbital.is-pointer-active {
+  --hero-lift: -6px;
 }
 
-.panel-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  color: var(--success);
-  font-size: 0.78rem;
-  font-weight: 740;
-}
-
-.panel-status::before {
-  width: 7px;
-  height: 7px;
-  content: "";
-  background: currentColor;
-  border-radius: 50%;
-  box-shadow: 0 0 0 5px rgba(37, 122, 84, 0.1);
-}
-
-.workflow-list {
-  display: grid;
-  gap: 13px;
-}
-
-.workflow-row {
-  display: grid;
-  grid-template-columns: 44px 1fr auto;
-  align-items: center;
-  gap: 13px;
-  padding: 14px;
-  color: inherit;
-  text-decoration: none;
-  background: var(--surface-soft);
-  border: 1px solid transparent;
-  border-radius: 14px;
-  transition: background 0.15s ease, border-color 0.15s ease;
-}
-
-.workflow-row.is-active,
-.workflow-row:hover,
-.workflow-row:focus-visible {
-  background: var(--brand-soft);
-  border-color: rgba(145, 50, 144, 0.16);
-}
-
-.workflow-icon {
-  display: grid;
-  width: 44px;
-  height: 44px;
-  place-items: center;
-  color: var(--brand-dark);
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-}
-
-.workflow-icon svg {
-  width: 22px;
-  height: 22px;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.6;
-}
-
-.workflow-copy strong,
-.workflow-copy span {
-  display: block;
-}
-
-.workflow-copy strong {
-  font-size: 0.92rem;
-}
-
-.workflow-copy span {
-  color: var(--muted);
-  font-size: 0.76rem;
-}
-
-.workflow-pill {
-  padding: 6px 9px;
-  color: var(--brand-dark);
-  font-size: 0.68rem;
-  font-weight: 760;
-  background: #fff;
-  border-radius: 999px;
-}
-
-.floating-card {
-  position: absolute;
-  z-index: 2;
-  min-width: 190px;
-  max-width: calc(100% - 24px);
-  padding: 16px;
-  background: rgba(255, 255, 255, 0.96);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: var(--shadow-sm);
-}
-
-.floating-card strong,
-.floating-card span {
-  display: block;
-}
-
-.floating-card strong {
-  margin-bottom: 3px;
-  font-size: 0.9rem;
-}
-
-.floating-card span {
-  color: var(--muted);
-  font-size: 0.75rem;
-}
-
-.floating-card-one {
-  top: 0;
-  right: 16px;
-}
-
-.connector-line {
+.hero-orbital-veil {
   position: absolute;
   z-index: 1;
-  background: linear-gradient(90deg, rgba(145, 50, 144, 0), rgba(145, 50, 144, 0.45));
-  height: 2px;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(8, 18, 30, 0.96) 0%, rgba(8, 18, 30, 0.82) 34%, rgba(8, 18, 30, 0.3) 62%, rgba(8, 18, 30, 0.06) 100%),
+    linear-gradient(180deg, rgba(8, 18, 30, 0.5) 0%, rgba(8, 18, 30, 0) 24%, rgba(8, 18, 30, 0) 66%, rgba(8, 18, 30, 0.58) 100%);
 }
 
-.connector-line::after {
-  position: absolute;
-  width: 9px;
-  height: 9px;
-  top: 50%;
-  right: 0;
-  content: "";
-  background: var(--brand);
-  border: 3px solid #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(145, 50, 144, 0.24);
-  transform: translate(50%, -50%);
+.hero-orbital-inner {
+  position: relative;
+  z-index: 2;
 }
 
-.connector-one {
-  width: 70px;
-  top: 60px;
-  right: 70px;
-  transform: rotate(66deg);
+.hero-orbital .hero-copy {
+  max-width: min(540px, 50%);
+}
+
+.hero-orbital .eyebrow {
+  color: var(--orbital-sky-soft);
+}
+
+.hero-orbital h1 {
+  margin-bottom: var(--content-gap-md);
+  font-size: clamp(2rem, 3.5vw, 2.9rem);
+  color: #fff;
+  text-shadow: 0 2px 26px rgba(4, 10, 18, 0.55);
+}
+
+.hero-orbital .hero-copy h1 span {
+  color: var(--orbital-sky);
+}
+
+.hero-orbital .hero-copy > p:not(.eyebrow):not(.hero-proof) {
+  max-width: 560px;
+  color: rgba(214, 230, 246, 0.86);
+  font-size: clamp(1.06rem, 1.5vw, 1.2rem);
+}
+
+.hero-orbital .hero-proof {
+  color: rgba(198, 216, 235, 0.8);
+}
+
+.hero-orbital .hero-proof span::before {
+  background: var(--orbital-sky);
+  box-shadow: 0 0 0 4px rgba(92, 200, 255, 0.14);
+}
+
+.hero-orbital .button {
+  background: linear-gradient(135deg, var(--orbital-electric), var(--orbital-sky));
+  border-color: rgba(126, 205, 255, 0.5);
+  box-shadow: 0 14px 34px rgba(11, 74, 145, 0.45);
+}
+
+.hero-orbital .button:hover {
+  background: linear-gradient(135deg, #1c76f5, #46bdff);
+  border-color: rgba(158, 219, 255, 0.68);
+  box-shadow: 0 18px 40px rgba(11, 74, 145, 0.55);
+}
+
+.hero-orbital .button-secondary {
+  color: #eaf4ff;
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(148, 202, 245, 0.42);
+  box-shadow: none;
+}
+
+.hero-orbital .button-secondary:hover {
+  color: #fff;
+  background: rgba(92, 200, 255, 0.16);
+  border-color: rgba(92, 200, 255, 0.7);
+  box-shadow: none;
+}
+
+.hero-orbital :focus-visible {
+  outline-color: rgba(124, 205, 255, 0.9);
 }
 
 .trust-band {
@@ -2227,10 +2179,22 @@ p {
     gap: 42px;
   }
 
-  .system-visual {
-    width: min(100%, 620px);
-    min-height: 560px;
-    margin-inline: auto;
+  .hero-orbital {
+    min-height: clamp(400px, 50vh, 500px);
+  }
+
+  .hero-orbital .hero-copy {
+    max-width: 600px;
+  }
+
+  .hero-orbital-art {
+    height: 68%;
+  }
+
+  .hero-orbital-veil {
+    background:
+      linear-gradient(90deg, rgba(8, 18, 30, 0.97) 0%, rgba(8, 18, 30, 0.9) 32%, rgba(8, 18, 30, 0.5) 66%, rgba(8, 18, 30, 0.14) 100%),
+      linear-gradient(180deg, rgba(8, 18, 30, 0.52) 0%, rgba(8, 18, 30, 0.06) 28%, rgba(8, 18, 30, 0.12) 62%, rgba(8, 18, 30, 0.62) 100%);
   }
 
   .page-hero-grid {
@@ -2288,7 +2252,54 @@ p {
   }
 }
 
+/* Below roughly 900px the hero has no room for a side-by-side composition, so
+   the artwork becomes a dimmed atmospheric wash sitting high in the frame and
+   the copy runs the full width. Touch devices land here; they never animate
+   because the script only reacts to mouse pointers. */
+@media (max-width: 900px) {
+  .hero-orbital {
+    min-height: clamp(360px, 58vh, 470px);
+    padding-block: clamp(34px, 6.4vw, 56px);
+  }
+
+  .hero-orbital .hero-copy,
+  .hero-orbital .hero-copy > p:not(.eyebrow):not(.hero-proof) {
+    max-width: none;
+  }
+
+  .hero-orbital h1 {
+    font-size: clamp(1.95rem, 5.6vw, 2.7rem);
+  }
+
+  .hero-orbital-media {
+    align-items: flex-start;
+  }
+
+  .hero-orbital-art {
+    width: 142%;
+    height: auto;
+    margin-top: -6%;
+    opacity: 0.7;
+    -webkit-mask-image: linear-gradient(180deg, #000 0, #000 66%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0, #000 66%, transparent 100%);
+  }
+
+  .hero-orbital-veil {
+    background:
+      radial-gradient(128% 62% at 86% 2%, rgba(8, 18, 30, 0.28) 0%, rgba(8, 18, 30, 0.66) 46%, rgba(8, 18, 30, 0.88) 100%),
+      linear-gradient(180deg, rgba(8, 18, 30, 0.42) 0%, rgba(8, 18, 30, 0.62) 42%, rgba(8, 18, 30, 0.86) 100%);
+  }
+}
+
 @media (max-width: 760px) {
+  .hero-orbital h1 {
+    font-size: clamp(1.95rem, 8.4vw, 2.6rem);
+  }
+
+  .hero-orbital-art {
+    width: 156%;
+  }
+
   .page-hero-grid {
     grid-template-columns: 1fr;
     align-items: start;
@@ -2509,46 +2520,6 @@ p {
     width: 100%;
   }
 
-  .system-visual {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    min-height: 0;
-  }
-
-  .connector-line {
-    display: none;
-  }
-
-  .system-panel {
-    position: static;
-    inset: auto;
-    padding: 16px;
-  }
-
-  .workflow-row {
-    grid-template-columns: 38px 1fr;
-  }
-
-  .workflow-icon {
-    width: 38px;
-    height: 38px;
-  }
-
-  .workflow-pill {
-    grid-column: 2;
-    justify-self: start;
-    margin-top: 6px;
-  }
-
-  .floating-card {
-    position: static;
-    width: 100%;
-    min-width: 0;
-    max-width: none;
-    padding: 12px;
-  }
-
   .orbit-tag-one {
     left: 0;
   }
@@ -2589,5 +2560,12 @@ p {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  /* Keep the hero composition identical, but never move the artwork. */
+  .hero-orbital-art {
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
   }
 }
