@@ -132,7 +132,7 @@ function inovantage_organization_schema() {
 		'name'        => inovantage_company( 'name' ),
 		'legalName'   => inovantage_company( 'legal_name' ),
 		'url'         => home_url( '/' ),
-		'logo'        => INOVANTAGE_URI . '/assets/images/inovantage-logo-blue.png',
+		'logo'        => INOVANTAGE_URI . '/assets/images/inovantage-logo-full.webp',
 		'email'       => inovantage_company( 'email' ),
 		'description' => inovantage_company( 'tagline' ),
 		'areaServed'  => array( 'GB', 'US' ),
@@ -195,7 +195,7 @@ function inovantage_article_schema( $post_id ) {
 			'name'  => inovantage_company( 'name' ),
 			'logo'  => array(
 				'@type' => 'ImageObject',
-				'url'   => INOVANTAGE_URI . '/assets/images/inovantage-logo-blue.png',
+				'url'   => INOVANTAGE_URI . '/assets/images/inovantage-logo-full.webp',
 			),
 		),
 		'mainEntityOfPage' => get_permalink( $post_id ),

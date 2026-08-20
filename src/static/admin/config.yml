@@ -8,7 +8,7 @@ local_backend: true
 publish_mode: editorial_workflow
 site_url: https://inovantage.co.uk
 display_url: https://inovantage.co.uk
-logo_url: https://inovantage.co.uk/assets/images/inovantage-logo.png
+logo_url: https://inovantage.co.uk/assets/images/inovantage-logo-full.webp
 show_preview_links: true
 locale: en
 

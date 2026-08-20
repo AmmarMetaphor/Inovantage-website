@@ -19,7 +19,7 @@
 <header class="site-header" data-header>
 	<div class="container header-inner">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php echo esc_attr( inovantage_company( 'name' ) . ' home' ); ?>">
-			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/inovantage-logo-blue.png" width="2048" height="646" alt="<?php echo esc_attr( inovantage_company( 'name' ) ); ?>">
+			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/inovantage-logo-full.webp" width="2000" height="686" alt="<?php echo esc_attr( inovantage_company( 'name' ) ); ?>">
 		</a>
 		<button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-menu-toggle>
 			<span class="menu-open-icon"><?php inovantage_icon_e( 'menu' ); ?></span>
