@@ -545,8 +545,10 @@ p {
 }
 
 /* Homepage hero: orbital artwork as an atmospheric background layer.
-   --hero-x and --hero-y are set from pointer position by main.js and are
-   unitless values in the range -1 to 1. Only the artwork layer moves. */
+   --hero-x and --hero-y are the pointer position, -1 to 1, and --hero-active
+   is 0 at rest and 1 while the pointer is inside. main.js interpolates all
+   three each frame, so the artwork glides rather than snapping, and no CSS
+   transition is needed. Only the artwork layer moves. */
 .hero-orbital {
   --orbital-slate: #08121e;
   --orbital-sky: #5cc8ff;
@@ -557,11 +559,18 @@ p {
   --orbital-text: #f3f8ff;
   --hero-x: 0;
   --hero-y: 0;
-  --hero-lift: 0px;
+  --hero-active: 0;
+  /* Artwork size caps, as percentages of the media box: the first limits it by
+     the box width, the second by the box height. The smaller one wins, so a
+     tall window cannot grow the form until it reaches across the copy, and a
+     short one cannot make it overflow. Breakpoints retune these two numbers. */
+  --art-cap-w: 80;
+  --art-cap-h: 142;
   display: grid;
   align-content: center;
-  min-height: clamp(400px, 50vh, 520px);
-  padding-block: clamp(44px, 4.6vw, 64px);
+  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100svh - var(--header-height));
+  padding-block: clamp(44px, 4.6vw, 72px);
   color: var(--orbital-text);
   background: var(--orbital-slate);
   isolation: isolate;
@@ -580,24 +589,45 @@ p {
   justify-content: flex-end;
   overflow: hidden;
   pointer-events: none;
+  container-type: size;
 }
 
-/* Sized from the hero height so the orbital form is never cropped, anchored
-   right, and feathered top and bottom so it dissolves into the slate ground. */
+/* The artwork keeps its aspect ratio, so the orbital form is never squashed or
+   cropped by object-fit. It is feathered on three edges — top, bottom and
+   right — so it dissolves into the slate ground instead of ending on a line.
+   The right feather is what lets it sit far enough left for the whole orbital
+   form to stay inside the hero while still moving without revealing an edge.
+   Browsers without mask-composite fall back to no feather, which is only ever
+   a harder edge, never a broken layout. */
 .hero-orbital-art {
   flex: none;
-  width: auto;
   max-width: none;
-  height: 84%;
-  transform: translate3d(calc(var(--hero-x) * 12px), calc(var(--hero-y) * 9px + var(--hero-lift)), 0);
-  transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  width: auto;
+  height: 82%;
+  margin-right: 1%;
+  transform:
+    translate3d(calc(var(--hero-x) * 33px), calc(var(--hero-y) * 25px + var(--hero-active) * -7px), 0)
+    rotate(calc(var(--hero-x) * 1.2deg))
+    scale(calc(1.04 + var(--hero-active) * 0.02));
   will-change: transform;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
-  mask-image: linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image:
+    linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(90deg, #000 0, #000 96%, transparent 100%);
+  mask-image:
+    linear-gradient(180deg, transparent 0, #000 8%, #000 92%, transparent 100%),
+    linear-gradient(90deg, #000 0, #000 96%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
 }
 
-.hero-orbital.is-pointer-active {
-  --hero-lift: -6px;
+/* Deliberately more specific than the breakpoint rules below, so those only
+   need to retune --art-cap-w / --art-cap-h rather than restate the sizing.
+   Without container query units the height fallback above applies instead. */
+@supports (width: 1cqw) {
+  .hero-orbital .hero-orbital-art {
+    width: min(calc(var(--art-cap-w) * 1cqw), calc(var(--art-cap-h) * 1cqh));
+    height: auto;
+  }
 }
 
 .hero-orbital-veil {
@@ -606,8 +636,8 @@ p {
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(8, 18, 30, 0.96) 0%, rgba(8, 18, 30, 0.82) 34%, rgba(8, 18, 30, 0.3) 62%, rgba(8, 18, 30, 0.06) 100%),
-    linear-gradient(180deg, rgba(8, 18, 30, 0.5) 0%, rgba(8, 18, 30, 0) 24%, rgba(8, 18, 30, 0) 66%, rgba(8, 18, 30, 0.58) 100%);
+    linear-gradient(90deg, rgba(8, 18, 30, 0.97) 0%, rgba(8, 18, 30, 0.92) 30%, rgba(8, 18, 30, 0.56) 51%, rgba(8, 18, 30, 0.14) 74%, rgba(8, 18, 30, 0.03) 100%),
+    linear-gradient(180deg, rgba(8, 18, 30, 0.5) 0%, rgba(8, 18, 30, 0) 22%, rgba(8, 18, 30, 0) 70%, rgba(8, 18, 30, 0.55) 100%);
 }
 
 .hero-orbital-inner {
@@ -616,7 +646,7 @@ p {
 }
 
 .hero-orbital .hero-copy {
-  max-width: min(540px, 50%);
+  max-width: min(470px, 42%);
 }
 
 .hero-orbital .eyebrow {
@@ -625,7 +655,7 @@ p {
 
 .hero-orbital h1 {
   margin-bottom: var(--content-gap-md);
-  font-size: clamp(2rem, 3.5vw, 2.9rem);
+  font-size: clamp(2rem, 3.4vw, 3.05rem);
   color: #fff;
   text-shadow: 0 2px 26px rgba(4, 10, 18, 0.55);
 }
@@ -677,30 +707,6 @@ p {
 
 .hero-orbital :focus-visible {
   outline-color: rgba(124, 205, 255, 0.9);
-}
-
-.trust-band {
-  padding-block: 22px;
-  background: var(--ink);
-}
-
-.trust-list {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px 34px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.trust-list li {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.82rem;
-  font-weight: 680;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .services-grid {
@@ -2202,22 +2208,26 @@ p {
     gap: 42px;
   }
 
+  /* Still a two-zone composition here, but the narrower frame needs a tighter
+     copy column and a smaller artwork for the two to stay clear of each other. */
   .hero-orbital {
-    min-height: clamp(400px, 50vh, 500px);
+    --art-cap-w: 70;
+    --art-cap-h: 120;
   }
 
   .hero-orbital .hero-copy {
-    max-width: 600px;
+    max-width: 420px;
   }
 
   .hero-orbital-art {
     height: 68%;
+    margin-right: 2.6%;
   }
 
   .hero-orbital-veil {
     background:
-      linear-gradient(90deg, rgba(8, 18, 30, 0.97) 0%, rgba(8, 18, 30, 0.9) 32%, rgba(8, 18, 30, 0.5) 66%, rgba(8, 18, 30, 0.14) 100%),
-      linear-gradient(180deg, rgba(8, 18, 30, 0.52) 0%, rgba(8, 18, 30, 0.06) 28%, rgba(8, 18, 30, 0.12) 62%, rgba(8, 18, 30, 0.62) 100%);
+      linear-gradient(90deg, rgba(8, 18, 30, 0.97) 0%, rgba(8, 18, 30, 0.92) 32%, rgba(8, 18, 30, 0.56) 58%, rgba(8, 18, 30, 0.14) 80%, rgba(8, 18, 30, 0.03) 100%),
+      linear-gradient(180deg, rgba(8, 18, 30, 0.52) 0%, rgba(8, 18, 30, 0.06) 24%, rgba(8, 18, 30, 0.1) 68%, rgba(8, 18, 30, 0.6) 100%);
   }
 
   .page-hero-grid {
@@ -2281,6 +2291,10 @@ p {
    because the script only reacts to mouse pointers. */
 @media (max-width: 900px) {
   .hero-orbital {
+    /* The width cap always wins here, so the wash keeps its approved scale
+       whatever the viewport height. */
+    --art-cap-w: 142;
+    --art-cap-h: 400;
     min-height: clamp(360px, 58vh, 470px);
     padding-block: clamp(34px, 6.4vw, 56px);
   }
@@ -2302,6 +2316,7 @@ p {
     width: 142%;
     height: auto;
     margin-top: -6%;
+    margin-right: 0;
     opacity: 0.7;
     -webkit-mask-image: linear-gradient(180deg, #000 0, #000 66%, transparent 100%);
     mask-image: linear-gradient(180deg, #000 0, #000 66%, transparent 100%);
@@ -2315,6 +2330,10 @@ p {
 }
 
 @media (max-width: 760px) {
+  .hero-orbital {
+    --art-cap-w: 156;
+  }
+
   .hero-orbital h1 {
     font-size: clamp(1.95rem, 8.4vw, 2.6rem);
   }
@@ -2357,48 +2376,6 @@ p {
   #services .section-heading h2 {
     font-size: clamp(2rem, 7vw, 2.4rem);
     line-height: 1.08;
-  }
-
-  .trust-band {
-    padding-top: 6px;
-    padding-bottom: 0;
-    background: var(--surface);
-  }
-
-  #services {
-    padding-top: 16px;
-  }
-
-  .trust-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    counter-reset: trust;
-  }
-
-  .trust-list li {
-    position: relative;
-    padding: 14px 14px 14px 16px;
-    color: var(--ink);
-    font-size: 0.86rem;
-    font-weight: 700;
-    letter-spacing: normal;
-    text-align: left;
-    text-transform: none;
-    background: var(--brand-pale);
-    border: 1px solid rgba(145, 50, 144, 0.18);
-    border-radius: var(--radius-sm);
-    counter-increment: trust;
-  }
-
-  .trust-list li::before {
-    display: block;
-    margin-bottom: 6px;
-    color: var(--brand);
-    content: counter(trust, decimal-leading-zero);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
   }
 
   .services-grid,
@@ -2566,12 +2543,6 @@ p {
   .footer-brand,
   .footer-grid > div:last-child {
     grid-column: auto;
-  }
-}
-
-@media (max-width: 360px) {
-  .trust-list {
-    grid-template-columns: 1fr;
   }
 }
 

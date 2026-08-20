@@ -34,17 +34,6 @@ $inovantage_hero_art_srcset = sprintf(
 	</div>
 </section>
 
-<div class="trust-band" aria-label="<?php esc_attr_e( 'How Inovantage works', 'inovantage' ); ?>">
-	<div class="container">
-		<ol class="trust-list">
-			<li><?php esc_html_e( 'Strategy before software', 'inovantage' ); ?></li>
-			<li><?php esc_html_e( 'Design around real users', 'inovantage' ); ?></li>
-			<li><?php esc_html_e( 'Review before release', 'inovantage' ); ?></li>
-			<li><?php esc_html_e( 'Improve after launch', 'inovantage' ); ?></li>
-		</ol>
-	</div>
-</div>
-
 <section class="section" id="services">
 	<div class="container">
 		<div class="section-heading">
