@@ -471,6 +471,30 @@ function whatsappUrl(site) {
   return `https://wa.me/${digits}?text=${encodeURIComponent('Hello Inovantage, I would like to discuss a project.')}`;
 }
 
+/**
+ * The global floating WhatsApp control, fixed to the bottom-right of the
+ * viewport on every page.
+ *
+ * It takes its destination from whatsappUrl(), the same builder the footer
+ * social row uses, so the number lives in exactly one place: the `whatsapp`
+ * field in src/data/site.json (edited through Decap CMS). Changing it there
+ * moves both controls at once, and there is no second copy to fall out of step.
+ *
+ * When no number is configured the function returns nothing, matching the
+ * documented behaviour of the footer icon — "leave blank to hide the WhatsApp
+ * icon". A floating button is worse than no button if it opens a chat with
+ * nobody, so an unconfigured site simply does not render one.
+ */
+function renderWhatsAppFloat(site) {
+  const url = whatsappUrl(site);
+  if (!url) return '';
+  return `
+<a class="wa-float" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer" aria-label="Contact Inovantage on WhatsApp">
+  <span class="wa-float-tip" aria-hidden="true">Chat with us on WhatsApp</span>
+  <span class="wa-float-disc">${icon('whatsapp')}</span>
+</a>`;
+}
+
 function renderHeader(activeNav, site) {
   const links = [
     ['solutions', '/solutions/', 'Solutions'],
@@ -649,6 +673,7 @@ function renderLayout({ site, title, description, route, activeNav, content, ima
   ${renderHeader(activeNav, site)}
   <main id="main-content">${content}</main>
   ${renderFooter(site, year)}
+  ${renderWhatsAppFloat(site)}
 </body>
 </html>`;
 }

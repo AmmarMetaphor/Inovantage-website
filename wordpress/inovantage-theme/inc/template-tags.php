@@ -206,3 +206,38 @@ function inovantage_insight_filters() {
 	</div>
 	<?php
 }
+
+/**
+ * The global floating WhatsApp control.
+ *
+ * Printed on every front-end view through wp_footer, so it needs no markup in
+ * any individual template and cannot be missed off a new one. wp_footer does
+ * not run in wp-admin, and the is_admin() guard makes that explicit.
+ *
+ * The destination comes from inovantage_whatsapp_url(), the same builder the
+ * footer social row uses, which reads the Customizer field
+ * "WhatsApp number" (inovantage_company_whatsapp). Updating that one field in
+ * Appearance > Customize moves both this control and the footer icon — no code
+ * change is needed to alter the number later.
+ *
+ * With no number configured the function prints nothing, matching the footer
+ * icon's documented behaviour. A floating button that opens a chat with nobody
+ * is worse than no button at all.
+ */
+function inovantage_whatsapp_float() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$url = inovantage_whatsapp_url();
+	if ( '' === $url ) {
+		return;
+	}
+	?>
+	<a class="wa-float" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e( 'Contact Inovantage on WhatsApp', 'inovantage' ); ?>">
+		<span class="wa-float-tip" aria-hidden="true"><?php esc_html_e( 'Chat with us on WhatsApp', 'inovantage' ); ?></span>
+		<span class="wa-float-disc"><?php inovantage_icon_e( 'whatsapp' ); ?></span>
+	</a>
+	<?php
+}
+add_action( 'wp_footer', 'inovantage_whatsapp_float' );
