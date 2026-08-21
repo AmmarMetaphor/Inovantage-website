@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 1.8.0
+Version: 1.9.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -4553,6 +4553,190 @@ p {
   }
 
   .value-brief:hover {
+    transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Global floating WhatsApp control
+
+   A single fixed anchor, rendered site-wide by build.mjs (and by the theme's
+   wp_footer hook) only when a WhatsApp number is configured. Its destination
+   comes from the same builder as the footer social icon, so there is one
+   number in one place.
+
+   Stacking: 900 sits above ordinary page content, whose highest in-flow
+   z-index is 4, but below the sticky header and the mobile navigation panel it
+   contains (1000) and below the skip link (9999). A visitor opening the mobile
+   menu or tabbing to the skip link therefore sees those over the button, which
+   is the correct priority, and no part of this feature needs an escalating
+   z-index to work.
+
+   Contrast: Luminous Cyan on Void Navy is 13.1:1, far above the 3:1 that
+   WCAG 1.4.11 asks of a graphical control, and the tooltip's Glacier Ice on
+   Deep Ocean is 15.5:1.
+
+   No JavaScript: the entrance, the hover and the tooltip are all CSS, and the
+   destination is a plain outbound link, so the control needs no script, no
+   dependency and no third-party embed — it sets no cookies and does not change
+   what the cookie notice has to say.
+   --------------------------------------------------------------------------- */
+
+.wa-float {
+  /* 56-62px desktop, dropping to 52px on small screens further down. */
+  --wa-size: clamp(56px, 4vw, 62px);
+  --wa-gap: clamp(22px, 2.2vw, 30px);
+  --wa-glow: 0 10px 35px rgba(0, 229, 255, 0.16);
+  --wa-glow-hover: 0 14px 40px rgba(0, 229, 255, 0.26), 0 6px 18px rgba(18, 107, 255, 0.2);
+  position: fixed;
+  z-index: 900;
+  right: calc(var(--wa-gap) + env(safe-area-inset-right, 0px));
+  bottom: calc(var(--wa-gap) + env(safe-area-inset-bottom, 0px));
+  display: grid;
+  place-items: center;
+  /* The anchor is exactly the disc. The tooltip is positioned out of flow so
+     it never enlarges the hit area into an invisible strip across the page. */
+  width: var(--wa-size);
+  height: var(--wa-size);
+  border-radius: 50%;
+  /* Under 350ms, and the control is clickable throughout: the animation only
+     fades and lifts it, it never blocks the pointer. */
+  animation: wa-float-in 320ms ease-out 120ms both;
+}
+
+.wa-float-disc {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--accent);
+  background: var(--color-void-navy);
+  border: 1px solid var(--accent-ring);
+  border-radius: 50%;
+  box-shadow: var(--wa-glow);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease, color 200ms ease;
+}
+
+.wa-float-disc svg {
+  width: 56%;
+  height: 56%;
+  fill: currentColor;
+  stroke: none;
+}
+
+.wa-float-tip {
+  position: absolute;
+  right: calc(100% + 12px);
+  padding: 9px 14px;
+  color: var(--color-glacier-ice);
+  font-size: 0.82rem;
+  font-weight: 560;
+  line-height: 1.2;
+  white-space: nowrap;
+  background: var(--color-deep-ocean);
+  border: 1px solid var(--accent-line);
+  border-radius: 10px;
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 200ms ease, transform 200ms ease;
+  pointer-events: none;
+}
+
+.wa-float:hover .wa-float-disc,
+.wa-float:focus-visible .wa-float-disc {
+  color: var(--accent-hover);
+  border-color: var(--accent);
+  box-shadow: var(--wa-glow-hover);
+  transform: translateY(-4px) scale(1.06);
+}
+
+.wa-float:hover .wa-float-tip,
+.wa-float:focus-visible .wa-float-tip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Keyboard users get the same cyan ring the rest of the site uses, and the
+   tooltip above reveals on focus as well as hover, so nothing here depends on
+   a pointer. */
+.wa-float:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+@keyframes wa-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* The last footer row keeps its legal links clear of the button's corner, but
+   only on pages that actually render one — with no number configured the
+   footer is unchanged. */
+body:has(.wa-float) .site-footer .footer-bottom {
+  padding-bottom: calc(var(--wa-size, 62px) + 16px);
+}
+
+@media (min-width: 640px) {
+  body:has(.wa-float) .site-footer .footer-bottom {
+    padding-bottom: 22px;
+    padding-right: calc(var(--wa-size, 62px) + 20px);
+  }
+}
+
+/* Size follows the viewport, not the input device. Keeping these two concerns
+   apart matters: a touchscreen laptop reports a coarse pointer at 1440px and
+   should still get the desktop control, and a device that reports no hover at
+   desktop width should not be handed a phone-sized button. */
+@media (max-width: 760px) {
+  .wa-float {
+    --wa-size: 52px;
+    --wa-gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .wa-float {
+    --wa-gap: 18px;
+  }
+}
+
+/* The tooltip, by contrast, is purely a hover affordance, so it is suppressed
+   by input capability rather than width. There is nothing to reveal it with on
+   a touch device, and the accessible name carries the same wording anyway. */
+@media (hover: none) {
+  .wa-float-tip {
+    display: none;
+  }
+
+  .wa-float:hover .wa-float-disc {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-float {
+    animation: none;
+  }
+
+  .wa-float-disc {
+    transition: border-color 200ms ease, box-shadow 200ms ease, color 200ms ease;
+  }
+
+  /* Hover still reads clearly through colour and glow; only the movement goes. */
+  .wa-float:hover .wa-float-disc,
+  .wa-float:focus-visible .wa-float-disc {
+    transform: none;
+  }
+
+  .wa-float-tip {
+    transition: none;
     transform: none;
   }
 }

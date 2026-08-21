@@ -34,7 +34,7 @@ function inovantage_company_defaults() {
 		'instagram'        => '',
 		'facebook'         => 'https://www.facebook.com/1HVYU4LZa1/',
 		'x'                => '',
-		'whatsapp'         => '',
+		'whatsapp'         => '447375803774',
 	);
 }
 
