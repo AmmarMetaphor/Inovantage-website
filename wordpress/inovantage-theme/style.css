@@ -4690,26 +4690,33 @@ body:has(.wa-float) .site-footer .footer-bottom {
   }
 }
 
-/* Touch: slightly smaller, and no tooltip because there is no hover to reveal
-   it with. The accessible name still carries the same wording. */
-@media (hover: none), (pointer: coarse) {
+/* Size follows the viewport, not the input device. Keeping these two concerns
+   apart matters: a touchscreen laptop reports a coarse pointer at 1440px and
+   should still get the desktop control, and a device that reports no hover at
+   desktop width should not be handed a phone-sized button. */
+@media (max-width: 760px) {
   .wa-float {
     --wa-size: 52px;
+    --wa-gap: 20px;
   }
+}
 
+@media (max-width: 480px) {
+  .wa-float {
+    --wa-gap: 18px;
+  }
+}
+
+/* The tooltip, by contrast, is purely a hover affordance, so it is suppressed
+   by input capability rather than width. There is nothing to reveal it with on
+   a touch device, and the accessible name carries the same wording anyway. */
+@media (hover: none) {
   .wa-float-tip {
     display: none;
   }
 
   .wa-float:hover .wa-float-disc {
     transform: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .wa-float {
-    --wa-size: 52px;
-    --wa-gap: 18px;
   }
 }
 
