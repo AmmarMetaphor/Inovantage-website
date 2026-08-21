@@ -8,7 +8,7 @@ local_backend: true
 publish_mode: editorial_workflow
 site_url: https://inovantage.co.uk
 display_url: https://inovantage.co.uk
-logo_url: https://inovantage.co.uk/assets/images/inovantage-logo.png
+logo_url: https://inovantage.co.uk/assets/images/inovantage-logo-full.webp
 show_preview_links: true
 locale: en
 
@@ -126,3 +126,83 @@ collections:
           - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
           - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
           - { label: "X URL", name: "x", widget: "string", required: false }
+          - { label: "WhatsApp number", name: "whatsapp", widget: "string", required: false, hint: "Digits only, with country code, for example: 447375803774. Leave blank to hide the WhatsApp icon." }
+
+  - name: "case_studies"
+    label: "Case studies"
+    files:
+      - label: "Case studies, testimonials and clients"
+        name: "case_studies_data"
+        file: "src/data/case-studies.json"
+        format: "json"
+        description: >-
+          Only publish a client story once that client has approved the wording,
+          the figures and the permission to be named. Leave a field blank rather
+          than estimating it. The Case Studies page renders whatever is here and
+          shows an honest empty state while the lists are empty.
+        fields:
+          - label: "Case studies"
+            name: "caseStudies"
+            widget: "list"
+            required: false
+            label_singular: "Case study"
+            summary: "{{fields.client}} — {{fields.title}}"
+            fields:
+              - { label: "URL slug", name: "slug", widget: "string", pattern: ["^[a-z0-9]+(?:-[a-z0-9]+)*$", "Use lowercase letters, numbers and hyphens only."], hint: "Becomes /case-studies/<slug>/" }
+              - { label: "Client or company name", name: "client", widget: "string", hint: "Exactly as the client has agreed to be named." }
+              - { label: "Project title", name: "title", widget: "string" }
+              - label: "Service category"
+                name: "category"
+                widget: "select"
+                options:
+                  - { label: "AI Automation", value: "ai-automation" }
+                  - { label: "Website Development", value: "website-development" }
+                  - { label: "Social Media Management", value: "social-media-management" }
+                  - { label: "App Development", value: "app-development" }
+              - { label: "Summary", name: "summary", widget: "text", hint: "One or two sentences for the card and search results." }
+              - { label: "Feature on the Case Studies page", name: "featured", widget: "boolean", default: true, required: false }
+              - { label: "Project image", name: "image", widget: "image", required: false }
+              - { label: "Image alternative text", name: "imageAlt", widget: "string", required: false }
+              - { label: "The challenge", name: "challenge", widget: "text", required: false }
+              - { label: "What we built", name: "built", widget: "text", required: false }
+              - { label: "How it worked", name: "howItWorked", widget: "text", required: false }
+              - { label: "The outcome", name: "result", widget: "text", required: false, hint: "Qualitative outcomes are fine. Never estimate a figure." }
+              - label: "Verified metrics"
+                name: "metrics"
+                widget: "list"
+                required: false
+                label_singular: "Metric"
+                summary: "{{fields.value}} {{fields.label}}"
+                fields:
+                  - { label: "Value", name: "value", widget: "string", hint: "Only a figure the client has confirmed, for example: 12 hours a week" }
+                  - { label: "What it measures", name: "label", widget: "string" }
+              - label: "Client testimonial"
+                name: "testimonial"
+                widget: "object"
+                required: false
+                collapsed: true
+                fields:
+                  - { label: "Quote", name: "quote", widget: "text", required: false, hint: "The client's own wording. Do not rewrite it." }
+                  - { label: "Author", name: "author", widget: "string", required: false }
+                  - { label: "Role", name: "role", widget: "string", required: false }
+                  - { label: "Company", name: "company", widget: "string", required: false }
+          - label: "Standalone testimonials"
+            name: "testimonials"
+            widget: "list"
+            required: false
+            label_singular: "Testimonial"
+            summary: "{{fields.author}}"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text", hint: "The client's own wording. Do not rewrite it." }
+              - { label: "Author", name: "author", widget: "string" }
+              - { label: "Role", name: "role", widget: "string", required: false }
+              - { label: "Company", name: "company", widget: "string", required: false }
+          - label: "Clients"
+            name: "clients"
+            widget: "list"
+            required: false
+            label_singular: "Client"
+            summary: "{{fields.name}}"
+            fields:
+              - { label: "Company name", name: "name", widget: "string" }
+              - { label: "Logo", name: "logo", widget: "image", required: false, hint: "Leave blank to show the company name as text. Never substitute another company's logo." }

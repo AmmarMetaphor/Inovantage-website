@@ -64,12 +64,13 @@ The project uses Decap's direct **GitHub backend**, not Netlify Git Gateway. Git
 ### Public pages
 
 - `/` — home
-- `/services/` — services overview
+- `/solutions/` — solutions overview with the interactive orbital hero
 - `/services/ai-automation/`
 - `/services/website-design/`
 - `/services/social-media-management/`
 - `/services/app-development/`
-- `/work/` — transparent solution blueprints rather than invented case studies
+- `/case-studies/` — client proof, driven by `src/data/case-studies.json`
+- `/case-studies/<slug>/` — one page per approved case study
 - `/insights/` — articles and category filtering
 - `/about/`
 - `/contact/`
@@ -77,6 +78,20 @@ The project uses Decap's direct **GitHub backend**, not Netlify Git Gateway. Git
 - `/cookies/`
 - `/terms/`
 - custom 404 and thank-you pages
+
+`/services/` and `/work/` were retired in favour of `/solutions/` and
+`/case-studies/`. Both redirect permanently (301) from `netlify.toml`, and the
+WordPress theme mirrors those redirects. The four service detail pages keep
+their original `/services/…` URLs.
+
+### Adding a case study
+
+Case studies live in `src/data/case-studies.json` (editable at `/admin/` under
+"Case studies"). Each entry needs a `slug`, `client`, `title` and one of the four
+`category` values; it then builds `/case-studies/<slug>/` and joins the sitemap.
+Only publish a client name, quotation, role, logo or figure the client has
+approved — leave the field out otherwise. The page is designed to look finished
+while the file is empty, so a gap never needs filling with an example.
 
 ### Publishing and operational features
 
@@ -713,24 +728,62 @@ Edit:
 src/static/assets/css/styles.css
 ```
 
-Keep the brand values:
+All colours are defined once, as design tokens, at the top of that file. Use
+the semantic tokens rather than adding new hex values:
 
 ```css
---brand: #913290;
---grey: #7d7d7d;
+/* palette */
+--color-void-navy: #07121f;    /* primary dark surface   */
+--color-deep-ocean: #0b1a2b;   /* secondary dark surface */
+--color-steel-blue: #1c2f4a;   /* elevated cards         */
+--color-cobalt-core: #0b3d9c;  /* deep accent, links on light */
+--color-electric-blue: #126bff;/* secondary — depth      */
+--color-luminous-cyan: #00e5ff;/* PRIMARY brand accent   */
+--color-glacier-ice: #e6f2ff;  /* light sections         */
+--color-silver-mist: #c9d6e6;  /* body text on dark      */
+
+/* brand roles */
+--brand-primary   /* cyan   — the identity colour */
+--brand-secondary /* blue   — depth behind it     */
+--accent          /* -> --brand-primary           */
+--accent-secondary/* -> --brand-secondary         */
+--on-accent       /* navy label for solid cyan    */
+
+/* semantic — reference these from components */
+--background-primary, --background-secondary, --surface-elevated,
+--background-light, --text-primary, --text-secondary, --text-muted,
+--accent-wash, --secondary-wash, --link, --link-on-light, --border, --focus
 ```
 
-Run a visual check at mobile and desktop widths after every layout change.
+Cyan is the first thing the eye should find on a dark surface: primary buttons,
+active navigation, eyebrows, icons, bullets, arrows and focus rings. Electric
+Blue sits behind it as depth — gradients, glows, orbital illumination and quiet
+card tints. Never put white text on solid cyan; use `--on-accent`. On light
+surfaces cyan is decorative only: text and links there use `--link-on-light`.
+
+Sections alternate between `--background-primary`, `.section-soft` and
+`.section-light` so boundaries stay visible. Run a visual check at mobile and
+desktop widths after every layout change.
 
 ### Change the logo
 
-Replace the file only with an approved Inovantage asset using the same filename where possible:
+Two official assets are in use. Replace them only with approved Inovantage
+artwork, keeping the same filenames:
 
 ```text
-src/static/assets/images/inovantage-logo.png
+src/static/assets/images/inovantage-logo-full.webp   /* long horizontal wordmark */
+src/static/assets/images/inovantage-logo-mark.png    /* compact V mark           */
 ```
 
-Keep the image transparent, do not stretch it, and regenerate favicons/social artwork when the official identity changes.
+The wordmark is used in the site header and the footer brand block. It sits on a
+2000x686 canvas whose artwork occupies the middle band, so it is sized by height
+(`.brand img`, `.footer-brand img`) and left to derive its own width — never set
+both dimensions. The compact mark is the source for `favicon-32.png`,
+`favicon-192.png` and `apple-touch-icon.png`; regenerate those from it if the
+mark changes. Both files carry their own transparency; do not recolour them, add
+CSS filters, or place the wordmark on a light surface, where its silver letters
+fall below 1.1:1. `social-card.png` is still the previous identity's artwork and
+needs regenerating separately.
 
 ---
 

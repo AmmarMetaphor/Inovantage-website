@@ -10,6 +10,30 @@
   to = "/admin/"
   status = 301
 
+# The Services page became Solutions. These match the exact paths only, so the
+# individual service routes under /services/ are untouched and keep working.
+[[redirects]]
+  from = "/services"
+  to = "/solutions/"
+  status = 301
+
+[[redirects]]
+  from = "/services/"
+  to = "/solutions/"
+  status = 301
+
+# /work/ held the placeholder project examples that the Case Studies page now
+# replaces, so it points there rather than at the service catalogue.
+[[redirects]]
+  from = "/work"
+  to = "/case-studies/"
+  status = 301
+
+[[redirects]]
+  from = "/work/"
+  to = "/case-studies/"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]
