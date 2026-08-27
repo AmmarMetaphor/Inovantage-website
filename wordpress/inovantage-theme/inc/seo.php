@@ -56,7 +56,7 @@ function inovantage_meta_description() {
 	}
 
 	if ( is_home() && ! is_front_page() ) {
-		return __( 'Practical guidance for business leaders on automation, website conversion, content operations and application development, focused on confident digital investment decisions.', 'inovantage' );
+		return __( 'Explore practical guidance on AI automation, website conversion, social media management and app development for growing B2B businesses.', 'inovantage' );
 	}
 
 	return inovantage_company( 'tagline' );

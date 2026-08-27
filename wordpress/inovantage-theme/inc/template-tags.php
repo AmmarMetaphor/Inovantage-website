@@ -76,7 +76,7 @@ function inovantage_default_nav_items() {
 	$links   = array(
 		'solutions'    => array( home_url( '/solutions/' ), __( 'Solutions', 'inovantage' ) ),
 		'case-studies' => array( home_url( '/case-studies/' ), __( 'Solutions in Practice', 'inovantage' ) ),
-		'insights'     => array( home_url( '/insights/' ), __( 'Articles & Guides', 'inovantage' ) ),
+		'insights'     => array( home_url( '/articles-and-guides/' ), __( 'Articles & Guides', 'inovantage' ) ),
 		'about'        => array( home_url( '/about/' ), __( 'About', 'inovantage' ) ),
 	);
 
@@ -111,7 +111,7 @@ function inovantage_nav_menu_css_class( $classes, $item ) {
 	$map     = array(
 		'/solutions/'    => 'solutions',
 		'/case-studies/' => 'case-studies',
-		'/insights/'     => 'insights',
+		'/articles-and-guides/' => 'insights',
 		'/about/'        => 'about',
 	);
 	$path = wp_parse_url( $item->url, PHP_URL_PATH );
@@ -127,7 +127,7 @@ function inovantage_nav_menu_link_attributes( $atts, $item ) {
 	$map     = array(
 		'/solutions/'    => 'solutions',
 		'/case-studies/' => 'case-studies',
-		'/insights/'     => 'insights',
+		'/articles-and-guides/' => 'insights',
 		'/about/'        => 'about',
 	);
 	$path = wp_parse_url( $item->url, PHP_URL_PATH );

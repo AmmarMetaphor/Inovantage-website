@@ -89,7 +89,7 @@ function inovantage_bootstrap_pages() {
 	$services_id   = inovantage_get_or_create( 'page', 'services', __( 'Services', 'inovantage' ), 0, '' );
 	$solutions_id  = inovantage_get_or_create( 'page', 'solutions', __( 'Connected Digital Solutions for B2B Growth', 'inovantage' ), 0, __( 'Connect a business challenge to the right solution: B2B AI automation, website design and development, social media management and business app development from Inovantage.', 'inovantage' ) );
 	$cases_id      = inovantage_get_or_create( 'page', 'case-studies', __( 'Solutions in Practice', 'inovantage' ), 0, __( 'See how Inovantage designs connected digital systems that improve lead response, website conversion, content operations and scalable service delivery for B2B companies.', 'inovantage' ) );
-	$insights_id = inovantage_get_or_create( 'page', 'insights', __( 'Insights for Digital Growth', 'inovantage' ), 0, __( 'Practical guidance for business leaders on automation, website conversion, content operations and application development, focused on confident digital investment decisions.', 'inovantage' ) );
+	$insights_id = inovantage_get_or_create( 'page', 'articles-and-guides', __( 'Articles & Guides', 'inovantage' ), 0, __( 'Explore practical guidance on AI automation, website conversion, social media management and app development for growing B2B businesses.', 'inovantage' ) );
 	$about_id    = inovantage_get_or_create( 'page', 'about', __( 'About Inovantage', 'inovantage' ), 0, __( 'Inovantage is a connected digital partner for ambitious B2B businesses, improving customer journeys, operational capacity and scalable digital services.', 'inovantage' ) );
 	$contact_id  = inovantage_get_or_create( 'page', 'contact', __( 'Book a Growth Consultation', 'inovantage' ), 0, __( 'Tell Inovantage what you want your business to achieve. Describe the current challenge and desired outcome, and we will recommend a practical next step.', 'inovantage' ) );
 	$privacy_id  = inovantage_get_or_create( 'page', 'privacy', __( 'Privacy Notice', 'inovantage' ), 0, __( 'How Inovantage handles personal information submitted through this website.', 'inovantage' ) );
@@ -270,7 +270,7 @@ function inovantage_bootstrap_menu() {
 	$items = array(
 		array( __( 'Solutions', 'inovantage' ), home_url( '/solutions/' ) ),
 		array( __( 'Solutions in Practice', 'inovantage' ), home_url( '/case-studies/' ) ),
-		array( __( 'Articles & Guides', 'inovantage' ), home_url( '/insights/' ) ),
+		array( __( 'Articles & Guides', 'inovantage' ), home_url( '/articles-and-guides/' ) ),
 		array( __( 'About', 'inovantage' ), home_url( '/about/' ) ),
 	);
 

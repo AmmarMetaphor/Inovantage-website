@@ -89,11 +89,13 @@ function inovantage_bootstrap_case_services() {
 }
 
 /**
- * Permanent redirects for the two routes this release retired.
+ * Permanent redirects for the routes this theme has retired.
  *
- * /services/  -> /solutions/     the overview page moved and was renamed
- * /work/      -> /case-studies/  its placeholder project examples are now
- *                                published as real case studies
+ * /services/  -> /solutions/            the overview page moved and was renamed
+ * /work/      -> /case-studies/         its placeholder project examples are now
+ *                                       published as real case studies
+ * /insights/  -> /articles-and-guides/  the archive was renamed to match its
+ *                                       navigation label
  *
  * The service detail pages are children of /services/, so only the exact
  * /services/ page redirects; /services/ai-automation/ and its siblings are
@@ -112,6 +114,7 @@ function inovantage_legacy_redirects() {
 	$targets = array(
 		'services' => '/solutions/',
 		'work'     => '/case-studies/',
+		'insights' => '/articles-and-guides/',
 	);
 
 	if ( isset( $targets[ $post->post_name ] ) ) {

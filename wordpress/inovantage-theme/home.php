@@ -1,24 +1,23 @@
 <?php
 /**
- * The Insights (Articles & Guides) archive.
+ * The Articles & Guides archive.
  *
  * WordPress automatically routes here whenever the "Posts page" set in
  * Settings -> Reading is requested, which is configured to be the
- * "Insights" page at /insights/ by inc/content-setup.php.
+ * "Articles & Guides" page at /articles-and-guides/ by inc/content-setup.php.
+ * The hero deliberately carries no image: the copy takes a single readable
+ * column (.page-hero-solo) instead of the two-column page-hero grid.
  */
 
 get_header();
 ?>
 
 <section class="page-hero">
-	<div class="container page-hero-grid">
-		<div>
-			<p class="eyebrow"><?php esc_html_e( 'Insights for digital growth', 'inovantage' ); ?></p>
-			<h1><?php esc_html_e( 'Practical guidance for better business decisions.', 'inovantage' ); ?></h1>
+	<div class="container">
+		<div class="page-hero-solo">
+			<p class="eyebrow"><?php esc_html_e( 'Guidance for digital growth', 'inovantage' ); ?></p>
+			<h1><?php esc_html_e( 'Articles & Guides', 'inovantage' ); ?></h1>
 			<p class="lede"><?php esc_html_e( 'Explore clear, commercially focused thinking on automation, website conversion, content operations and application development. Each article is designed to help business leaders identify opportunities, avoid unnecessary complexity and make more confident digital investments.', 'inovantage' ); ?></p>
-		</div>
-		<div class="page-hero-visual">
-			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/articles-guides-hero.png" width="1536" height="1024" alt="<?php esc_attr_e( 'Articles, practical guides and digital decision-making resources.', 'inovantage' ); ?>" loading="eager" decoding="async">
 		</div>
 	</div>
 </section>
@@ -35,7 +34,7 @@ get_header();
 				endwhile;
 				?>
 			<?php else : ?>
-				<p><?php esc_html_e( 'No insights have been published yet.', 'inovantage' ); ?></p>
+				<p><?php esc_html_e( 'No articles have been published yet.', 'inovantage' ); ?></p>
 			<?php endif; ?>
 		</div>
 
