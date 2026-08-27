@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 2.0.1
+Version: 2.0.2
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -4936,6 +4936,53 @@ body:has(.wa-float) .site-footer .footer-bottom {
   .about-movement > .ed-label,
   .about-overture > .ed-label {
     padding-top: 0;
+  }
+}
+
+/* Book a Growth Consultation hero. The orbital artwork leads on the left at
+   roughly 45 to 47 percent of the hero width and the copy answers on the
+   right, with both columns centred on the same axis. The artwork carries a
+   baked-in navy background (the source has no alpha channel), so instead of
+   the shared circular fade and drop shadow, its four edges dissolve into the
+   continuous hero gradient through intersecting edge-fade masks; the orbital
+   subject itself stays fully opaque and uncropped. */
+.consult-hero-grid {
+  align-items: center;
+}
+
+.consult-hero .page-hero-visual img {
+  width: 100%;
+  filter: none;
+  -webkit-mask-image:
+    linear-gradient(90deg, transparent 0%, #000 30%, #000 84%, transparent 99%),
+    linear-gradient(180deg, transparent 0%, #000 11%, #000 82%, transparent 100%);
+  mask-image:
+    linear-gradient(90deg, transparent 0%, #000 30%, #000 84%, transparent 99%),
+    linear-gradient(180deg, transparent 0%, #000 11%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+@media (min-width: 901px) {
+  .consult-hero-grid {
+    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+    gap: clamp(28px, 4vw, 52px);
+  }
+
+  .consult-hero .page-hero-visual img {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 900px) {
+  .consult-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .consult-hero .page-hero-visual img {
+    max-width: min(560px, 94%);
+    margin-inline: auto;
   }
 }
 
