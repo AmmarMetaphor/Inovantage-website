@@ -1,4 +1,43 @@
 {
+  "_contentApproval": "TODO(content-approval): Confirm that each client has approved the public use of their name, project details and final testimonial wording before production launch. The clientExperiences entries below are professionally written summaries of client feedback, not verbatim quotations; replace a summary with an exact quotation only once the client supplies and approves that wording.",
+  "clientExperiences": [
+    {
+      "name": "Alexis Kling",
+      "services": ["AI Automation"],
+      "title": "AI-powered restaurant reservation management",
+      "summary": "Alexis Kling engaged Inovantage to develop an AI-powered reservation system for her restaurant. The system now manages the reservation workflow, helping the restaurant handle bookings more efficiently and consistently. Alexis has reported that the system is working brilliantly and that she is highly satisfied with the solution and the service provided by Inovantage.",
+      "points": [
+        "More efficient reservation handling",
+        "Greater consistency across the booking workflow",
+        "Reduced manual reservation administration",
+        "A smoother experience for the restaurant team"
+      ]
+    },
+    {
+      "name": "Steve Elliot",
+      "services": ["Website Design and Development"],
+      "title": "A well-integrated website for his business",
+      "summary": "Steve Elliot chose Inovantage to design and develop a professionally integrated website for his business. The completed website brings his business information and digital customer journey together through a clear, cohesive online presence. Steve has expressed that he is very satisfied with the finished website and the service delivered by Inovantage.",
+      "points": [
+        "Clearer presentation of the business",
+        "A more cohesive digital presence",
+        "Better integration across the website experience",
+        "A professional foundation for future growth"
+      ]
+    },
+    {
+      "name": "Anna Rodriguez",
+      "services": ["Website Development", "App Development"],
+      "title": "An integrated digital platform for an e-commerce business",
+      "summary": "Anna Rodriguez worked with Inovantage on the website and application development required for her e-commerce business. The website and app were developed as connected parts of the customer experience, giving the business a more integrated digital foundation. Anna has reported that she is very satisfied with the completed work and the support provided by Inovantage.",
+      "points": [
+        "Connected website and application experience",
+        "Stronger digital foundation for e-commerce",
+        "More consistent customer journey",
+        "Greater readiness for future business growth"
+      ]
+    }
+  ],
   "caseStudies": [],
   "testimonials": [],
   "clients": []

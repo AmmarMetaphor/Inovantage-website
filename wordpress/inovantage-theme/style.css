@@ -4,7 +4,7 @@ Theme URI: https://inovantage.co.uk
 Author: Inovantage
 Author URI: https://inovantage.co.uk
 Description: Bespoke WordPress theme for Inovantage
-Version: 2.0.2
+Version: 2.1.0
 Requires at least: 6.0
 Requires PHP: 7.4
 Tested up to: 6.6
@@ -4857,9 +4857,10 @@ body:has(.wa-float) .site-footer .footer-bottom {
   font-weight: 600;
 }
 
-/* The revised navigation labels are longer ("Solutions in Practice",
-   "Book a Consultation"), so keep each header item on one line and tighten
-   the row slightly in the band just above the mobile-menu breakpoint. */
+/* The revised navigation labels are longer than the originals ("Articles &
+   Guides", "Book a Consultation"), so keep each header item on one line and
+   tighten the row slightly in the band just above the mobile-menu
+   breakpoint. */
 .primary-navigation li a,
 .site-header .button {
   white-space: nowrap;
@@ -4984,6 +4985,31 @@ body:has(.wa-float) .site-footer .footer-bottom {
     max-width: min(560px, 94%);
     margin-inline: auto;
   }
+}
+
+/* Client-experience cards on /case-studies/. The summaries are paraphrased
+   client feedback, so they render as plain copy rather than blockquotes or
+   quotation marks, with the client's name anchored to the card foot so the
+   three cards keep a consistent shape. */
+.client-experience {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-experience .case-study-tag {
+  margin-bottom: 12px;
+}
+
+.client-experience ul {
+  margin-bottom: 20px;
+}
+
+.client-experience-name {
+  margin-top: auto;
+  padding-top: 14px;
+  color: var(--text-primary);
+  font-weight: 700;
+  border-top: 1px solid var(--border);
 }
 
 .form-alert {
