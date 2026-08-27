@@ -28,9 +28,10 @@ The public domain is `https://inovantage.co.uk`.
 ## Routes
 
 - `/solutions/` is the service overview with the approved orbital hero.
-- `/case-studies/` is the client-proof page with the interactive proof hero. It
-  is labelled "Solutions in Practice" in navigation and page copy until
-  approved client stories exist; the route itself is unchanged.
+- `/case-studies/` is the client-proof page with the interactive proof hero,
+  labelled "Case Studies" in navigation and page copy. It shows the
+  owner-supplied client-experience summaries followed by clearly labelled
+  example systems.
 - The four service detail pages keep their original URLs under `/services/`.
 - `/services/` and `/work/` are retired. `netlify.toml` redirects them (301) to
   `/solutions/` and `/case-studies/` respectively, and the WordPress theme does
@@ -39,16 +40,22 @@ The public domain is `https://inovantage.co.uk`.
 ## Case studies
 
 - Every entry on `/case-studies/` comes from `src/data/case-studies.json`, which
-  holds three lists: `caseStudies`, `testimonials` and `clients`. It ships empty.
+  holds four lists: `clientExperiences`, `caseStudies`, `testimonials` and
+  `clients`. The `clientExperiences` entries are owner-supplied,
+  professionally written summaries of client feedback, never verbatim
+  quotations; they render as plain copy, not blockquotes, and each client's
+  approval of their name, project details and final wording must be confirmed
+  before production launch (see the TODO(content-approval) notes in the data
+  file and build.mjs).
 - A case study needs `slug`, `client`, `title` and a `category` of
   `ai-automation`, `website-development`, `social-media-management` or
   `app-development`. Anything without those four is skipped.
 - Each valid entry builds a `/case-studies/<slug>/` page and joins the sitemap.
   Entries are never generated for projects without real content.
 - Never write a client name, quotation, role, logo, figure or rating that the
-  client has not supplied and approved. Leave the field out instead. While the
-  lists are empty the page shows four example systems that are clearly labelled
-  as examples of what Inovantage designs; they must never be presented as
+  client has not supplied and approved. Leave the field out instead. The four
+  example systems beneath the client experiences are clearly labelled as
+  examples of what Inovantage designs; they must never be presented as
   completed client projects or carry invented clients, figures or results.
 - The four hero cards are the four service categories, not case studies. A card
   only offers "View case study" once a published study exists for its category.
@@ -107,8 +114,9 @@ Run `npm run verify` after every meaningful change. Do not claim success if it f
 - Use British English.
 - Be specific and practical; avoid inflated AI claims and empty buzzwords.
 - Never invent clients, testimonials, certifications, awards, project results or business statistics.
-- `/case-studies/` publishes only approved client stories. While none exist it
-  shows an honest empty state rather than illustrative examples.
+- `/case-studies/` publishes only owner-approved client experiences and
+  stories. Paraphrased feedback is presented as a summary, never inside
+  quotation marks or blockquotes.
 - Keep named human approval before external publication or sensitive automated actions.
 - Do not imply that AI replaces accountability.
 - Do not publish a legal claim as final legal advice. Legal pages are drafts for professional review.

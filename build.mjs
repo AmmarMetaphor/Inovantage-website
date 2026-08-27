@@ -35,8 +35,8 @@ const pageDefinitions = [
     output: 'case-studies/index.html',
     route: '/case-studies/',
     nav: 'case-studies',
-    title: 'Solutions in Practice',
-    description: 'See how Inovantage designs connected digital systems that improve lead response, website conversion, content operations and scalable service delivery for B2B companies.'
+    title: 'Case Studies',
+    description: 'Explore client experiences with Inovantage across AI automation, website development and app development for growing businesses.'
   },
   {
     source: 'ai-automation.html',
@@ -498,7 +498,7 @@ function renderWhatsAppFloat(site) {
 function renderHeader(activeNav, site) {
   const links = [
     ['solutions', '/solutions/', 'Solutions'],
-    ['case-studies', '/case-studies/', 'Solutions in Practice'],
+    ['case-studies', '/case-studies/', 'Case Studies'],
     ['insights', '/articles-and-guides/', 'Articles & Guides'],
     ['about', '/about/', 'About']
   ];
@@ -575,7 +575,7 @@ function renderFooter(site, year) {
       <h2>Company</h2>
       <ul>
         <li><a href="/about/">About</a></li>
-        <li><a href="/case-studies/">Solutions in Practice</a></li>
+        <li><a href="/case-studies/">Case Studies</a></li>
         <li><a href="/articles-and-guides/">Articles &amp; Guides</a></li>
         <li><a href="/contact/">Contact</a></li>
       </ul>
@@ -758,14 +758,18 @@ ${relatedHtml}`;
 }
 
 /* ------------------------------------------------------------------ *
- * Solutions in Practice (the /case-studies/ route)
+ * Case Studies (the /case-studies/ route)
  *
- * Client stories on /case-studies/ are driven by src/data/case-studies.json.
- * That file ships empty on purpose: this site never publishes a client
- * name, quote, logo or figure that has not been supplied and approved.
- * Until real entries exist the page presents four clearly labelled example
- * systems, one per service category, and grows into the full client-story
- * design the moment approved entries are added.
+ * Everything on /case-studies/ is driven by src/data/case-studies.json:
+ * the client-experience summaries shown after the hero, the full client
+ * stories (which build their own detail pages once entries exist) and the
+ * clearly labelled example systems shown beneath the experiences. This
+ * site never publishes a client name, quote, logo or figure that has not
+ * been supplied and approved by the owner.
+ *
+ * TODO(content-approval): Confirm that each client has approved the public
+ * use of their name, project details and final testimonial wording before
+ * production launch.
  * ------------------------------------------------------------------ */
 
 /* `capability` is a short factual description of the service, taken from the
@@ -800,9 +804,48 @@ async function loadCaseStudies() {
 
   return {
     caseStudies,
+    clientExperiences: (Array.isArray(raw.clientExperiences) ? raw.clientExperiences : [])
+      .filter((entry) => entry && entry.name && entry.title && entry.summary),
     testimonials: (Array.isArray(raw.testimonials) ? raw.testimonials : []).filter((t) => t && t.quote && t.author),
     clients: (Array.isArray(raw.clients) ? raw.clients : []).filter((c) => c && c.name)
   };
+}
+
+/* The client-experience section shown on /case-studies/ straight after the
+   hero. Each entry is a professionally written summary of feedback a client
+   gave, deliberately NOT rendered as a blockquote or wrapped in quotation
+   marks: the wording is paraphrased, so presenting it as a verbatim quote
+   would overstate it. Once a client supplies and approves exact wording, the
+   entry can move to the quotation-based testimonial list instead.
+
+   TODO(content-approval): Confirm that each client has approved the public
+   use of their name, project details and final testimonial wording before
+   production launch. */
+function clientExperienceCard(entry) {
+  const services = (Array.isArray(entry.services) ? entry.services : []).filter(Boolean);
+  const points = (Array.isArray(entry.points) ? entry.points : []).filter(Boolean);
+  return `
+      <article class="info-card client-experience">
+        ${services.length ? `<p class="case-study-tag">${services.map((s) => escapeHtml(s)).join(' · ')}</p>` : ''}
+        <h3>${escapeHtml(entry.title)}</h3>
+        <p>${escapeHtml(entry.summary)}</p>
+        ${points.length ? `<ul>${points.map((point) => `<li>${escapeHtml(point)}</li>`).join('')}</ul>` : ''}
+        <footer class="client-experience-name">${escapeHtml(entry.name)}</footer>
+      </article>`;
+}
+
+function clientExperiencesSection(list) {
+  if (!list.length) return '';
+  return `
+<section class="section" id="client-experiences">
+  <div class="container">
+    <div class="section-heading">
+      <div><p class="eyebrow">Client experiences</p><h2>What our clients say about working with Inovantage.</h2></div>
+      <p>Every project begins with a specific business need. These client experiences show how focused digital systems can simplify operations, strengthen customer journeys and support business growth.</p>
+    </div>
+    <div class="card-grid-3 client-experience-grid">${list.map(clientExperienceCard).join('')}</div>
+  </div>
+</section>`;
 }
 
 /* The four hero cards are the four real service categories. A card only
@@ -1094,7 +1137,7 @@ async function build() {
 
   const site = JSON.parse(await readFile(path.join(DATA_DIR, 'site.json'), 'utf8'));
   const posts = await loadPosts();
-  const { caseStudies, testimonials, clients } = await loadCaseStudies();
+  const { caseStudies, clientExperiences, testimonials, clients } = await loadCaseStudies();
   const featuredCases = caseStudies.filter((entry) => entry.featured);
   const remainingCases = caseStudies.filter((entry) => !entry.featured);
   const replacements = {
@@ -1112,6 +1155,7 @@ async function build() {
     contactForm: contactForm(site),
     caseOrbitCards: caseOrbitCards(caseStudies),
     caseFilters: caseFilters(),
+    clientExperiences: clientExperiencesSection(clientExperiences),
     caseStudiesFeatured: caseStudyGrid(featuredCases.length ? featuredCases : caseStudies),
     caseStudiesMore: remainingCases.length && featuredCases.length
       ? `<section class="section"><div class="container"><div class="section-heading"><div><p class="eyebrow">More work</p><h2>Further case studies</h2></div></div>${caseStudyGrid(remainingCases)}</div></section>`

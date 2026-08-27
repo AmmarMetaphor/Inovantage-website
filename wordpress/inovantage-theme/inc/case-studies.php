@@ -158,7 +158,99 @@ function inovantage_case_study_card( $post_id ) {
 }
 
 /**
- * Shown while no approved case study exists: four clearly labelled example
+ * The client-experience summaries shown on the Case Studies page straight
+ * after the hero. Each entry is a professionally written summary of feedback
+ * a client gave, deliberately NOT rendered as a blockquote or wrapped in
+ * quotation marks: the wording is paraphrased, so presenting it as a
+ * verbatim quote would overstate it. It matches the static build's
+ * src/data/case-studies.json clientExperiences list word for word.
+ *
+ * TODO(content-approval): Confirm that each client has approved the public
+ * use of their name, project details and final testimonial wording before
+ * production launch.
+ */
+function inovantage_client_experiences() {
+	return array(
+		array(
+			'name'     => 'Alexis Kling',
+			'services' => array( __( 'AI Automation', 'inovantage' ) ),
+			'title'    => __( 'AI-powered restaurant reservation management', 'inovantage' ),
+			'summary'  => __( 'Alexis Kling engaged Inovantage to develop an AI-powered reservation system for her restaurant. The system now manages the reservation workflow, helping the restaurant handle bookings more efficiently and consistently. Alexis has reported that the system is working brilliantly and that she is highly satisfied with the solution and the service provided by Inovantage.', 'inovantage' ),
+			'points'   => array(
+				__( 'More efficient reservation handling', 'inovantage' ),
+				__( 'Greater consistency across the booking workflow', 'inovantage' ),
+				__( 'Reduced manual reservation administration', 'inovantage' ),
+				__( 'A smoother experience for the restaurant team', 'inovantage' ),
+			),
+		),
+		array(
+			'name'     => 'Steve Elliot',
+			'services' => array( __( 'Website Design and Development', 'inovantage' ) ),
+			'title'    => __( 'A well-integrated website for his business', 'inovantage' ),
+			'summary'  => __( 'Steve Elliot chose Inovantage to design and develop a professionally integrated website for his business. The completed website brings his business information and digital customer journey together through a clear, cohesive online presence. Steve has expressed that he is very satisfied with the finished website and the service delivered by Inovantage.', 'inovantage' ),
+			'points'   => array(
+				__( 'Clearer presentation of the business', 'inovantage' ),
+				__( 'A more cohesive digital presence', 'inovantage' ),
+				__( 'Better integration across the website experience', 'inovantage' ),
+				__( 'A professional foundation for future growth', 'inovantage' ),
+			),
+		),
+		array(
+			'name'     => 'Anna Rodriguez',
+			'services' => array( __( 'Website Development', 'inovantage' ), __( 'App Development', 'inovantage' ) ),
+			'title'    => __( 'An integrated digital platform for an e-commerce business', 'inovantage' ),
+			'summary'  => __( 'Anna Rodriguez worked with Inovantage on the website and application development required for her e-commerce business. The website and app were developed as connected parts of the customer experience, giving the business a more integrated digital foundation. Anna has reported that she is very satisfied with the completed work and the support provided by Inovantage.', 'inovantage' ),
+			'points'   => array(
+				__( 'Connected website and application experience', 'inovantage' ),
+				__( 'Stronger digital foundation for e-commerce', 'inovantage' ),
+				__( 'More consistent customer journey', 'inovantage' ),
+				__( 'Greater readiness for future business growth', 'inovantage' ),
+			),
+		),
+	);
+}
+
+/**
+ * Renders the Client Experiences section, matching the static build.
+ */
+function inovantage_client_experiences_section() {
+	$experiences = inovantage_client_experiences();
+	if ( empty( $experiences ) ) {
+		return;
+	}
+	?>
+	<section class="section" id="client-experiences">
+		<div class="container">
+			<div class="section-heading">
+				<div><p class="eyebrow"><?php esc_html_e( 'Client experiences', 'inovantage' ); ?></p><h2><?php esc_html_e( 'What our clients say about working with Inovantage.', 'inovantage' ); ?></h2></div>
+				<p><?php esc_html_e( 'Every project begins with a specific business need. These client experiences show how focused digital systems can simplify operations, strengthen customer journeys and support business growth.', 'inovantage' ); ?></p>
+			</div>
+			<div class="card-grid-3 client-experience-grid">
+				<?php foreach ( $experiences as $experience ) : ?>
+					<article class="info-card client-experience">
+						<?php if ( ! empty( $experience['services'] ) ) : ?>
+							<p class="case-study-tag"><?php echo esc_html( implode( ' · ', $experience['services'] ) ); ?></p>
+						<?php endif; ?>
+						<h3><?php echo esc_html( $experience['title'] ); ?></h3>
+						<p><?php echo esc_html( $experience['summary'] ); ?></p>
+						<?php if ( ! empty( $experience['points'] ) ) : ?>
+							<ul>
+								<?php foreach ( $experience['points'] as $point ) : ?>
+									<li><?php echo esc_html( $point ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
+						<footer class="client-experience-name"><?php echo esc_html( $experience['name'] ); ?></footer>
+					</article>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</section>
+	<?php
+}
+
+/**
+ * Shown beneath the client experiences: four clearly labelled example
  * systems, one per service category. Each describes the kind of system
  * Inovantage designs. None is presented as a completed client project, and
  * no client, figure or result is invented. It matches the static build word

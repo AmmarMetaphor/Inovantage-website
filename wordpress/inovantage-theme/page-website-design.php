@@ -43,7 +43,7 @@ while ( have_posts() ) :
 		<div class="card-grid-3">
 			<article class="info-card"><h3><?php esc_html_e( 'Home', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Establish the value proposition, priority solutions, credibility and next action.', 'inovantage' ); ?></p></article>
 			<article class="info-card"><h3><?php esc_html_e( 'Solutions', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Connect business challenges to clear services and outcomes.', 'inovantage' ); ?></p></article>
-			<article class="info-card"><h3><?php esc_html_e( 'Solutions in Practice', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Show verified problems, solutions and outcomes that strengthen buyer confidence.', 'inovantage' ); ?></p></article>
+			<article class="info-card"><h3><?php esc_html_e( 'Case Studies', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Show verified problems, solutions and outcomes that strengthen buyer confidence.', 'inovantage' ); ?></p></article>
 			<article class="info-card"><h3><?php esc_html_e( 'About', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Explain the expertise, perspective and operating principles behind the company.', 'inovantage' ); ?></p></article>
 			<article class="info-card"><h3><?php esc_html_e( 'Articles & Guides', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Answer buyer questions, demonstrate expertise and support search visibility.', 'inovantage' ); ?></p></article>
 			<article class="info-card"><h3><?php esc_html_e( 'Contact', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Capture the information required to begin a relevant business conversation.', 'inovantage' ); ?></p></article>

@@ -2,9 +2,9 @@
 /**
  * Template Name: Case studies
  *
- * Mirrors the approved static /case-studies/ page, presented as "Solutions in
- * Practice": a full-viewport interactive hero whose four cards orbit a glowing
- * core, the service filter bar, then the published case studies (or four
+ * Mirrors the approved static /case-studies/ page: a full-viewport interactive
+ * hero whose four cards orbit a glowing core, the service filter bar, the
+ * client-experience summaries, then the published case studies (or four
  * clearly labelled example systems while none exist).
  */
 
@@ -55,9 +55,9 @@ $inovantage_cases = get_posts(
 <section class="page-hero case-hero" data-case-hero>
 	<div class="container case-hero-grid">
 		<div class="case-hero-copy">
-			<p class="eyebrow"><?php esc_html_e( 'Solutions in practice', 'inovantage' ); ?></p>
-			<h1><?php esc_html_e( 'See how', 'inovantage' ); ?> <span><?php esc_html_e( 'connected digital systems', 'inovantage' ); ?></span> <?php esc_html_e( 'solve business challenges.', 'inovantage' ); ?></h1>
-			<p class="lede"><?php esc_html_e( 'Inovantage designs solutions around measurable operational and commercial needs, from improving lead response and customer journeys to reducing administration and creating scalable digital services.', 'inovantage' ); ?></p>
+			<p class="eyebrow"><?php esc_html_e( 'Case studies', 'inovantage' ); ?></p>
+			<h1><?php esc_html_e( 'Digital systems built around', 'inovantage' ); ?> <span><?php esc_html_e( 'real business needs.', 'inovantage' ); ?></span></h1>
+			<p class="lede"><?php esc_html_e( 'See how Inovantage has helped clients improve customer experiences, strengthen their digital presence and create more efficient ways of operating through AI automation, website development and application development.', 'inovantage' ); ?></p>
 
 			<div class="filter-bar case-filter-bar" role="group" aria-label="<?php esc_attr_e( 'Filter examples by service', 'inovantage' ); ?>" data-case-filter-group>
 				<button class="filter-button is-active" type="button" data-case-filter="all" aria-pressed="true"><?php esc_html_e( 'All', 'inovantage' ); ?></button>
@@ -121,13 +121,15 @@ $inovantage_cases = get_posts(
 		</div>
 	</div>
 
-	<a class="case-scroll" href="#featured-case-studies">
+	<a class="case-scroll" href="#client-experiences">
 		<span class="case-scroll-mouse" aria-hidden="true"></span>
-		<?php esc_html_e( 'Scroll to explore the systems', 'inovantage' ); ?>
+		<?php esc_html_e( 'Scroll to explore client experiences', 'inovantage' ); ?>
 	</a>
 </section>
 
-<section class="section" id="featured-case-studies">
+<?php inovantage_client_experiences_section(); ?>
+
+<section class="section section-soft" id="featured-case-studies">
 	<div class="container case-featured-grid">
 		<div class="sticky-copy">
 			<?php if ( ! empty( $inovantage_cases ) ) : ?>
@@ -136,9 +138,9 @@ $inovantage_cases = get_posts(
 				<p class="lede"><?php esc_html_e( 'Each study is published with confirmed wording, verified evidence and the client\'s permission.', 'inovantage' ); ?></p>
 			<?php else : ?>
 				<p class="eyebrow"><?php esc_html_e( 'Example systems', 'inovantage' ); ?></p>
-				<h2><?php esc_html_e( 'Four systems that remove common growth constraints.', 'inovantage' ); ?></h2>
-				<p class="lede"><?php esc_html_e( 'Each example shows how Inovantage approaches a frequent business challenge. They describe the kind of system we design, not completed client projects.', 'inovantage' ); ?></p>
-				<p class="proof-note"><?php esc_html_e( 'Future client case studies will be published only with confirmed wording, verified evidence and appropriate client permission.', 'inovantage' ); ?></p>
+				<h2><?php esc_html_e( 'More ways Inovantage can support business growth.', 'inovantage' ); ?></h2>
+				<p class="lede"><?php esc_html_e( 'From lead automation and customer portals to conversion-focused websites and controlled content workflows, each solution is shaped around a clear operational or commercial need.', 'inovantage' ); ?></p>
+				<p class="proof-note"><?php esc_html_e( 'These examples describe the kinds of systems Inovantage designs; they are not additional completed client projects.', 'inovantage' ); ?></p>
 			<?php endif; ?>
 			<a class="text-link" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'Explore all solutions', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 		</div>
@@ -160,10 +162,11 @@ $inovantage_cases = get_posts(
 	<div class="container">
 		<div class="cta-panel">
 			<div>
+				<p class="eyebrow"><?php esc_html_e( 'Your next case study', 'inovantage' ); ?></p>
 				<h2><?php esc_html_e( 'What business challenge should your next digital system solve?', 'inovantage' ); ?></h2>
-				<p><?php esc_html_e( 'Tell us what is slowing the business down, where opportunities are being lost or what needs to scale.', 'inovantage' ); ?></p>
+				<p><?php esc_html_e( 'Tell us what is slowing the business down, limiting customer experience or preventing the next stage of growth. We will help you identify a practical digital solution.', 'inovantage' ); ?></p>
 			</div>
-			<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Discuss Your Business Challenge', 'inovantage' ); ?></a>
+			<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Growth Consultation', 'inovantage' ); ?></a>
 		</div>
 	</div>
 </section>
