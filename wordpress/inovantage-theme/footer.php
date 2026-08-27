@@ -61,7 +61,7 @@ $inovantage_address = inovantage_registered_address();
 			<ul>
 				<li><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'About', 'inovantage' ); ?></a></li>
 				<li><a href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'Solutions in Practice', 'inovantage' ); ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Insights', 'inovantage' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/articles-and-guides/' ) ); ?>"><?php esc_html_e( 'Articles & Guides', 'inovantage' ); ?></a></li>
 				<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'inovantage' ); ?></a></li>
 			</ul>
 		</div>

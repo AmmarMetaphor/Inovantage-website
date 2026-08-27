@@ -19,7 +19,7 @@ while ( have_posts() ) :
 			<p class="lede"><?php esc_html_e( 'Your consultation request has been received. A member of the Inovantage team will review the details and respond using the email address you provided.', 'inovantage' ); ?></p>
 			<div class="button-row" style="justify-content:center">
 				<a class="button" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php esc_html_e( 'Return home', 'inovantage' ); ?></a>
-				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Read our insights', 'inovantage' ); ?></a>
+				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/articles-and-guides/' ) ); ?>"><?php esc_html_e( 'Browse articles and guides', 'inovantage' ); ?></a>
 			</div>
 		</div>
 	</div>

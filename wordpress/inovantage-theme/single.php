@@ -17,7 +17,7 @@ while ( have_posts() ) :
 
 	<section class="article-hero">
 		<div class="container container-narrow">
-			<a class="back-link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>">&larr; <?php esc_html_e( 'Back to insights', 'inovantage' ); ?></a>
+			<a class="back-link" href="<?php echo esc_url( home_url( '/articles-and-guides/' ) ); ?>">&larr; <?php esc_html_e( 'Back to Articles & Guides', 'inovantage' ); ?></a>
 			<div class="insight-meta"><span><?php echo esc_html( $category ); ?></span><span><?php echo esc_html( get_the_date( 'j F Y' ) ); ?></span><span><?php echo esc_html( $reading ); ?> <?php esc_html_e( 'min read', 'inovantage' ); ?></span></div>
 			<h1><?php the_title(); ?></h1>
 			<?php if ( get_the_excerpt() ) : ?>
@@ -75,7 +75,7 @@ while ( have_posts() ) :
 			<div class="container">
 				<div class="section-heading">
 					<div><p class="eyebrow"><?php esc_html_e( 'Keep learning', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Related insights', 'inovantage' ); ?></h2></div>
-					<a class="text-link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'View all insights', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+					<a class="text-link" href="<?php echo esc_url( home_url( '/articles-and-guides/' ) ); ?>"><?php esc_html_e( 'View all articles and guides', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 				</div>
 				<div class="insights-grid">
 					<?php

@@ -80,11 +80,11 @@ const pageDefinitions = [
   },
   {
     source: 'insights.html',
-    output: 'insights/index.html',
-    route: '/insights/',
+    output: 'articles-and-guides/index.html',
+    route: '/articles-and-guides/',
     nav: 'insights',
-    title: 'Insights for Digital Growth',
-    description: 'Practical guidance for business leaders on automation, website conversion, content operations and application development, focused on confident digital investment decisions.'
+    title: 'Articles & Guides',
+    description: 'Explore practical guidance on AI automation, website conversion, social media management and app development for growing B2B businesses.'
   },
   {
     source: 'contact.html',
@@ -434,7 +434,7 @@ async function loadPosts() {
     posts.push({
       ...data,
       slug,
-      url: `/insights/${slug}/`,
+      url: `/articles-and-guides/${slug}/`,
       description: data.description || body.replace(/[#*_`>\[\]()!-]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 155),
       author: data.author || 'Inovantage',
       category: data.category || 'Digital Growth',
@@ -499,7 +499,7 @@ function renderHeader(activeNav, site) {
   const links = [
     ['solutions', '/solutions/', 'Solutions'],
     ['case-studies', '/case-studies/', 'Solutions in Practice'],
-    ['insights', '/insights/', 'Articles & Guides'],
+    ['insights', '/articles-and-guides/', 'Articles & Guides'],
     ['about', '/about/', 'About']
   ];
   const navItems = links.map(([key, href, label]) => {
@@ -576,7 +576,7 @@ function renderFooter(site, year) {
       <ul>
         <li><a href="/about/">About</a></li>
         <li><a href="/case-studies/">Solutions in Practice</a></li>
-        <li><a href="/insights/">Insights</a></li>
+        <li><a href="/articles-and-guides/">Articles &amp; Guides</a></li>
         <li><a href="/contact/">Contact</a></li>
       </ul>
     </div>
@@ -698,13 +698,13 @@ function renderPost(post, site, allPosts) {
   const related = allPosts.filter((item) => item.slug !== post.slug && item.category === post.category).slice(0, 2);
   const relatedFallback = related.length ? related : allPosts.filter((item) => item.slug !== post.slug).slice(0, 2);
   const relatedHtml = relatedFallback.length
-    ? `<section class="section section-soft"><div class="container"><div class="section-heading"><div><p class="eyebrow">Keep learning</p><h2>Related insights</h2></div><a class="text-link" href="/insights/">View all insights ${icon('arrow')}</a></div><div class="insights-grid">${relatedFallback.map((item) => postCard(item, true)).join('')}</div></div></section>`
+    ? `<section class="section section-soft"><div class="container"><div class="section-heading"><div><p class="eyebrow">Keep learning</p><h2>Related articles</h2></div><a class="text-link" href="/articles-and-guides/">View all articles and guides ${icon('arrow')}</a></div><div class="insights-grid">${relatedFallback.map((item) => postCard(item, true)).join('')}</div></div></section>`
     : '';
   const heroImage = post.image ? `<figure class="article-hero-image"><img src="${escapeHtml(post.image)}" alt="${escapeHtml(post.imageAlt)}"></figure>` : '';
   const content = `
 <section class="article-hero">
   <div class="container container-narrow">
-    <a class="back-link" href="/insights/">← Back to insights</a>
+    <a class="back-link" href="/articles-and-guides/">← Back to Articles &amp; Guides</a>
     <div class="insight-meta"><span>${escapeHtml(post.category)}</span><span>${formatDate(post.date)}</span><span>${post.readingMinutes} min read</span></div>
     <h1>${escapeHtml(post.title)}</h1>
     <p class="article-deck">${escapeHtml(post.description)}</p>
@@ -1013,7 +1013,7 @@ function replaceTokens(html, replacements) {
 }
 
 function renderAllPosts(posts) {
-  if (!posts.length) return '<p>No insights have been published yet.</p>';
+  if (!posts.length) return '<p>No articles have been published yet.</p>';
   return posts.map((post) => postCard(post)).join('');
 }
 
@@ -1024,7 +1024,7 @@ function renderLatestPosts(posts) {
 function categoriesFilter(posts) {
   const categories = [...new Set(posts.map((post) => post.category))];
   if (categories.length < 2) return '';
-  return `<div class="filter-bar" aria-label="Filter insights by category" data-filter-group>
+  return `<div class="filter-bar" aria-label="Filter articles by category" data-filter-group>
     <button class="filter-button is-active" type="button" data-filter="all">All</button>
     ${categories.map((category) => `<button class="filter-button" type="button" data-filter="${slugify(category)}">${escapeHtml(category)}</button>`).join('')}
   </div>`;
@@ -1074,8 +1074,8 @@ async function generateRss(site, posts) {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>${escapeXml(site.name)} Insights</title>
-  <link>${escapeXml(`${site.url}/insights/`)}</link>
+  <title>${escapeXml(site.name)} Articles &amp; Guides</title>
+  <link>${escapeXml(`${site.url}/articles-and-guides/`)}</link>
   <description>${escapeXml('Practical guidance on AI automation, website performance, social media operations, and app development.')}</description>
   <language>en-gb</language>
 ${items}
@@ -1143,7 +1143,7 @@ async function build() {
   }
 
   for (const post of posts) {
-    await writeOutput(`insights/${post.slug}/index.html`, renderPost(post, site, posts));
+    await writeOutput(`articles-and-guides/${post.slug}/index.html`, renderPost(post, site, posts));
   }
 
   // A detail route only exists for a case study that has real content.
@@ -1154,7 +1154,7 @@ async function build() {
   await generateSitemap(site, posts, caseStudies);
   await generateRss(site, posts);
   await writeOutput('robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${site.url}/sitemap.xml\n`);
-  await writeOutput('llms.txt', `# ${site.name}\n\n${site.tagline} A connected B2B digital growth partner helping companies increase capacity, improve conversion and scale through connected digital systems.\n\n## Core services\n- AI Automation\n- Website Design and Development\n- Social Media Management with approval workflows\n- App Development (portals, dashboards, internal tools and business applications)\n\n## Important pages\n- ${site.url}/solutions/\n- ${site.url}/case-studies/\n- ${site.url}/insights/\n- ${site.url}/contact/\n`);
+  await writeOutput('llms.txt', `# ${site.name}\n\n${site.tagline} A connected B2B digital growth partner helping companies increase capacity, improve conversion and scale through connected digital systems.\n\n## Core services\n- AI Automation\n- Website Design and Development\n- Social Media Management with approval workflows\n- App Development (portals, dashboards, internal tools and business applications)\n\n## Important pages\n- ${site.url}/solutions/\n- ${site.url}/case-studies/\n- ${site.url}/articles-and-guides/\n- ${site.url}/contact/\n`);
 
   console.log(`Built ${pageDefinitions.length} pages, ${posts.length} insight posts and ${caseStudies.length} case studies into ${path.relative(ROOT, DIST)}/`);
 }

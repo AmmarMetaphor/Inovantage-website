@@ -4877,3 +4877,39 @@ body:has(.wa-float) .site-footer .footer-bottom {
     font-size: 0.92rem;
   }
 }
+
+/* The Articles & Guides hero carries no image, so its copy sits in a single
+   readable column instead of the two-column page-hero grid. */
+.page-hero-solo {
+  max-width: 840px;
+}
+
+.page-hero-solo .lede {
+  max-width: 700px;
+}
+
+/* About page: the small side label optically floated a few pixels above the
+   cap line of the statement beside it, because the statement's much larger
+   type carries more internal leading. The columns already share a grid row,
+   so the correction is a top offset that scales with the statement's own
+   font-size clamp; the label and the statement then begin on the same
+   horizontal line at every desktop width. Below 1024px the columns stack
+   and the offset resets. */
+.about-movement {
+  align-items: start;
+}
+
+.about-movement > .ed-label {
+  padding-top: calc(clamp(1.9rem, 3.5vw, 3.05rem) * 0.13);
+}
+
+.about-overture > .ed-label {
+  padding-top: calc(clamp(2.3rem, 4.6vw, 4.1rem) * 0.13);
+}
+
+@media (max-width: 1024px) {
+  .about-movement > .ed-label,
+  .about-overture > .ed-label {
+    padding-top: 0;
+  }
+}

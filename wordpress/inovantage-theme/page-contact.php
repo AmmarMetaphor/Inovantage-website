@@ -23,7 +23,7 @@ while ( have_posts() ) :
 			<p class="lede"><?php esc_html_e( 'You may want to generate more enquiries, improve conversion, automate repeated work, strengthen your digital presence or build a service that can scale. Describe the current situation and the outcome you want. You do not need to arrive with a technical specification.', 'inovantage' ); ?></p>
 		</div>
 		<div class="page-hero-visual">
-			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/contact-hero.png" width="1536" height="1024" alt="<?php esc_attr_e( 'Project enquiry, planning, communication and agreed next steps.', 'inovantage' ); ?>" loading="eager" decoding="async">
+			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/home-hero-orbital.webp" srcset="<?php echo esc_attr( sprintf( '%1$s/assets/images/heroes/home-hero-orbital-760.webp 760w, %1$s/assets/images/heroes/home-hero-orbital-1180.webp 1180w, %1$s/assets/images/heroes/home-hero-orbital.webp 1672w', INOVANTAGE_URI ) ); ?>" sizes="(max-width: 900px) 92vw, 460px" width="1672" height="941" alt="" loading="eager" decoding="async">
 		</div>
 	</div>
 </section>

@@ -129,7 +129,7 @@ $inovantage_hero_art_srcset = sprintf(
 	<div class="container">
 		<div class="section-heading">
 			<div><p class="eyebrow"><?php esc_html_e( 'Insights for business leaders', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Make stronger digital investment decisions.', 'inovantage' ); ?></h2></div>
-			<a class="text-link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'View Articles and Guides', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+			<a class="text-link" href="<?php echo esc_url( home_url( '/articles-and-guides/' ) ); ?>"><?php esc_html_e( 'View Articles and Guides', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 		</div>
 		<div class="section-intro">
 			<p><?php esc_html_e( 'Explore practical guidance on business automation, conversion-focused websites, content operations and application development, written for leaders deciding where digital improvement can create the greatest value.', 'inovantage' ); ?></p>

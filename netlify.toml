@@ -34,6 +34,19 @@
   to = "/case-studies/"
   status = 301
 
+# The Insights page became Articles & Guides. The splat rule carries every
+# article URL across to its new home, so /insights/<slug>/ lands on
+# /articles-and-guides/<slug>/ permanently.
+[[redirects]]
+  from = "/insights"
+  to = "/articles-and-guides/"
+  status = 301
+
+[[redirects]]
+  from = "/insights/*"
+  to = "/articles-and-guides/:splat"
+  status = 301
+
 [[headers]]
   for = "/*"
   [headers.values]

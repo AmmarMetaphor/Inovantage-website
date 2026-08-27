@@ -16,9 +16,12 @@ media_folder: "src/static/assets/images/uploads"
 public_folder: "/assets/images/uploads"
 
 collections:
+  # "insights" stays as the internal collection identifier so existing
+  # editorial-workflow branches keep working; the public page is
+  # Articles & Guides at /articles-and-guides/.
   - name: "insights"
-    label: "Insights"
-    label_singular: "Insight post"
+    label: "Articles & Guides"
+    label_singular: "Article"
     folder: "src/content/posts"
     create: true
     extension: "md"
