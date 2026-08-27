@@ -79,7 +79,7 @@ function inovantage_default_author_id() {
  * templates, and configures the static front page / posts page.
  */
 function inovantage_bootstrap_pages() {
-	$home_id     = inovantage_get_or_create( 'page', 'home', __( 'Home', 'inovantage' ), 0, __( 'Inovantage helps ambitious businesses automate repetitive work, build high-performing websites, manage social media with approval controls, and launch practical web and mobile apps.', 'inovantage' ) );
+	$home_id     = inovantage_get_or_create( 'page', 'home', __( 'Home', 'inovantage' ), 0, __( 'Inovantage is a connected B2B digital growth partner. AI automation, conversion-focused websites, managed content operations and business apps that increase capacity, improve conversion and support scalable growth.', 'inovantage' ) );
 
 	/* The four service detail pages are children of the "services" page, so
 	   that page has to stay in place for /services/<service>/ to keep
@@ -87,20 +87,20 @@ function inovantage_bootstrap_pages() {
 	   moved to "solutions", and inovantage_legacy_redirects() sends
 	   /services/ there permanently. */
 	$services_id   = inovantage_get_or_create( 'page', 'services', __( 'Services', 'inovantage' ), 0, '' );
-	$solutions_id  = inovantage_get_or_create( 'page', 'solutions', __( 'Solutions', 'inovantage' ), 0, __( 'Explore Inovantage solutions across AI automation, website design, social media management, and app development.', 'inovantage' ) );
-	$cases_id      = inovantage_get_or_create( 'page', 'case-studies', __( 'Case Studies', 'inovantage' ), 0, __( 'How Inovantage connects automation, websites, social media and apps into systems that move a business forward.', 'inovantage' ) );
-	$insights_id = inovantage_get_or_create( 'page', 'insights', __( 'Insights', 'inovantage' ), 0, __( 'Practical guidance on AI automation, website performance, social media operations, and app development.', 'inovantage' ) );
-	$about_id    = inovantage_get_or_create( 'page', 'about', __( 'About', 'inovantage' ), 0, __( 'A practical digital partner focused on useful automation, clear communication, thoughtful design, and dependable delivery.', 'inovantage' ) );
-	$contact_id  = inovantage_get_or_create( 'page', 'contact', __( 'Contact', 'inovantage' ), 0, __( 'Tell Inovantage what you want to improve, build, or automate. Start with a clear, no-pressure discovery conversation.', 'inovantage' ) );
+	$solutions_id  = inovantage_get_or_create( 'page', 'solutions', __( 'Connected Digital Solutions for B2B Growth', 'inovantage' ), 0, __( 'Connect a business challenge to the right solution: B2B AI automation, website design and development, social media management and business app development from Inovantage.', 'inovantage' ) );
+	$cases_id      = inovantage_get_or_create( 'page', 'case-studies', __( 'Solutions in Practice', 'inovantage' ), 0, __( 'See how Inovantage designs connected digital systems that improve lead response, website conversion, content operations and scalable service delivery for B2B companies.', 'inovantage' ) );
+	$insights_id = inovantage_get_or_create( 'page', 'insights', __( 'Insights for Digital Growth', 'inovantage' ), 0, __( 'Practical guidance for business leaders on automation, website conversion, content operations and application development, focused on confident digital investment decisions.', 'inovantage' ) );
+	$about_id    = inovantage_get_or_create( 'page', 'about', __( 'About Inovantage', 'inovantage' ), 0, __( 'Inovantage is a connected digital partner for ambitious B2B businesses, improving customer journeys, operational capacity and scalable digital services.', 'inovantage' ) );
+	$contact_id  = inovantage_get_or_create( 'page', 'contact', __( 'Book a Growth Consultation', 'inovantage' ), 0, __( 'Tell Inovantage what you want your business to achieve. Describe the current challenge and desired outcome, and we will recommend a practical next step.', 'inovantage' ) );
 	$privacy_id  = inovantage_get_or_create( 'page', 'privacy', __( 'Privacy Notice', 'inovantage' ), 0, __( 'How Inovantage handles personal information submitted through this website.', 'inovantage' ) );
 	$cookies_id  = inovantage_get_or_create( 'page', 'cookies', __( 'Cookie Notice', 'inovantage' ), 0, __( 'Information about cookies and local storage used by the Inovantage website.', 'inovantage' ) );
 	$terms_id    = inovantage_get_or_create( 'page', 'terms', __( 'Website Terms', 'inovantage' ), 0, __( 'Terms governing use of the Inovantage website.', 'inovantage' ) );
 	$thanks_id   = inovantage_get_or_create( 'page', 'thank-you', __( 'Thank You', 'inovantage' ), 0, __( 'Thank you for contacting Inovantage.', 'inovantage' ) );
 
-	$ai_id     = inovantage_get_or_create( 'page', 'ai-automation', __( 'AI Automation', 'inovantage' ), $services_id, __( 'Practical AI automation for lead handling, customer support, reporting, data entry, content operations, and connected business workflows.', 'inovantage' ) );
-	$web_id    = inovantage_get_or_create( 'page', 'website-design', __( 'Website Design', 'inovantage' ), $services_id, __( 'Fast, accessible, conversion-focused websites designed around your brand, customers, content, and growth goals.', 'inovantage' ) );
-	$social_id = inovantage_get_or_create( 'page', 'social-media-management', __( 'Social Media Management', 'inovantage' ), $services_id, __( 'Strategy, content planning, design, captions, approval workflows, scheduling, community support, and clear performance reporting.', 'inovantage' ) );
-	$app_id    = inovantage_get_or_create( 'page', 'app-development', __( 'App Development', 'inovantage' ), $services_id, __( 'From discovery and prototype to production, Inovantage builds practical apps, portals, dashboards, and internal tools.', 'inovantage' ) );
+	$ai_id     = inovantage_get_or_create( 'page', 'ai-automation', __( 'B2B AI Automation Services', 'inovantage' ), $services_id, __( 'B2B AI automation and workflow automation that helps teams respond to opportunities faster, reduce repeated administration and scale output without scaling repetitive work.', 'inovantage' ) );
+	$web_id    = inovantage_get_or_create( 'page', 'website-design', __( 'B2B Website Design & Development', 'inovantage' ), $services_id, __( 'Conversion-focused website design and development for B2B companies: clear positioning, buyer-focused structure and credible digital experiences that generate qualified enquiries.', 'inovantage' ) );
+	$social_id = inovantage_get_or_create( 'page', 'social-media-management', __( 'B2B Social Media Management', 'inovantage' ), $services_id, __( 'Managed B2B social media: strategy, content planning, production, stakeholder approval, scheduling and performance review that build visibility, credibility and demand.', 'inovantage' ) );
+	$app_id    = inovantage_get_or_create( 'page', 'app-development', __( 'Business App Development', 'inovantage' ), $services_id, __( 'Business app development for B2B growth: customer portals, dashboards, internal tools and workflow applications that improve delivery, customer experience and operational efficiency.', 'inovantage' ) );
 
 	$templates = array(
 		$solutions_id => 'page-solutions.php',
@@ -163,33 +163,33 @@ function inovantage_bootstrap_insight_posts() {
 	$posts = array(
 		array(
 			'slug'        => 'seven-business-processes-to-automate-first',
-			'title'       => 'Seven business processes worth automating first',
+			'title'       => 'Seven Business Processes That Could Be Limiting Your Capacity',
 			'date'        => '2026-07-30 09:00:00',
-			'excerpt'     => 'A practical way to identify repetitive, high-volume work that is suitable for automation without removing essential human judgement.',
+			'excerpt'     => 'Identify the repetitive, high-volume processes that limit team capacity and learn where automation can create room to grow without removing essential human judgement.',
 			'category'    => 'AI Automation',
 			'file'        => 'seven-business-processes-to-automate-first.html',
 		),
 		array(
 			'slug'        => 'website-brief-checklist',
-			'title'       => 'The website brief checklist that prevents expensive rework',
+			'title'       => 'How to Plan a B2B Website That Converts More Opportunities',
 			'date'        => '2026-07-22 09:00:00',
-			'excerpt'     => 'Define the audience, offer, content, actions and technical constraints before website design begins with this practical briefing checklist.',
+			'excerpt'     => 'Plan a B2B website around audience, offer, content, actions and technical constraints so design decisions support conversion and prevent expensive rework.',
 			'category'    => 'Website Design',
 			'file'        => 'website-brief-checklist.html',
 		),
 		array(
 			'slug'        => 'social-media-approval-workflow',
-			'title'       => 'A simple social media approval workflow for busy teams',
+			'title'       => 'A Social Media Approval Workflow That Supports Consistent Growth',
 			'date'        => '2026-07-15 09:00:00',
-			'excerpt'     => 'Use a clear draft, review, approval and scheduling process to publish social content consistently without losing control of your brand.',
+			'excerpt'     => 'Use a clear draft, review, approval and scheduling process to publish social media content consistently while keeping full control of your brand.',
 			'category'    => 'Social Media',
 			'file'        => 'social-media-approval-workflow.html',
 		),
 		array(
 			'slug'        => 'how-to-choose-the-right-mvp',
-			'title'       => 'How to choose the right MVP for a business app',
+			'title'       => 'How to Define an MVP That Can Prove Commercial Demand',
 			'date'        => '2026-07-08 09:00:00',
-			'excerpt'     => 'Define a focused minimum viable product by choosing one user, one important task and the smallest evidence-producing release.',
+			'excerpt'     => 'Define a focused minimum viable product by choosing one user and one important task, then building the smallest release that can prove commercial demand.',
 			'category'    => 'App Development',
 			'file'        => 'how-to-choose-the-right-mvp.html',
 		),
@@ -239,9 +239,9 @@ function inovantage_bootstrap_insight_posts() {
 }
 
 /**
- * Creates the "Inovantage Primary" navigation menu (Solutions, Case Studies,
- * Articles & Guides, About) if no menu is already assigned to the
- * "primary" theme location, and assigns it. "Start a project" is
+ * Creates the "Inovantage Primary" navigation menu (Solutions, Solutions in
+ * Practice, Articles & Guides, About) if no menu is already assigned to the
+ * "primary" theme location, and assigns it. "Book a Consultation" is
  * rendered separately in header.php as a call-to-action button, not as a
  * menu item, matching the approved navigation. No Home item is added.
  */
@@ -269,7 +269,7 @@ function inovantage_bootstrap_menu() {
 
 	$items = array(
 		array( __( 'Solutions', 'inovantage' ), home_url( '/solutions/' ) ),
-		array( __( 'Case Studies', 'inovantage' ), home_url( '/case-studies/' ) ),
+		array( __( 'Solutions in Practice', 'inovantage' ), home_url( '/case-studies/' ) ),
 		array( __( 'Articles & Guides', 'inovantage' ), home_url( '/insights/' ) ),
 		array( __( 'About', 'inovantage' ), home_url( '/about/' ) ),
 	);

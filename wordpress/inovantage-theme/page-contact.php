@@ -2,7 +2,7 @@
 /**
  * Template Name: Contact
  *
- * Renders the project enquiry form and posts it to admin-post.php, which
+ * Renders the consultation enquiry form and posts it to admin-post.php, which
  * inc/contact-form.php processes (nonce + honeypot + sanitisation +
  * wp_mail()) before redirecting to /thank-you/.
  */
@@ -18,9 +18,9 @@ while ( have_posts() ) :
 <section class="page-hero">
 	<div class="container page-hero-grid">
 		<div>
-			<p class="eyebrow"><?php esc_html_e( 'Contact', 'inovantage' ); ?></p>
-			<h1><?php esc_html_e( 'Tell us what you want to improve, automate or build.', 'inovantage' ); ?></h1>
-			<p class="lede"><?php esc_html_e( 'A useful first message explains what is happening now, what better would look like, who needs the solution and any important timing or budget constraints.', 'inovantage' ); ?></p>
+			<p class="eyebrow"><?php esc_html_e( 'Book a growth consultation', 'inovantage' ); ?></p>
+			<h1><?php esc_html_e( 'Tell us what you want your business to achieve.', 'inovantage' ); ?></h1>
+			<p class="lede"><?php esc_html_e( 'You may want to generate more enquiries, improve conversion, automate repeated work, strengthen your digital presence or build a service that can scale. Describe the current situation and the outcome you want. You do not need to arrive with a technical specification.', 'inovantage' ); ?></p>
 		</div>
 		<div class="page-hero-visual">
 			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/contact-hero.png" width="1536" height="1024" alt="<?php esc_attr_e( 'Project enquiry, planning, communication and agreed next steps.', 'inovantage' ); ?>" loading="eager" decoding="async">
@@ -32,14 +32,24 @@ while ( have_posts() ) :
 	<div class="container contact-grid">
 		<div class="contact-details">
 			<p class="eyebrow"><?php esc_html_e( 'Start with context', 'inovantage' ); ?></p>
-			<h2><?php esc_html_e( 'A clear problem is enough for the first conversation.', 'inovantage' ); ?></h2>
-			<p><?php esc_html_e( 'You do not need to arrive with a technical specification. We can help turn the opportunity into a practical scope and sequence.', 'inovantage' ); ?></p>
+			<h2><?php esc_html_e( 'A clear business challenge is enough to begin.', 'inovantage' ); ?></h2>
+			<p><?php esc_html_e( 'Helpful information includes:', 'inovantage' ); ?></p>
+			<ul class="contact-help-list">
+				<li><?php esc_html_e( 'What is happening today', 'inovantage' ); ?></li>
+				<li><?php esc_html_e( 'Where time, opportunities or capacity are being lost', 'inovantage' ); ?></li>
+				<li><?php esc_html_e( 'Who experiences the problem', 'inovantage' ); ?></li>
+				<li><?php esc_html_e( 'What better performance would look like', 'inovantage' ); ?></li>
+				<li><?php esc_html_e( 'Which systems or channels are currently involved', 'inovantage' ); ?></li>
+				<li><?php esc_html_e( 'Any important timing requirements', 'inovantage' ); ?></li>
+			</ul>
+			<p><?php esc_html_e( 'After reviewing your enquiry, we will recommend a sensible next conversation or discovery step.', 'inovantage' ); ?></p>
 			<div class="contact-list">
 				<div class="contact-item"><strong><?php esc_html_e( 'Email', 'inovantage' ); ?></strong><a href="mailto:<?php echo esc_attr( inovantage_company( 'email' ) ); ?>"><?php echo esc_html( inovantage_company( 'email' ) ); ?></a></div>
 				<div class="contact-item"><strong><?php esc_html_e( 'Service area', 'inovantage' ); ?></strong><span><?php echo esc_html( inovantage_company( 'location' ) ); ?></span></div>
 				<div class="contact-item"><strong><?php esc_html_e( 'Registered office', 'inovantage' ); ?></strong><span><?php echo esc_html( inovantage_registered_address() ); ?></span></div>
-				<div class="contact-item"><strong><?php esc_html_e( 'Typical first step', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Discovery conversation and written next-step recommendation', 'inovantage' ); ?></span></div>
+				<div class="contact-item"><strong><?php esc_html_e( 'Typical first step', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Growth consultation and written next-step recommendation', 'inovantage' ); ?></span></div>
 			</div>
+			<p class="contact-tagline"><?php esc_html_e( 'Digital systems that move your business forward.', 'inovantage' ); ?></p>
 		</div>
 
 		<form class="contact-form" id="contact-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
@@ -57,16 +67,16 @@ while ( have_posts() ) :
 				<div class="field"><label for="email"><?php esc_html_e( 'Work email', 'inovantage' ); ?> <span aria-hidden="true">*</span></label><input id="email" name="email" type="email" autocomplete="email" required></div>
 				<div class="field"><label for="company"><?php esc_html_e( 'Company', 'inovantage' ); ?></label><input id="company" name="company" type="text" autocomplete="organization"></div>
 				<div class="field">
-					<label for="service"><?php esc_html_e( 'What can we help with?', 'inovantage' ); ?> <span aria-hidden="true">*</span></label>
+					<label for="service"><?php esc_html_e( 'Which area would you like to improve?', 'inovantage' ); ?> <span aria-hidden="true">*</span></label>
 					<select id="service" name="service" required>
-						<option value=""><?php esc_html_e( 'Select a service', 'inovantage' ); ?></option>
+						<option value=""><?php esc_html_e( 'Select an area', 'inovantage' ); ?></option>
 						<?php foreach ( inovantage_contact_service_options() as $option ) : ?>
 							<option><?php echo esc_html( $option ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
 				<div class="field">
-					<label for="budget"><?php esc_html_e( 'Approximate budget', 'inovantage' ); ?></label>
+					<label for="budget"><?php esc_html_e( 'Estimated investment range (optional)', 'inovantage' ); ?></label>
 					<select id="budget" name="budget">
 						<option value=""><?php esc_html_e( 'Prefer not to say', 'inovantage' ); ?></option>
 						<?php foreach ( inovantage_contact_budget_options() as $option ) : ?>
@@ -75,7 +85,7 @@ while ( have_posts() ) :
 					</select>
 				</div>
 				<div class="field">
-					<label for="timeline"><?php esc_html_e( 'Ideal start', 'inovantage' ); ?></label>
+					<label for="timeline"><?php esc_html_e( 'When would you like to begin?', 'inovantage' ); ?></label>
 					<select id="timeline" name="timeline">
 						<option value=""><?php esc_html_e( 'No fixed date', 'inovantage' ); ?></option>
 						<?php foreach ( inovantage_contact_timeline_options() as $option ) : ?>
@@ -84,8 +94,8 @@ while ( have_posts() ) :
 					</select>
 				</div>
 				<div class="field field-full">
-					<label for="message"><?php esc_html_e( 'Tell us what you want to improve or build', 'inovantage' ); ?> <span aria-hidden="true">*</span></label>
-					<textarea id="message" name="message" rows="7" required placeholder="<?php esc_attr_e( 'What is happening now, what would better look like, and who needs to use the solution?', 'inovantage' ); ?>"></textarea>
+					<label for="message"><?php esc_html_e( 'Describe the current challenge and desired business outcome', 'inovantage' ); ?> <span aria-hidden="true">*</span></label>
+					<textarea id="message" name="message" rows="7" required placeholder="<?php esc_attr_e( 'What is happening today, what would better performance look like, who is affected and which systems are currently involved?', 'inovantage' ); ?>"></textarea>
 				</div>
 				<div class="field field-full checkbox-field">
 					<input id="consent" name="consent" type="checkbox" required value="yes">
@@ -102,7 +112,7 @@ while ( have_posts() ) :
 					</label>
 				</div>
 			</div>
-			<button class="button" type="submit"><?php esc_html_e( 'Send project enquiry', 'inovantage' ); ?></button>
+			<button class="button" type="submit"><?php esc_html_e( 'Request a Consultation', 'inovantage' ); ?></button>
 			<p class="form-note"><?php esc_html_e( 'This form is protected by a hidden spam trap. Please do not send passwords, payment details, or other highly sensitive information.', 'inovantage' ); ?></p>
 		</form>
 	</div>

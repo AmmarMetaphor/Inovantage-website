@@ -39,9 +39,9 @@ while ( have_posts() ) :
 				<div>
 					<p class="eyebrow"><?php esc_html_e( 'Make it practical', 'inovantage' ); ?></p>
 					<h2><?php esc_html_e( 'Turn the idea into a working system.', 'inovantage' ); ?></h2>
-					<p><?php esc_html_e( 'Tell us what is taking too long, underperforming, or ready to be built.', 'inovantage' ); ?></p>
+					<p><?php esc_html_e( 'Tell us what is taking too long, underperforming or ready to be built.', 'inovantage' ); ?></p>
 				</div>
-				<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a conversation', 'inovantage' ); ?></a>
+				<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a Conversation', 'inovantage' ); ?></a>
 			</aside>
 		</div>
 	</section>

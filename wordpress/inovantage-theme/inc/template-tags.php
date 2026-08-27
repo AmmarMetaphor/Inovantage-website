@@ -75,7 +75,7 @@ function inovantage_default_nav_items() {
 	$current = inovantage_nav_section();
 	$links   = array(
 		'solutions'    => array( home_url( '/solutions/' ), __( 'Solutions', 'inovantage' ) ),
-		'case-studies' => array( home_url( '/case-studies/' ), __( 'Case Studies', 'inovantage' ) ),
+		'case-studies' => array( home_url( '/case-studies/' ), __( 'Solutions in Practice', 'inovantage' ) ),
 		'insights'     => array( home_url( '/insights/' ), __( 'Articles & Guides', 'inovantage' ) ),
 		'about'        => array( home_url( '/about/' ), __( 'About', 'inovantage' ) ),
 	);

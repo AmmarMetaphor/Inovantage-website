@@ -29,6 +29,7 @@ $inovantage_address = inovantage_registered_address();
 				<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/inovantage-logo-full.webp" width="2000" height="686" alt="<?php echo esc_attr( inovantage_company( 'name' ) ); ?>">
 			</a>
 			<p><?php echo esc_html( inovantage_company( 'tagline' ) ); ?></p>
+			<p><?php esc_html_e( 'AI automation, conversion-focused websites, managed content operations and business applications for companies ready to increase capacity and scale with confidence.', 'inovantage' ); ?></p>
 			<?php if ( ! empty( $inovantage_socials ) ) : ?>
 				<div class="footer-social">
 					<?php foreach ( $inovantage_socials as $label => $url ) :
@@ -49,17 +50,17 @@ $inovantage_address = inovantage_registered_address();
 		<div>
 			<h2><?php esc_html_e( 'Services', 'inovantage' ); ?></h2>
 			<ul>
-				<li><a href="<?php echo esc_url( home_url( '/services/ai-automation/' ) ); ?>"><?php esc_html_e( 'AI automation', 'inovantage' ); ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/services/website-design/' ) ); ?>"><?php esc_html_e( 'Website design', 'inovantage' ); ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/services/social-media-management/' ) ); ?>"><?php esc_html_e( 'Social media', 'inovantage' ); ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/services/app-development/' ) ); ?>"><?php esc_html_e( 'App development', 'inovantage' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/services/ai-automation/' ) ); ?>"><?php esc_html_e( 'AI Automation', 'inovantage' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/services/website-design/' ) ); ?>"><?php esc_html_e( 'Website Design', 'inovantage' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/services/social-media-management/' ) ); ?>"><?php esc_html_e( 'Social Media Management', 'inovantage' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/services/app-development/' ) ); ?>"><?php esc_html_e( 'App Development', 'inovantage' ); ?></a></li>
 			</ul>
 		</div>
 		<div>
 			<h2><?php esc_html_e( 'Company', 'inovantage' ); ?></h2>
 			<ul>
 				<li><a href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><?php esc_html_e( 'About', 'inovantage' ); ?></a></li>
-				<li><a href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'Case studies', 'inovantage' ); ?></a></li>
+				<li><a href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'Solutions in Practice', 'inovantage' ); ?></a></li>
 				<li><a href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Insights', 'inovantage' ); ?></a></li>
 				<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'inovantage' ); ?></a></li>
 			</ul>
