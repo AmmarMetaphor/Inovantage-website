@@ -19,56 +19,56 @@ const pageDefinitions = [
     output: 'index.html',
     route: '/',
     nav: 'home',
-    title: 'AI Automation, Website Design, Social Media & App Development',
-    description: 'Inovantage helps ambitious businesses automate repetitive work, build high-performing websites, manage social media with approval controls, and launch practical web and mobile apps.'
+    title: 'AI Automation, Websites & Apps for B2B Growth',
+    description: 'Inovantage is a connected B2B digital growth partner. AI automation, conversion-focused websites, managed content operations and business apps that increase capacity, improve conversion and support scalable growth.'
   },
   {
     source: 'solutions.html',
     output: 'solutions/index.html',
     route: '/solutions/',
     nav: 'solutions',
-    title: 'Solutions',
-    description: 'Explore Inovantage solutions across AI automation, website design, social media management, and app development.'
+    title: 'Connected Digital Solutions for B2B Growth',
+    description: 'Connect a business challenge to the right solution: B2B AI automation, website design and development, social media management and business app development from Inovantage.'
   },
   {
     source: 'case-studies.html',
     output: 'case-studies/index.html',
     route: '/case-studies/',
     nav: 'case-studies',
-    title: 'Case Studies',
-    description: 'How Inovantage connects automation, websites, social media and apps into systems that move a business forward.'
+    title: 'Solutions in Practice',
+    description: 'See how Inovantage designs connected digital systems that improve lead response, website conversion, content operations and scalable service delivery for B2B companies.'
   },
   {
     source: 'ai-automation.html',
     output: 'services/ai-automation/index.html',
     route: '/services/ai-automation/',
     nav: 'solutions',
-    title: 'AI Automation Services',
-    description: 'Practical AI automation for lead handling, customer support, reporting, data entry, content operations, and connected business workflows.'
+    title: 'B2B AI Automation Services',
+    description: 'B2B AI automation and workflow automation that helps teams respond to opportunities faster, reduce repeated administration and scale output without scaling repetitive work.'
   },
   {
     source: 'website-design.html',
     output: 'services/website-design/index.html',
     route: '/services/website-design/',
     nav: 'solutions',
-    title: 'Website Design & Development',
-    description: 'Fast, accessible, conversion-focused websites designed around your brand, customers, content, and growth goals.'
+    title: 'B2B Website Design & Development',
+    description: 'Conversion-focused website design and development for B2B companies: clear positioning, buyer-focused structure and credible digital experiences that generate qualified enquiries.'
   },
   {
     source: 'social-media-management.html',
     output: 'services/social-media-management/index.html',
     route: '/services/social-media-management/',
     nav: 'solutions',
-    title: 'Social Media Management',
-    description: 'Strategy, content planning, design, captions, approval workflows, scheduling, community support, and clear performance reporting.'
+    title: 'B2B Social Media Management',
+    description: 'Managed B2B social media: strategy, content planning, production, stakeholder approval, scheduling and performance review that build visibility, credibility and demand.'
   },
   {
     source: 'app-development.html',
     output: 'services/app-development/index.html',
     route: '/services/app-development/',
     nav: 'solutions',
-    title: 'Web & Mobile App Development',
-    description: 'From discovery and prototype to production, Inovantage builds practical apps, portals, dashboards, and internal tools.'
+    title: 'Business App Development',
+    description: 'Business app development for B2B growth: customer portals, dashboards, internal tools and workflow applications that improve delivery, customer experience and operational efficiency.'
   },
   {
     source: 'about.html',
@@ -76,23 +76,23 @@ const pageDefinitions = [
     route: '/about/',
     nav: 'about',
     title: 'About Inovantage',
-    description: 'A practical digital partner focused on useful automation, clear communication, thoughtful design, and dependable delivery.'
+    description: 'Inovantage is a connected digital partner for ambitious B2B businesses, improving customer journeys, operational capacity and scalable digital services.'
   },
   {
     source: 'insights.html',
     output: 'insights/index.html',
     route: '/insights/',
     nav: 'insights',
-    title: 'Insights',
-    description: 'Practical guidance on AI automation, website performance, social media operations, and app development.'
+    title: 'Insights for Digital Growth',
+    description: 'Practical guidance for business leaders on automation, website conversion, content operations and application development, focused on confident digital investment decisions.'
   },
   {
     source: 'contact.html',
     output: 'contact/index.html',
     route: '/contact/',
     nav: 'contact',
-    title: 'Contact Inovantage',
-    description: 'Tell Inovantage what you want to improve, build, or automate. Start with a clear, no-pressure discovery conversation.'
+    title: 'Book a Growth Consultation',
+    description: 'Tell Inovantage what you want your business to achieve. Describe the current challenge and desired outcome, and we will recommend a practical next step.'
   },
   {
     source: 'thank-you.html',
@@ -498,7 +498,7 @@ function renderWhatsAppFloat(site) {
 function renderHeader(activeNav, site) {
   const links = [
     ['solutions', '/solutions/', 'Solutions'],
-    ['case-studies', '/case-studies/', 'Case Studies'],
+    ['case-studies', '/case-studies/', 'Solutions in Practice'],
     ['insights', '/insights/', 'Articles & Guides'],
     ['about', '/about/', 'About']
   ];
@@ -520,7 +520,7 @@ function renderHeader(activeNav, site) {
     </button>
     <nav id="primary-navigation" class="primary-navigation" aria-label="Primary navigation" data-menu>
       <ul>${navItems}</ul>
-      <a class="button button-small" href="/contact/">Start a project</a>
+      <a class="button button-small" href="/contact/">Book a Consultation</a>
     </nav>
   </div>
 </header>`;
@@ -559,22 +559,23 @@ function renderFooter(site, year) {
     <div class="footer-brand">
       <a href="/" aria-label="${escapeHtml(site.name)} home"><img src="/assets/images/inovantage-logo-full.webp" width="2000" height="686" alt="${escapeHtml(site.name)}"></a>
       <p>${escapeHtml(site.tagline)}</p>
+      <p>AI automation, conversion-focused websites, managed content operations and business applications for companies ready to increase capacity and scale with confidence.</p>
       ${socialHtml}
     </div>
     <div>
       <h2>Services</h2>
       <ul>
-        <li><a href="/services/ai-automation/">AI automation</a></li>
-        <li><a href="/services/website-design/">Website design</a></li>
-        <li><a href="/services/social-media-management/">Social media</a></li>
-        <li><a href="/services/app-development/">App development</a></li>
+        <li><a href="/services/ai-automation/">AI Automation</a></li>
+        <li><a href="/services/website-design/">Website Design</a></li>
+        <li><a href="/services/social-media-management/">Social Media Management</a></li>
+        <li><a href="/services/app-development/">App Development</a></li>
       </ul>
     </div>
     <div>
       <h2>Company</h2>
       <ul>
         <li><a href="/about/">About</a></li>
-        <li><a href="/case-studies/">Case studies</a></li>
+        <li><a href="/case-studies/">Solutions in Practice</a></li>
         <li><a href="/insights/">Insights</a></li>
         <li><a href="/contact/">Contact</a></li>
       </ul>
@@ -610,7 +611,7 @@ function organisationSchema(site) {
     url: site.url,
     logo: `${site.url}/assets/images/inovantage-logo-full.webp`,
     email: site.email,
-    description: site.tagline,
+    description: `${site.tagline} AI automation, conversion-focused websites, managed content operations and business applications for B2B companies.`,
     areaServed: ['GB', 'US']
   };
   if (site.phone) schema.telephone = site.phone;
@@ -718,9 +719,9 @@ function renderPost(post, site, allPosts) {
       <div>
         <p class="eyebrow">Make it practical</p>
         <h2>Turn the idea into a working system.</h2>
-        <p>Tell us what is taking too long, underperforming, or ready to be built.</p>
+        <p>Tell us what is taking too long, underperforming or ready to be built.</p>
       </div>
-      <a class="button" href="/contact/">Start a conversation</a>
+      <a class="button" href="/contact/">Start a Conversation</a>
     </aside>
   </div>
 </section>
@@ -757,13 +758,14 @@ ${relatedHtml}`;
 }
 
 /* ------------------------------------------------------------------ *
- * Case studies
+ * Solutions in Practice (the /case-studies/ route)
  *
- * Everything on /case-studies/ is driven by src/data/case-studies.json.
+ * Client stories on /case-studies/ are driven by src/data/case-studies.json.
  * That file ships empty on purpose: this site never publishes a client
- * name, quote, logo or figure that has not been supplied and approved,
- * so the page renders an honest empty state until real entries exist and
- * grows into the full design the moment they do.
+ * name, quote, logo or figure that has not been supplied and approved.
+ * Until real entries exist the page presents four clearly labelled example
+ * systems, one per service category, and grows into the full client-story
+ * design the moment approved entries are added.
  * ------------------------------------------------------------------ */
 
 /* `capability` is a short factual description of the service, taken from the
@@ -831,7 +833,7 @@ function caseFilters() {
     ...CASE_CATEGORIES.map((category) =>
       `<button class="filter-button" type="button" data-case-filter="${category.key}" aria-pressed="false">${escapeHtml(category.label)}</button>`)
   ];
-  return `<div class="filter-bar case-filter-bar" role="group" aria-label="Filter case studies by service" data-case-filter-group>${buttons.join('')}</div>`;
+  return `<div class="filter-bar case-filter-bar" role="group" aria-label="Filter examples by service" data-case-filter-group>${buttons.join('')}</div>`;
 }
 
 function caseStudyCard(entry) {
@@ -857,30 +859,55 @@ function caseStudyCard(entry) {
     </article>`;
 }
 
-/* Shown while no approved case study exists. It states the position
-   plainly rather than dressing an empty grid as "coming soon". */
-function caseStudyEmptyState() {
+/* Shown while no approved case study exists: four clearly labelled example
+   systems, one per service category. Each describes the kind of system
+   Inovantage designs. None is presented as a completed client project, and
+   no client, figure or result is invented. */
+const PRACTICE_EXAMPLES = [
+  {
+    category: 'ai-automation',
+    title: 'Connected lead operations',
+    copy: 'Connect enquiry capture, qualification, routing and follow-up so opportunities reach the right person faster.',
+    cta: 'Explore AI Automation'
+  },
+  {
+    category: 'website-development',
+    title: 'Conversion-focused digital presence',
+    copy: 'Restructure a service-led website around buyer questions, credibility and clear conversion pathways.',
+    cta: 'Explore Website Design'
+  },
+  {
+    category: 'social-media-management',
+    title: 'Controlled content operations',
+    copy: 'Create a social media workflow connecting strategy, production, stakeholder approval, publishing and performance review.',
+    cta: 'Explore Social Media Management'
+  },
+  {
+    category: 'app-development',
+    title: 'Scalable customer delivery',
+    copy: 'Replace fragmented email and spreadsheet-based administration with a focused portal or workflow application.',
+    cta: 'Explore App Development'
+  }
+];
+
+function practiceExampleCard(example) {
+  const category = categoryByKey.get(example.category);
   return `
-    <div class="case-empty">
-      <h3>No case studies are published yet.</h3>
-      <p>Inovantage only publishes a client story once that client has confirmed the wording, the figures and the permission to name them. Nothing on this page is illustrative.</p>
-      <p>Each published study will follow the same structure:</p>
-      <ol class="case-empty-flow">
-        <li><span>01</span>The challenge the business brought to us</li>
-        <li><span>02</span>What we built</li>
-        <li><span>03</span>How it worked in practice</li>
-        <li><span>04</span>The outcome</li>
-        <li><span>05</span>The client's own words</li>
-      </ol>
-      <div class="button-row">
-        <a class="button" href="/contact/">Start a project</a>
-        <a class="button button-secondary" href="/solutions/">Explore solutions</a>
+    <article class="case-study-card" data-case-card data-category="${escapeHtml(example.category)}">
+      <div class="case-study-media" aria-hidden="true"><div class="insight-card-pattern"><span>${escapeHtml(category.label)}</span></div></div>
+      <div class="case-study-body">
+        <p class="case-study-tag">Example system · ${escapeHtml(category.label)}</p>
+        <h3>${escapeHtml(example.title)}</h3>
+        <p>${escapeHtml(example.copy)}</p>
+        <a class="text-link" href="${category.service}">${escapeHtml(example.cta)} ${icon('arrow')}</a>
       </div>
-    </div>`;
+    </article>`;
 }
 
 function caseStudyGrid(caseStudies) {
-  if (!caseStudies.length) return caseStudyEmptyState();
+  if (!caseStudies.length) {
+    return `<div class="case-study-grid" data-case-grid>${PRACTICE_EXAMPLES.map(practiceExampleCard).join('')}</div>`;
+  }
   return `<div class="case-study-grid" data-case-grid>${caseStudies.map(caseStudyCard).join('')}</div>`;
 }
 
@@ -903,40 +930,6 @@ function testimonialSection(testimonials, { heading, eyebrow, limit }) {
     <div class="testimonial-grid">${list.map(testimonialBlock).join('')}</div>
   </div>
 </section>`;
-}
-
-/* The About page's Success Stories movement. Built from the same approved
-   testimonial list the Case Studies page uses, so a quote appears here only
-   once a client has supplied and approved it. While the list is empty this
-   states that plainly instead of showing an example, and always emits the
-   heading the section is labelled by. */
-function aboutSuccessStories(testimonials) {
-  const heading = `      <p class="ed-label">Our success stories</p>
-      <h2 class="ed-statement" id="about-stories-h">What the work is worth is what a client will say about it.</h2>`;
-
-  if (!testimonials.length) {
-    return `${heading}
-      <div class="about-stories-empty">
-        <p>We publish a client's words only once that client has approved them, so there is nothing quoted here yet. The same rule governs every figure and every named example on this site.</p>
-        <p>It is the fifth of the principles above, applied to our own marketing.</p>
-        <p class="ed-action"><a class="text-link" href="/case-studies/">See how a case study is structured ${icon('arrow')}</a></p>
-      </div>`;
-  }
-
-  return `${heading}
-      <div class="about-quotes">
-        ${testimonials.slice(0, 4).map((testimonial) => {
-          const attribution = [testimonial.role, testimonial.company].filter(Boolean).join(', ');
-          return `<figure class="about-quote">
-          <blockquote><p>${escapeHtml(testimonial.quote)}</p></blockquote>
-          <figcaption>
-            <span class="about-quote-author">${escapeHtml(testimonial.author)}</span>
-            ${attribution ? `<span class="about-quote-role">${escapeHtml(attribution)}</span>` : ''}
-          </figcaption>
-        </figure>`;
-        }).join('\n        ')}
-      </div>
-      <p class="ed-action"><a class="text-link" href="/case-studies/">Explore case studies ${icon('arrow')}</a></p>`;
 }
 
 /* Client names are rendered as text unless a real logo file is supplied,
@@ -998,7 +991,7 @@ function renderCaseStudy(entry, site, related) {
 </section>
 ${quote}
 ${more}
-<section class="section section-tight"><div class="container"><div class="cta-panel"><div><h2>Have a challenge worth solving?</h2><p>Tell us what is slowing your team down or what you want to build.</p></div><a class="button" href="/contact/">Start a project</a></div></div></section>`;
+<section class="section section-tight"><div class="container"><div class="cta-panel"><div><h2>Have a challenge worth solving?</h2><p>Tell us what is slowing your team down or what you want to build.</p></div><a class="button" href="/contact/">Book a Growth Consultation</a></div></div></section>`;
 
   return renderLayout({
     site,
@@ -1045,13 +1038,13 @@ function contactForm(site) {
       <div class="field"><label for="name">Name <span aria-hidden="true">*</span></label><input id="name" name="name" type="text" autocomplete="name" required></div>
       <div class="field"><label for="email">Work email <span aria-hidden="true">*</span></label><input id="email" name="email" type="email" autocomplete="email" required></div>
       <div class="field"><label for="company">Company</label><input id="company" name="company" type="text" autocomplete="organization"></div>
-      <div class="field"><label for="service">What can we help with? <span aria-hidden="true">*</span></label><select id="service" name="service" required><option value="">Select a service</option><option>AI automation</option><option>Website design</option><option>Social media management</option><option>App development</option><option>Multiple services</option><option>Not sure yet</option></select></div>
-      <div class="field"><label for="budget">Approximate budget</label><select id="budget" name="budget"><option value="">Prefer not to say</option><option>Under £2,500</option><option>£2,500–£5,000</option><option>£5,000–£10,000</option><option>£10,000–£25,000</option><option>£25,000+</option></select></div>
-      <div class="field"><label for="timeline">Ideal start</label><select id="timeline" name="timeline"><option value="">No fixed date</option><option>As soon as possible</option><option>Within 1 month</option><option>Within 3 months</option><option>Later this year</option></select></div>
-      <div class="field field-full"><label for="message">Tell us what you want to improve or build <span aria-hidden="true">*</span></label><textarea id="message" name="message" rows="7" required placeholder="What is happening now, what would better look like, and who needs to use the solution?"></textarea></div>
+      <div class="field"><label for="service">Which area would you like to improve? <span aria-hidden="true">*</span></label><select id="service" name="service" required><option value="">Select an area</option><option>AI Automation</option><option>Website Design and Development</option><option>Social Media Management</option><option>App Development</option><option>Multiple areas</option><option>Not sure yet</option></select></div>
+      <div class="field"><label for="budget">Estimated investment range (optional)</label><select id="budget" name="budget"><option value="">Prefer not to say</option><option>Under £2,500</option><option>£2,500 to £5,000</option><option>£5,000 to £10,000</option><option>£10,000 to £25,000</option><option>£25,000+</option></select></div>
+      <div class="field"><label for="timeline">When would you like to begin?</label><select id="timeline" name="timeline"><option value="">No fixed date</option><option>As soon as possible</option><option>Within 1 month</option><option>Within 3 months</option><option>Later this year</option></select></div>
+      <div class="field field-full"><label for="message">Describe the current challenge and desired business outcome <span aria-hidden="true">*</span></label><textarea id="message" name="message" rows="7" required placeholder="What is happening today, what would better performance look like, who is affected and which systems are currently involved?"></textarea></div>
       <div class="field field-full checkbox-field"><input id="consent" name="consent" type="checkbox" required value="yes"><label for="consent">I agree that ${escapeHtml(site.name)} may use these details to respond to my enquiry. See the <a href="/privacy/">privacy notice</a>.</label></div>
     </div>
-    <button class="button" type="submit">Send project enquiry</button>
+    <button class="button" type="submit">Request a Consultation</button>
     <p class="form-note">This form is protected by a hidden spam trap. Please do not send passwords, payment details, or other highly sensitive information.</p>
   </form>`;
 }
@@ -1126,7 +1119,6 @@ async function build() {
     caseTestimonialMid: testimonialSection(testimonials, { eyebrow: 'In their words', heading: 'What clients say about working with us', limit: 1 }),
     caseTestimonialsAll: testimonialSection(testimonials.slice(1), { eyebrow: 'Client voices', heading: 'More from the people we work with', limit: 4 }),
     caseClients: clientSection(clients),
-    aboutSuccessStories: aboutSuccessStories(testimonials),
     currentYear: String(new Date().getUTCFullYear()),
     iconAutomation: icon('automation'),
     iconWeb: icon('web'),
@@ -1162,7 +1154,7 @@ async function build() {
   await generateSitemap(site, posts, caseStudies);
   await generateRss(site, posts);
   await writeOutput('robots.txt', `User-agent: *\nAllow: /\nDisallow: /admin/\nSitemap: ${site.url}/sitemap.xml\n`);
-  await writeOutput('llms.txt', `# ${site.name}\n\n${site.tagline}\n\n## Core services\n- AI automation\n- Website design and development\n- Social media management with approval workflows\n- Web and mobile app development\n\n## Important pages\n- ${site.url}/solutions/\n- ${site.url}/case-studies/\n- ${site.url}/insights/\n- ${site.url}/contact/\n`);
+  await writeOutput('llms.txt', `# ${site.name}\n\n${site.tagline} A connected B2B digital growth partner helping companies increase capacity, improve conversion and scale through connected digital systems.\n\n## Core services\n- AI Automation\n- Website Design and Development\n- Social Media Management with approval workflows\n- App Development (portals, dashboards, internal tools and business applications)\n\n## Important pages\n- ${site.url}/solutions/\n- ${site.url}/case-studies/\n- ${site.url}/insights/\n- ${site.url}/contact/\n`);
 
   console.log(`Built ${pageDefinitions.length} pages, ${posts.length} insight posts and ${caseStudies.length} case studies into ${path.relative(ROOT, DIST)}/`);
 }

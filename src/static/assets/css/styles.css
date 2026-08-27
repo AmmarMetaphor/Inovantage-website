@@ -4715,3 +4715,165 @@ body:has(.wa-float) .site-footer .footer-bottom {
     transform: none;
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * Content-revision helpers.
+ *
+ * Small hooks for sections whose revised copy carries five or six items,
+ * plus the section intro, list and tagline lines the new content needs.
+ * No palette additions: everything references the existing tokens.
+ * ------------------------------------------------------------------ */
+
+.section-intro {
+  max-width: 780px;
+  margin-bottom: var(--content-gap-lg);
+}
+
+.section-intro p {
+  color: var(--text-secondary);
+}
+
+.section-intro p:last-child {
+  margin-bottom: 0;
+}
+
+/* Five- and six-card grids keep balanced rows instead of orphaning the
+   final card; below 901px they inherit the standard grid collapse. */
+@media (min-width: 901px) {
+  .outcome-grid-5,
+  .outcome-grid-6 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .process-grid-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .process-grid-5 .process-card {
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 900px) {
+  /* In the two-column collapse of a five-stage process, the fourth card
+     ends its row, so its connector line has nowhere to point. */
+  .process-grid-5 .process-card:nth-child(4)::after {
+    display: none;
+  }
+}
+
+.card-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 640px) {
+  .card-grid-4 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+.cta-panel p + p {
+  margin-top: 10px;
+}
+
+.cta-panel .cta-tagline {
+  margin-top: 16px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.proof-note {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.section-footnote {
+  max-width: 720px;
+  margin: 28px 0 0;
+  color: var(--text-secondary);
+}
+
+.contact-help-list {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.contact-help-list li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--text-secondary);
+}
+
+.contact-help-list li::before {
+  position: absolute;
+  top: 0.52em;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  content: "";
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.contact-tagline {
+  margin-top: 22px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ed-tagline {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* The revised navigation labels are longer ("Solutions in Practice",
+   "Book a Consultation"), so keep each header item on one line and tighten
+   the row slightly in the band just above the mobile-menu breakpoint. */
+.primary-navigation li a,
+.site-header .button {
+  white-space: nowrap;
+}
+
+@media (min-width: 1041px) and (max-width: 1180px) {
+  .header-inner {
+    gap: 18px;
+  }
+
+  .primary-navigation {
+    gap: 14px;
+  }
+
+  .primary-navigation ul {
+    gap: 2px;
+  }
+
+  .primary-navigation li a {
+    padding: 12px 10px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (min-width: 1041px) and (max-width: 1100px) {
+  .header-inner {
+    gap: 12px;
+  }
+
+  .brand img {
+    height: 60px;
+  }
+
+  .primary-navigation {
+    gap: 10px;
+  }
+
+  .primary-navigation li a {
+    padding: 12px 8px;
+    font-size: 0.92rem;
+  }
+}

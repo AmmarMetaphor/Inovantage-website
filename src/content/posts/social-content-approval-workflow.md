@@ -1,8 +1,8 @@
 ---
-title: "A simple social media approval workflow for busy teams"
+title: "A Social Media Approval Workflow That Supports Consistent Growth"
 slug: "social-media-approval-workflow"
 date: "2026-07-15"
-description: "Use a clear draft, review, approval and scheduling process to publish social content consistently without losing control of your brand."
+description: "Use a clear draft, review, approval and scheduling process to publish social media content consistently while keeping full control of your brand."
 category: "Social Media"
 author: "Inovantage"
 featured: true
@@ -91,11 +91,11 @@ Do not judge every post on reach alone. The right measure depends on the objecti
 
 A small team can use five statuses:
 
-1. **Idea** — approved for development but not written.
-2. **Draft** — copy or creative is being prepared.
-3. **In review** — complete version is awaiting comments or approval.
-4. **Ready** — final version is approved for scheduling.
-5. **Published** — live link and date are recorded.
+1. **Idea**: approved for development but not written.
+2. **Draft**: copy or creative is being prepared.
+3. **In review**: complete version is awaiting comments or approval.
+4. **Ready**: final version is approved for scheduling.
+5. **Published**: live link and date are recorded.
 
 Limit who can move content from **Ready** to **Published**. This creates a deliberate final control without slowing the rest of the process.
 

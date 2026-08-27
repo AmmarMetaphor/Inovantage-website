@@ -1,8 +1,8 @@
 ---
-title: "Seven business processes worth automating first"
+title: "Seven Business Processes That Could Be Limiting Your Capacity"
 slug: "seven-business-processes-to-automate-first"
 date: "2026-07-30"
-description: "A practical way to identify repetitive, high-volume work that is suitable for automation without removing essential human judgement."
+description: "Identify the repetitive, high-volume processes that limit team capacity and learn where automation can create room to grow without removing essential human judgement."
 category: "AI Automation"
 author: "Inovantage"
 featured: true
