@@ -155,91 +155,60 @@ function inovantage_case_study_card( $post_id ) {
 }
 
 /**
- * The honest empty state, shown until an approved case study is published.
- * It matches the static build word for word.
+ * Shown while no approved case study exists: four clearly labelled example
+ * systems, one per service category. Each describes the kind of system
+ * Inovantage designs. None is presented as a completed client project, and
+ * no client, figure or result is invented. It matches the static build word
+ * for word.
  */
-function inovantage_case_study_empty_state() {
-	$steps = array(
-		'01' => __( 'The challenge the business brought to us', 'inovantage' ),
-		'02' => __( 'What we built', 'inovantage' ),
-		'03' => __( 'How it worked in practice', 'inovantage' ),
-		'04' => __( 'The outcome', 'inovantage' ),
-		'05' => __( "The client's own words", 'inovantage' ),
+function inovantage_practice_examples_grid() {
+	$examples = array(
+		array(
+			'category' => 'ai-automation',
+			'label'    => __( 'AI Automation', 'inovantage' ),
+			'title'    => __( 'Connected lead operations', 'inovantage' ),
+			'copy'     => __( 'Connect enquiry capture, qualification, routing and follow-up so opportunities reach the right person faster.', 'inovantage' ),
+			'cta'      => __( 'Explore AI Automation', 'inovantage' ),
+			'service'  => home_url( '/services/ai-automation/' ),
+		),
+		array(
+			'category' => 'website-development',
+			'label'    => __( 'Website Development', 'inovantage' ),
+			'title'    => __( 'Conversion-focused digital presence', 'inovantage' ),
+			'copy'     => __( 'Restructure a service-led website around buyer questions, credibility and clear conversion pathways.', 'inovantage' ),
+			'cta'      => __( 'Explore Website Design', 'inovantage' ),
+			'service'  => home_url( '/services/website-design/' ),
+		),
+		array(
+			'category' => 'social-media-management',
+			'label'    => __( 'Social Media Management', 'inovantage' ),
+			'title'    => __( 'Controlled content operations', 'inovantage' ),
+			'copy'     => __( 'Create a social media workflow connecting strategy, production, stakeholder approval, publishing and performance review.', 'inovantage' ),
+			'cta'      => __( 'Explore Social Media Management', 'inovantage' ),
+			'service'  => home_url( '/services/social-media-management/' ),
+		),
+		array(
+			'category' => 'app-development',
+			'label'    => __( 'App Development', 'inovantage' ),
+			'title'    => __( 'Scalable customer delivery', 'inovantage' ),
+			'copy'     => __( 'Replace fragmented email and spreadsheet-based administration with a focused portal or workflow application.', 'inovantage' ),
+			'cta'      => __( 'Explore App Development', 'inovantage' ),
+			'service'  => home_url( '/services/app-development/' ),
+		),
 	);
 	?>
-	<div class="case-empty">
-		<h3><?php esc_html_e( 'No case studies are published yet.', 'inovantage' ); ?></h3>
-		<p><?php esc_html_e( 'Inovantage only publishes a client story once that client has confirmed the wording, the figures and the permission to name them. Nothing on this page is illustrative.', 'inovantage' ); ?></p>
-		<p><?php esc_html_e( 'Each published study will follow the same structure:', 'inovantage' ); ?></p>
-		<ol class="case-empty-flow">
-			<?php foreach ( $steps as $number => $label ) : ?>
-				<li><span><?php echo esc_html( $number ); ?></span><?php echo esc_html( $label ); ?></li>
-			<?php endforeach; ?>
-		</ol>
-		<div class="button-row">
-			<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project', 'inovantage' ); ?></a>
-			<a class="button button-secondary" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'Explore solutions', 'inovantage' ); ?></a>
-		</div>
+	<div class="case-study-grid" data-case-grid>
+		<?php foreach ( $examples as $example ) : ?>
+			<article class="case-study-card" data-case-card data-category="<?php echo esc_attr( $example['category'] ); ?>">
+				<div class="case-study-media" aria-hidden="true"><div class="insight-card-pattern"><span><?php echo esc_html( $example['label'] ); ?></span></div></div>
+				<div class="case-study-body">
+					<p class="case-study-tag"><?php echo esc_html( __( 'Example system', 'inovantage' ) . ' · ' . $example['label'] ); ?></p>
+					<h3><?php echo esc_html( $example['title'] ); ?></h3>
+					<p><?php echo esc_html( $example['copy'] ); ?></p>
+					<a class="text-link" href="<?php echo esc_url( $example['service'] ); ?>"><?php echo esc_html( $example['cta'] ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+				</div>
+			</article>
+		<?php endforeach; ?>
 	</div>
-	<?php
-}
-
-/**
- * The About page's Success Stories movement.
- *
- * A client's words are published only once that client has supplied and
- * approved them. This theme carries no custom field layer for testimonials, so
- * there is deliberately no place for an unapproved quote to be typed: the list
- * comes from a filter, which an owner-supplied snippet can populate when real
- * approved quotes exist.
- *
- *     add_filter( 'inovantage_about_testimonials', function () {
- *         return array(
- *             array( 'quote' => '...', 'author' => '...', 'role' => '...' ),
- *         );
- *     } );
- *
- * Until then it states the position plainly rather than showing an example,
- * and it always emits the heading the section is labelled by.
- */
-function inovantage_about_success_stories() {
-	$quotes = apply_filters( 'inovantage_about_testimonials', array() );
-	$quotes = is_array( $quotes ) ? $quotes : array();
-
-	// Anything without both a quotation and a named source is not publishable.
-	$quotes = array_filter(
-		$quotes,
-		function ( $item ) {
-			return is_array( $item ) && ! empty( $item['quote'] ) && ! empty( $item['author'] );
-		}
-	);
-	?>
-	<p class="ed-label"><?php esc_html_e( 'Our success stories', 'inovantage' ); ?></p>
-	<h2 class="ed-statement" id="about-stories-h"><?php esc_html_e( 'What the work is worth is what a client will say about it.', 'inovantage' ); ?></h2>
-	<?php if ( empty( $quotes ) ) : ?>
-		<div class="about-stories-empty">
-			<p><?php esc_html_e( "We publish a client's words only once that client has approved them, so there is nothing quoted here yet. The same rule governs every figure and every named example on this site.", 'inovantage' ); ?></p>
-			<p><?php esc_html_e( 'It is the fifth of the principles above, applied to our own marketing.', 'inovantage' ); ?></p>
-			<p class="ed-action"><a class="text-link" href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'See how a case study is structured', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a></p>
-		</div>
-	<?php else : ?>
-		<div class="about-quotes">
-			<?php foreach ( array_slice( $quotes, 0, 4 ) as $item ) : ?>
-				<?php
-				$attribution = trim( implode( ', ', array_filter( array( isset( $item['role'] ) ? $item['role'] : '', isset( $item['company'] ) ? $item['company'] : '' ) ) ) );
-				?>
-				<figure class="about-quote">
-					<blockquote><p><?php echo esc_html( $item['quote'] ); ?></p></blockquote>
-					<figcaption>
-						<span class="about-quote-author"><?php echo esc_html( $item['author'] ); ?></span>
-						<?php if ( $attribution ) : ?>
-							<span class="about-quote-role"><?php echo esc_html( $attribution ); ?></span>
-						<?php endif; ?>
-					</figcaption>
-				</figure>
-			<?php endforeach; ?>
-		</div>
-		<p class="ed-action"><a class="text-link" href="<?php echo esc_url( home_url( '/case-studies/' ) ); ?>"><?php esc_html_e( 'Explore case studies', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a></p>
-	<?php endif; ?>
 	<?php
 }

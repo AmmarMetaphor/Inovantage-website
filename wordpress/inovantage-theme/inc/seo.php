@@ -56,7 +56,7 @@ function inovantage_meta_description() {
 	}
 
 	if ( is_home() && ! is_front_page() ) {
-		return __( 'Practical guidance on AI automation, website performance, social media operations, and app development.', 'inovantage' );
+		return __( 'Practical guidance for business leaders on automation, website conversion, content operations and application development, focused on confident digital investment decisions.', 'inovantage' );
 	}
 
 	return inovantage_company( 'tagline' );
@@ -134,7 +134,7 @@ function inovantage_organization_schema() {
 		'url'         => home_url( '/' ),
 		'logo'        => INOVANTAGE_URI . '/assets/images/inovantage-logo-full.webp',
 		'email'       => inovantage_company( 'email' ),
-		'description' => inovantage_company( 'tagline' ),
+		'description' => inovantage_company( 'tagline' ) . ' ' . __( 'AI automation, conversion-focused websites, managed content operations and business applications for B2B companies.', 'inovantage' ),
 		'areaServed'  => array( 'GB', 'US' ),
 	);
 

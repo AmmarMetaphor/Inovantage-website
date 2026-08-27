@@ -1,8 +1,8 @@
 ---
-title: "The website brief checklist that prevents expensive rework"
+title: "How to Plan a B2B Website That Converts More Opportunities"
 slug: "website-brief-checklist"
 date: "2026-07-22"
-description: "Define the audience, offer, content, actions and technical constraints before website design begins with this practical briefing checklist."
+description: "Plan a B2B website around audience, offer, content, actions and technical constraints so design decisions support conversion and prevent expensive rework."
 category: "Website Design"
 author: "Inovantage"
 featured: true

@@ -27,11 +27,11 @@ define('INOVANTAGE_CONTACT_NONCE', 'inovantage_contact_nonce');
  * carried over from the approved static contact form.
  */
 function inovantage_contact_service_options() {
-	return array( 'AI automation', 'Website design', 'Social media management', 'App development', 'Multiple services', 'Not sure yet' );
+	return array( 'AI Automation', 'Website Design and Development', 'Social Media Management', 'App Development', 'Multiple areas', 'Not sure yet' );
 }
 
 function inovantage_contact_budget_options() {
-	return array( 'Under £2,500', '£2,500–£5,000', '£5,000–£10,000', '£10,000–£25,000', '£25,000+' );
+	return array( 'Under £2,500', '£2,500 to £5,000', '£5,000 to £10,000', '£10,000 to £25,000', '£25,000+' );
 }
 
 function inovantage_contact_timeline_options() {
@@ -89,17 +89,17 @@ function inovantage_handle_contact_submit() {
 	}
 
 	$recipient = inovantage_company( 'email' );
-	$subject   = sprintf( '[Project enquiry] %s — %s', $service, $name );
+	$subject   = sprintf( '[Consultation request] %s: %s', $service, $name );
 
 	$body_lines = array(
-		"A new project enquiry was submitted through inovantage.co.uk/contact/.",
+		"A new consultation request was submitted through inovantage.co.uk/contact/.",
 		'',
 		'Name: ' . $name,
 		'Work email: ' . $email,
 		'Company: ' . ( '' !== $company ? $company : 'Not provided' ),
-		'Service: ' . $service,
-		'Approximate budget: ' . ( '' !== $budget ? $budget : 'Not provided' ),
-		'Ideal start: ' . ( '' !== $timeline ? $timeline : 'Not provided' ),
+		'Area to improve: ' . $service,
+		'Estimated investment range: ' . ( '' !== $budget ? $budget : 'Not provided' ),
+		'Preferred start: ' . ( '' !== $timeline ? $timeline : 'Not provided' ),
 		'',
 		'Message:',
 		$message,

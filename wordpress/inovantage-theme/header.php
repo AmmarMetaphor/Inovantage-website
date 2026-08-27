@@ -38,7 +38,7 @@
 				)
 			);
 			?>
-			<a class="button button-small" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project', 'inovantage' ); ?></a>
+			<a class="button button-small" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Consultation', 'inovantage' ); ?></a>
 		</nav>
 	</div>
 </header>

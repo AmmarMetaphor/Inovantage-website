@@ -17,8 +17,8 @@ while ( have_posts() ) :
 			<p class="lede"><?php esc_html_e( 'These terms apply to general use of the Inovantage public website.', 'inovantage' ); ?></p>
 		</div>
 		<aside class="hero-aside">
-			<strong><?php esc_html_e( 'Review before launch', 'inovantage' ); ?></strong>
-			<p><?php esc_html_e( 'Confirm the correct legal entity, jurisdiction and liability wording for your business. Client services should be governed by a separate proposal, statement of work or contract.', 'inovantage' ); ?></p>
+			<strong><?php esc_html_e( 'Working with us', 'inovantage' ); ?></strong>
+			<p><?php esc_html_e( 'Client services are governed by a separate proposal, statement of work or contract rather than these website terms.', 'inovantage' ); ?></p>
 		</aside>
 	</div>
 </section>
@@ -32,7 +32,7 @@ while ( have_posts() ) :
 			<a href="<?php echo esc_url( home_url( '/terms/' ) ); ?>"><?php esc_html_e( 'Website terms', 'inovantage' ); ?></a>
 		</nav>
 		<article class="prose">
-			<p><strong><?php esc_html_e( 'Last updated:', 'inovantage' ); ?></strong> <?php esc_html_e( '3 August 2026', 'inovantage' ); ?></p>
+			<p><strong><?php esc_html_e( 'Last updated:', 'inovantage' ); ?></strong> <?php esc_html_e( '27 August 2026', 'inovantage' ); ?></p>
 			<p>
 				<?php
 				printf(
@@ -58,16 +58,32 @@ while ( have_posts() ) :
 			<p><?php esc_html_e( 'We aim to keep the website useful and accurate but do not guarantee that every page will always be complete, current, error-free or available. We may change, suspend or remove content without notice.', 'inovantage' ); ?></p>
 
 			<h2 id="ip"><?php esc_html_e( '5. Intellectual property', 'inovantage' ); ?></h2>
-			<p><?php esc_html_e( "Unless stated otherwise, the website's original text, design, code and branding are owned by or licensed to the website operator. You may view and share links to public pages for lawful purposes. You may not reproduce substantial content, remove ownership notices or present the material as your own without permission.", 'inovantage' ); ?></p>
+			<p>
+				<?php
+				printf(
+					/* translators: 1: legal name */
+					esc_html__( "Unless stated otherwise, the website's original text, design, code and branding are owned by or licensed to %1\$s. You may view and share links to public pages for lawful purposes. You may not reproduce substantial content, remove ownership notices or present the material as your own without permission.", 'inovantage' ),
+					esc_html( inovantage_company( 'legal_name' ) )
+				);
+				?>
+			</p>
 
 			<h2 id="links"><?php esc_html_e( '6. External links', 'inovantage' ); ?></h2>
 			<p><?php esc_html_e( 'Links to third-party websites are provided for convenience. We do not control those websites and are not responsible for their content, security, availability or privacy practices.', 'inovantage' ); ?></p>
 
 			<h2 id="liability"><?php esc_html_e( '7. Liability', 'inovantage' ); ?></h2>
-			<p><?php esc_html_e( 'Nothing in these terms excludes liability that cannot legally be excluded. Subject to that, the website operator is not responsible for indirect or consequential loss arising solely from general use of, or inability to use, this public website. The final clause should be reviewed for the legal structure and jurisdiction of your business.', 'inovantage' ); ?></p>
+			<p>
+				<?php
+				printf(
+					/* translators: 1: legal name */
+					esc_html__( 'Nothing in these terms excludes liability that cannot legally be excluded. Subject to that, %1$s is not responsible for indirect or consequential loss arising solely from general use of, or inability to use, this public website.', 'inovantage' ),
+					esc_html( inovantage_company( 'legal_name' ) )
+				);
+				?>
+			</p>
 
 			<h2 id="law"><?php esc_html_e( '8. Governing law', 'inovantage' ); ?></h2>
-			<p><?php esc_html_e( 'Before launch, replace this paragraph with the governing law and courts appropriate to the legal entity operating Inovantage. For a business established in England and Wales, a common formulation is that these terms are governed by the laws of England and Wales and disputes are subject to the jurisdiction of its courts.', 'inovantage' ); ?></p>
+			<p><?php esc_html_e( 'These terms are governed by the laws of England and Wales, and any dispute arising from use of this website is subject to the jurisdiction of the courts of England and Wales.', 'inovantage' ); ?></p>
 
 			<h2 id="contact"><?php esc_html_e( '9. Contact', 'inovantage' ); ?></h2>
 			<p>

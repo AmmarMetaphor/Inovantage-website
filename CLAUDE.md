@@ -28,7 +28,9 @@ The public domain is `https://inovantage.co.uk`.
 ## Routes
 
 - `/solutions/` is the service overview with the approved orbital hero.
-- `/case-studies/` is the client-proof page with the interactive proof hero.
+- `/case-studies/` is the client-proof page with the interactive proof hero. It
+  is labelled "Solutions in Practice" in navigation and page copy until
+  approved client stories exist; the route itself is unchanged.
 - The four service detail pages keep their original URLs under `/services/`.
 - `/services/` and `/work/` are retired. `netlify.toml` redirects them (301) to
   `/solutions/` and `/case-studies/` respectively, and the WordPress theme does
@@ -44,9 +46,10 @@ The public domain is `https://inovantage.co.uk`.
 - Each valid entry builds a `/case-studies/<slug>/` page and joins the sitemap.
   Entries are never generated for projects without real content.
 - Never write a client name, quotation, role, logo, figure or rating that the
-  client has not supplied and approved. Leave the field out instead. The page is
-  designed to look finished while the lists are empty, so there is never a
-  reason to fill a gap with an example.
+  client has not supplied and approved. Leave the field out instead. While the
+  lists are empty the page shows four example systems that are clearly labelled
+  as examples of what Inovantage designs; they must never be presented as
+  completed client projects or carry invented clients, figures or results.
 - The four hero cards are the four service categories, not case studies. A card
   only offers "View case study" once a published study exists for its category.
 - In WordPress the same content is a `case_study` post type with a

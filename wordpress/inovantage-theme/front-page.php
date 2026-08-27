@@ -1,7 +1,8 @@
 <?php
 /**
- * The homepage template — preserves the approved hero copy, services grid,
- * outcomes, process, review-first panel and latest insights sections. The
+ * The homepage template — carries the approved B2B growth-partner copy: the
+ * hero, connected-capability cards, business outcomes, the five-stage
+ * delivery process, the oversight panel and latest insights sections. The
  * hero renders the orbital artwork as a decorative background layer; the
  * headline, body copy and calls to action stay as semantic markup.
  */
@@ -22,14 +23,14 @@ $inovantage_hero_art_srcset = sprintf(
 	<div class="hero-orbital-veil" aria-hidden="true"></div>
 	<div class="container hero-orbital-inner">
 		<div class="hero-copy">
-			<p class="eyebrow"><?php esc_html_e( 'Automation, design and development', 'inovantage' ); ?></p>
-			<h1><?php esc_html_e( 'Digital systems that help your business ', 'inovantage' ); ?><span><?php esc_html_e( 'work better.', 'inovantage' ); ?></span></h1>
-			<p><?php esc_html_e( 'Inovantage designs connected workflows, websites, content operations and business apps that reduce friction while keeping people in control.', 'inovantage' ); ?></p>
+			<p class="eyebrow"><?php esc_html_e( 'AI automation · Digital experiences · Business growth', 'inovantage' ); ?></p>
+			<h1><?php esc_html_e( 'Build a business that ', 'inovantage' ); ?><span><?php esc_html_e( 'needs less of you.', 'inovantage' ); ?></span></h1>
+			<p><?php esc_html_e( 'Inovantage creates connected automation, high-converting websites, content operations and business applications that help B2B companies win more opportunities, reduce manual work and deliver consistently as they grow.', 'inovantage' ); ?></p>
 			<div class="button-row">
-				<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project', 'inovantage' ); ?></a>
-				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'Explore solutions', 'inovantage' ); ?></a>
+				<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Growth Consultation', 'inovantage' ); ?></a>
+				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'Explore Solutions', 'inovantage' ); ?></a>
 			</div>
-			<p class="hero-proof"><span><?php esc_html_e( 'Built for UK businesses', 'inovantage' ); ?></span><span><?php esc_html_e( 'Clear scope and milestones', 'inovantage' ); ?></span><span><?php esc_html_e( 'Human review before publication', 'inovantage' ); ?></span></p>
+			<p class="hero-proof"><span><?php esc_html_e( 'Built for B2B growth', 'inovantage' ); ?></span><span><?php esc_html_e( 'Human oversight where it matters', 'inovantage' ); ?></span><span><?php esc_html_e( 'Designed around measurable outcomes', 'inovantage' ); ?></span></p>
 		</div>
 	</div>
 </section>
@@ -37,33 +38,37 @@ $inovantage_hero_art_srcset = sprintf(
 <section class="section" id="services">
 	<div class="container">
 		<div class="section-heading">
-			<div><p class="eyebrow"><?php esc_html_e( 'Four connected capabilities', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Everything you need to build a more capable digital business.', 'inovantage' ); ?></h2></div>
-			<a class="text-link" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'View all solutions', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+			<div><p class="eyebrow"><?php esc_html_e( 'Four connected capabilities', 'inovantage' ); ?></p><h2><?php esc_html_e( 'The systems behind a more scalable business.', 'inovantage' ); ?></h2></div>
+			<a class="text-link" href="<?php echo esc_url( home_url( '/solutions/' ) ); ?>"><?php esc_html_e( 'Explore All Solutions', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+		</div>
+		<div class="section-intro">
+			<p><?php esc_html_e( 'Growth becomes difficult when sales, marketing, customer service and delivery depend on disconnected tools and repetitive manual work.', 'inovantage' ); ?></p>
+			<p><?php esc_html_e( 'Inovantage connects the digital systems your customers experience with the workflows your team relies on, creating a stronger route from first enquiry to long-term customer value.', 'inovantage' ); ?></p>
 		</div>
 		<div class="services-grid">
 			<article class="service-card">
 				<span class="service-icon"><?php inovantage_icon_e( 'automation' ); ?></span>
-				<h3><?php esc_html_e( 'AI automation', 'inovantage' ); ?></h3>
-				<p><?php esc_html_e( 'Remove repetitive admin, improve response times and connect the tools your team already uses.', 'inovantage' ); ?></p>
-				<a class="text-link" href="<?php echo esc_url( home_url( '/services/ai-automation/' ) ); ?>"><?php esc_html_e( 'Explore AI automation', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+				<h3><?php esc_html_e( 'AI Automation', 'inovantage' ); ?></h3>
+				<p><?php esc_html_e( 'Increase capacity without increasing repetitive workload. Automate lead handling, customer support, reporting, document processing and routine administration while keeping your team in control of important decisions.', 'inovantage' ); ?></p>
+				<a class="text-link" href="<?php echo esc_url( home_url( '/services/ai-automation/' ) ); ?>"><?php esc_html_e( 'Explore AI Automation', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 			</article>
 			<article class="service-card">
 				<span class="service-icon"><?php inovantage_icon_e( 'web' ); ?></span>
-				<h3><?php esc_html_e( 'Website design', 'inovantage' ); ?></h3>
-				<p><?php esc_html_e( 'Turn your offer into a fast, accessible website that makes the next step clear on every screen.', 'inovantage' ); ?></p>
-				<a class="text-link" href="<?php echo esc_url( home_url( '/services/website-design/' ) ); ?>"><?php esc_html_e( 'Explore website design', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+				<h3><?php esc_html_e( 'Website Design and Development', 'inovantage' ); ?></h3>
+				<p><?php esc_html_e( 'Turn more of your website traffic into qualified opportunities. Build a fast, credible and conversion-focused website that explains your value, strengthens buyer confidence and guides prospects towards the right action.', 'inovantage' ); ?></p>
+				<a class="text-link" href="<?php echo esc_url( home_url( '/services/website-design/' ) ); ?>"><?php esc_html_e( 'Explore Website Design', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 			</article>
 			<article class="service-card">
 				<span class="service-icon"><?php inovantage_icon_e( 'social' ); ?></span>
-				<h3><?php esc_html_e( 'Social media management', 'inovantage' ); ?></h3>
-				<p><?php esc_html_e( 'Plan, create, review and schedule useful content through a transparent approval workflow.', 'inovantage' ); ?></p>
-				<a class="text-link" href="<?php echo esc_url( home_url( '/services/social-media-management/' ) ); ?>"><?php esc_html_e( 'Explore social media', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+				<h3><?php esc_html_e( 'Social Media Management', 'inovantage' ); ?></h3>
+				<p><?php esc_html_e( 'Build visibility, credibility and demand through consistent content. Turn your expertise and business activity into a structured social media programme designed to reach the right audience and support commercial growth.', 'inovantage' ); ?></p>
+				<a class="text-link" href="<?php echo esc_url( home_url( '/services/social-media-management/' ) ); ?>"><?php esc_html_e( 'Explore Social Media Management', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 			</article>
 			<article class="service-card">
 				<span class="service-icon"><?php inovantage_icon_e( 'app' ); ?></span>
-				<h3><?php esc_html_e( 'App development', 'inovantage' ); ?></h3>
-				<p><?php esc_html_e( 'Build portals, dashboards, internal tools and customer apps around a focused business need.', 'inovantage' ); ?></p>
-				<a class="text-link" href="<?php echo esc_url( home_url( '/services/app-development/' ) ); ?>"><?php esc_html_e( 'Explore app development', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+				<h3><?php esc_html_e( 'App Development', 'inovantage' ); ?></h3>
+				<p><?php esc_html_e( 'Create digital products that improve delivery and support growth. Develop customer portals, dashboards, internal tools and focused applications that simplify important tasks, connect information and create scalable customer experiences.', 'inovantage' ); ?></p>
+				<a class="text-link" href="<?php echo esc_url( home_url( '/services/app-development/' ) ); ?>"><?php esc_html_e( 'Explore App Development', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
 			</article>
 		</div>
 	</div>
@@ -72,14 +77,15 @@ $inovantage_hero_art_srcset = sprintf(
 <section class="section section-dark">
 	<div class="container">
 		<div class="section-heading">
-			<div><p class="eyebrow"><?php esc_html_e( 'Useful outcomes', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Technology should make the business easier to run.', 'inovantage' ); ?></h2></div>
-			<p><?php esc_html_e( 'We focus on clear improvements rather than adding tools for the sake of it.', 'inovantage' ); ?></p>
+			<div><p class="eyebrow"><?php esc_html_e( 'Business outcomes', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Technology should create measurable commercial value.', 'inovantage' ); ?></h2></div>
+			<p><?php esc_html_e( 'Every Inovantage solution begins with the result the business needs, not the tool being considered.', 'inovantage' ); ?></p>
 		</div>
-		<div class="outcome-grid">
-			<article class="outcome-card"><span>01</span><h3><?php esc_html_e( 'Faster follow-up', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Capture, qualify and route enquiries without waiting for manual handoffs.', 'inovantage' ); ?></p></article>
-			<article class="outcome-card"><span>02</span><h3><?php esc_html_e( 'Less repeated work', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Automate routine updates, reminders, reports and data movement.', 'inovantage' ); ?></p></article>
-			<article class="outcome-card"><span>03</span><h3><?php esc_html_e( 'More consistent content', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Use a structured calendar and approval step before anything is published.', 'inovantage' ); ?></p></article>
-			<article class="outcome-card"><span>04</span><h3><?php esc_html_e( 'Better digital journeys', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Give customers and staff simple interfaces that help them complete a task.', 'inovantage' ); ?></p></article>
+		<div class="outcome-grid outcome-grid-5">
+			<article class="outcome-card"><span>01</span><h3><?php esc_html_e( 'Increase revenue opportunities', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Capture, qualify and follow up with more potential customers before valuable opportunities are lost.', 'inovantage' ); ?></p></article>
+			<article class="outcome-card"><span>02</span><h3><?php esc_html_e( 'Improve conversion', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Create clearer digital journeys that move buyers from interest to enquiry, consultation or purchase.', 'inovantage' ); ?></p></article>
+			<article class="outcome-card"><span>03</span><h3><?php esc_html_e( 'Expand operational capacity', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Reduce repeated administration so your team can handle greater demand without the same increase in manual workload.', 'inovantage' ); ?></p></article>
+			<article class="outcome-card"><span>04</span><h3><?php esc_html_e( 'Deliver more consistently', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Use connected workflows, clear ownership and dependable systems to improve the customer experience.', 'inovantage' ); ?></p></article>
+			<article class="outcome-card"><span>05</span><h3><?php esc_html_e( 'Scale with greater visibility', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Bring information, activity and performance into clearer systems so leaders can make faster, better-informed decisions.', 'inovantage' ); ?></p></article>
 		</div>
 	</div>
 </section>
@@ -87,14 +93,15 @@ $inovantage_hero_art_srcset = sprintf(
 <section class="section">
 	<div class="container">
 		<div class="section-heading">
-			<div><p class="eyebrow"><?php esc_html_e( 'A dependable process', 'inovantage' ); ?></p><h2><?php esc_html_e( 'From unclear problem to working solution.', 'inovantage' ); ?></h2></div>
+			<div><p class="eyebrow"><?php esc_html_e( 'A clear delivery process', 'inovantage' ); ?></p><h2><?php esc_html_e( 'From business challenge to measurable improvement.', 'inovantage' ); ?></h2></div>
 			<p><?php esc_html_e( 'You always know what is being decided, built, reviewed and released.', 'inovantage' ); ?></p>
 		</div>
-		<div class="process-grid">
-			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Discover', 'inovantage' ); ?></h3><p><?php esc_html_e( 'We map the goal, users, current workflow, constraints and measures of success.', 'inovantage' ); ?></p></article>
-			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Design', 'inovantage' ); ?></h3><p><?php esc_html_e( 'We shape the solution, content, user journey, technical approach and delivery plan.', 'inovantage' ); ?></p></article>
-			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Build', 'inovantage' ); ?></h3><p><?php esc_html_e( 'We work in visible stages, test the important paths and ask for feedback early.', 'inovantage' ); ?></p></article>
-			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Improve', 'inovantage' ); ?></h3><p><?php esc_html_e( 'After launch, we monitor what matters and prioritise practical refinements.', 'inovantage' ); ?></p></article>
+		<div class="process-grid process-grid-5">
+			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Discover', 'inovantage' ); ?></h3><p><?php esc_html_e( 'We identify the commercial goal, current barriers, users, systems and measures of success.', 'inovantage' ); ?></p></article>
+			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Design', 'inovantage' ); ?></h3><p><?php esc_html_e( 'We develop the customer journey, workflow, content or product direction needed to achieve the outcome.', 'inovantage' ); ?></p></article>
+			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Build', 'inovantage' ); ?></h3><p><?php esc_html_e( 'The solution is created and tested through visible milestones, with feedback gathered before final release.', 'inovantage' ); ?></p></article>
+			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Launch', 'inovantage' ); ?></h3><p><?php esc_html_e( 'The approved system is introduced with clear ownership, documentation and practical guidance.', 'inovantage' ); ?></p></article>
+			<article class="process-card"><span class="process-number"></span><h3><?php esc_html_e( 'Improve', 'inovantage' ); ?></h3><p><?php esc_html_e( 'Performance and real usage guide the next round of optimisation, automation or development.', 'inovantage' ); ?></p></article>
 		</div>
 	</div>
 </section>
@@ -102,17 +109,17 @@ $inovantage_hero_art_srcset = sprintf(
 <section class="section section-soft">
 	<div class="container review-grid">
 		<div class="review-copy">
-			<p class="eyebrow"><?php esc_html_e( 'Review-first publishing', 'inovantage' ); ?></p>
-			<h2><?php esc_html_e( 'Nothing should publish by accident.', 'inovantage' ); ?></h2>
-			<p class="lede"><?php esc_html_e( 'The included content system separates drafts from reviewed work. Editors can prepare an article, move it into review, check a private preview and publish only after approval.', 'inovantage' ); ?></p>
-			<p><?php esc_html_e( 'The same principle can be used for social media: create the calendar, prepare copy and visuals, request comments, record approval, then schedule.', 'inovantage' ); ?></p>
-			<div class="button-row"><a class="button" href="<?php echo esc_url( home_url( '/services/social-media-management/' ) ); ?>"><?php esc_html_e( 'See the content workflow', 'inovantage' ); ?></a><a class="button button-secondary" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'Read our insights', 'inovantage' ); ?></a></div>
+			<p class="eyebrow"><?php esc_html_e( 'Control without slowing growth', 'inovantage' ); ?></p>
+			<h2><?php esc_html_e( 'Move faster without losing oversight.', 'inovantage' ); ?></h2>
+			<p class="lede"><?php esc_html_e( 'Automation and content systems should accelerate delivery while protecting important business decisions. Inovantage builds clear approval points into customer communication, content publishing and higher-impact workflows.', 'inovantage' ); ?></p>
+			<p><?php esc_html_e( 'Your team can see what is being prepared, what requires review and what is ready to go live, creating speed, consistency and accountability without unnecessary bottlenecks.', 'inovantage' ); ?></p>
+			<div class="button-row"><a class="button" href="<?php echo esc_url( home_url( '/services/ai-automation/#responsible' ) ); ?>"><?php esc_html_e( 'See How We Build Responsible Systems', 'inovantage' ); ?></a></div>
 		</div>
 		<div class="approval-board" aria-label="<?php esc_attr_e( 'Example content approval board', 'inovantage' ); ?>">
 			<div class="approval-columns">
-				<div class="approval-column"><h3><?php esc_html_e( 'Draft', 'inovantage' ); ?></h3><div class="approval-item"><strong><?php esc_html_e( 'Five tasks worth automating', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Copy in progress', 'inovantage' ); ?></span></div><div class="approval-item"><strong><?php esc_html_e( 'Website launch checklist', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Image needed', 'inovantage' ); ?></span></div></div>
-				<div class="approval-column is-review"><h3><?php esc_html_e( 'In review', 'inovantage' ); ?></h3><div class="approval-item"><strong><?php esc_html_e( 'Content approval workflow', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Preview available', 'inovantage' ); ?></span></div></div>
-				<div class="approval-column is-ready"><h3><?php esc_html_e( 'Ready', 'inovantage' ); ?></h3><div class="approval-item"><strong><?php esc_html_e( 'Choosing an app MVP', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Approved to publish', 'inovantage' ); ?></span></div></div>
+				<div class="approval-column"><h3><?php esc_html_e( 'Draft', 'inovantage' ); ?></h3><div class="approval-item"><strong><?php esc_html_e( 'Customer question carousel', 'inovantage' ); ?></strong><span><?php esc_html_e( 'In preparation', 'inovantage' ); ?></span></div></div>
+				<div class="approval-column is-review"><h3><?php esc_html_e( 'In review', 'inovantage' ); ?></h3><div class="approval-item"><strong><?php esc_html_e( 'Automation explainer', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Awaiting comments', 'inovantage' ); ?></span></div></div>
+				<div class="approval-column is-ready"><h3><?php esc_html_e( 'Ready', 'inovantage' ); ?></h3><div class="approval-item"><strong><?php esc_html_e( 'Website planning guide', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Approved to go live', 'inovantage' ); ?></span></div></div>
 			</div>
 		</div>
 	</div>
@@ -121,8 +128,11 @@ $inovantage_hero_art_srcset = sprintf(
 <section class="section">
 	<div class="container">
 		<div class="section-heading">
-			<div><p class="eyebrow"><?php esc_html_e( 'Practical insights', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Useful thinking for your next digital decision.', 'inovantage' ); ?></h2></div>
-			<a class="text-link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'View all insights', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+			<div><p class="eyebrow"><?php esc_html_e( 'Insights for business leaders', 'inovantage' ); ?></p><h2><?php esc_html_e( 'Make stronger digital investment decisions.', 'inovantage' ); ?></h2></div>
+			<a class="text-link" href="<?php echo esc_url( home_url( '/insights/' ) ); ?>"><?php esc_html_e( 'View Articles and Guides', 'inovantage' ); ?> <?php inovantage_icon_e( 'arrow' ); ?></a>
+		</div>
+		<div class="section-intro">
+			<p><?php esc_html_e( 'Explore practical guidance on business automation, conversion-focused websites, content operations and application development, written for leaders deciding where digital improvement can create the greatest value.', 'inovantage' ); ?></p>
 		</div>
 		<div class="insights-grid">
 			<?php
@@ -153,8 +163,13 @@ $inovantage_hero_art_srcset = sprintf(
 <section class="section section-tight">
 	<div class="container">
 		<div class="cta-panel">
-			<div><h2><?php esc_html_e( 'What is taking too long, underperforming or ready to be built?', 'inovantage' ); ?></h2><p><?php esc_html_e( 'Share the current situation and the outcome you want. We will help you define a sensible next step.', 'inovantage' ); ?></p></div>
-			<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project', 'inovantage' ); ?></a>
+			<div>
+				<h2><?php esc_html_e( 'What is limiting the next stage of your growth?', 'inovantage' ); ?></h2>
+				<p><?php esc_html_e( 'It may be slow lead follow-up, repeated administration, an underperforming website, inconsistent marketing or a customer journey that no longer scales.', 'inovantage' ); ?></p>
+				<p><?php esc_html_e( 'Tell us what is happening today and what better performance should look like. We will help you identify a practical next step.', 'inovantage' ); ?></p>
+				<p class="cta-tagline"><?php esc_html_e( 'Digital systems that move your business forward.', 'inovantage' ); ?></p>
+			</div>
+			<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Book a Growth Consultation', 'inovantage' ); ?></a>
 		</div>
 	</div>
 </section>
