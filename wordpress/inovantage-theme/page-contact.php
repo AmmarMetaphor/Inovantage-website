@@ -17,13 +17,13 @@ while ( have_posts() ) :
 
 <section class="page-hero consult-hero">
 	<div class="container page-hero-grid consult-hero-grid">
-		<div class="page-hero-visual">
-			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/home-hero-orbital.webp" srcset="<?php echo esc_attr( sprintf( '%1$s/assets/images/heroes/home-hero-orbital-760.webp 760w, %1$s/assets/images/heroes/home-hero-orbital-1180.webp 1180w, %1$s/assets/images/heroes/home-hero-orbital.webp 1672w', INOVANTAGE_URI ) ); ?>" sizes="(max-width: 900px) 92vw, (max-width: 1400px) 45vw, 640px" width="1672" height="941" alt="" loading="eager" decoding="async">
-		</div>
 		<div>
 			<p class="eyebrow"><?php esc_html_e( 'Book a growth consultation', 'inovantage' ); ?></p>
 			<h1><?php esc_html_e( 'Tell us what you want your business to achieve.', 'inovantage' ); ?></h1>
 			<p class="lede"><?php esc_html_e( 'You may want to generate more enquiries, improve conversion, automate repeated work, strengthen your digital presence or build a service that can scale. Describe the current situation and the outcome you want. You do not need to arrive with a technical specification.', 'inovantage' ); ?></p>
+		</div>
+		<div class="page-hero-visual">
+			<img src="<?php echo esc_url( INOVANTAGE_URI ); ?>/assets/images/heroes/home-hero-orbital.webp" srcset="<?php echo esc_attr( sprintf( '%1$s/assets/images/heroes/home-hero-orbital-760.webp 760w, %1$s/assets/images/heroes/home-hero-orbital-1180.webp 1180w, %1$s/assets/images/heroes/home-hero-orbital.webp 1672w', INOVANTAGE_URI ) ); ?>" sizes="(max-width: 900px) 92vw, (max-width: 1400px) 45vw, 640px" width="1672" height="941" alt="" loading="eager" decoding="async">
 		</div>
 	</div>
 </section>
@@ -43,12 +43,6 @@ while ( have_posts() ) :
 				<li><?php esc_html_e( 'Any important timing requirements', 'inovantage' ); ?></li>
 			</ul>
 			<p><?php esc_html_e( 'After reviewing your enquiry, we will recommend a sensible next conversation or discovery step.', 'inovantage' ); ?></p>
-			<div class="contact-list">
-				<div class="contact-item"><strong><?php esc_html_e( 'Email', 'inovantage' ); ?></strong><a href="mailto:<?php echo esc_attr( inovantage_company( 'email' ) ); ?>"><?php echo esc_html( inovantage_company( 'email' ) ); ?></a></div>
-				<div class="contact-item"><strong><?php esc_html_e( 'Service area', 'inovantage' ); ?></strong><span><?php echo esc_html( inovantage_company( 'location' ) ); ?></span></div>
-				<div class="contact-item"><strong><?php esc_html_e( 'Registered office', 'inovantage' ); ?></strong><span><?php echo esc_html( inovantage_registered_address() ); ?></span></div>
-				<div class="contact-item"><strong><?php esc_html_e( 'Typical first step', 'inovantage' ); ?></strong><span><?php esc_html_e( 'Growth consultation and written next-step recommendation', 'inovantage' ); ?></span></div>
-			</div>
 			<p class="contact-tagline"><?php esc_html_e( 'Digital systems that move your business forward.', 'inovantage' ); ?></p>
 		</div>
 

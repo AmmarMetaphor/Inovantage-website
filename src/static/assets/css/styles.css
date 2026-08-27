@@ -2679,35 +2679,6 @@ p {
   margin-bottom: 20px;
 }
 
-.contact-list {
-  display: grid;
-  gap: 14px;
-  margin-top: var(--content-gap-lg);
-}
-
-.contact-item {
-  padding: 18px;
-  background: var(--surface-soft);
-  border-radius: 12px;
-}
-
-.contact-item strong,
-.contact-item span,
-.contact-item a {
-  display: block;
-}
-
-.contact-item strong {
-  margin-bottom: 3px;
-  font-size: 0.8rem;
-}
-
-.contact-item span,
-.contact-item a {
-  color: var(--ink-soft);
-  font-size: 0.94rem;
-}
-
 .contact-form {
   padding: clamp(26px, 5vw, 48px);
   background: var(--surface-elevated);
@@ -4915,9 +4886,11 @@ body:has(.wa-float) .site-footer .footer-bottom {
   }
 }
 
-/* Book a Growth Consultation hero. The orbital artwork leads on the left at
-   roughly 45 to 47 percent of the hero width and the copy answers on the
-   right, with both columns centred on the same axis. The artwork carries a
+/* Book a Growth Consultation hero. The copy leads on the left at roughly 53
+   percent of the hero width and the orbital artwork answers on the right at
+   roughly 47 percent, with both columns centred on the same axis. Source
+   order is copy then image, so the mobile stack reads heading first without
+   any ordering override. The artwork carries a
    baked-in navy background (the source has no alpha channel), so instead of
    the shared circular fade and drop shadow, its four edges dissolve into the
    continuous hero gradient through intersecting edge-fade masks; the orbital
@@ -4941,7 +4914,7 @@ body:has(.wa-float) .site-footer .footer-bottom {
 
 @media (min-width: 901px) {
   .consult-hero-grid {
-    grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+    grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
     gap: clamp(28px, 4vw, 52px);
   }
 
